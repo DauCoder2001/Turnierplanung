@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" type="image/png" sizes="32x32" href="data:image/png;base64,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">
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Ccircle cx='32' cy='32' r='30' fill='%231a1a1a'/%3E%3Ccircle cx='24' cy='22' r='8' fill='%23ffffff' opacity='0.18'/%3E%3Ccircle cx='32' cy='32' r='15' fill='%23fdfdf2'/%3E%3Ctext x='32' y='39' font-family='Arial, Helvetica, sans-serif' font-size='22' font-weight='bold' fill='%23111' text-anchor='middle'%3E8%3C/text%3E%3C/svg%3E">
+    <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
+    <meta name="apple-mobile-web-app-title" content="Billard">
+    <title>Billard Turnierverwaltung</title>
+    <style>
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #f4f6f9; color: #333; margin: 0; padding: 20px; }
+        .container { max-width: 900px; margin: 0 auto; background-color: #fff; padding: 25px; border-radius: 8px; box-shadow: 0 4px 10px rgba(0,0,0,0.08); }
+        .kopf { display: flex; align-items: center; gap: 14px; border-bottom: 2px solid #2c3e50; padding-bottom: 12px; margin-bottom: 22px; }
+        .kopf h1 { color: #1e3d2f; margin: 0; font-size: 1.7rem; line-height: 1.2; }
+        .kopf .unter { color: #7f8c8d; font-size: 0.95rem; }
+        .logo { height: 56px; width: auto; flex-shrink: 0; }
+
+        .kacheln { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+        .kachel { display: block; text-decoration: none; color: inherit; background-color: #f8f9fa; border: 1px solid #e9ecef;
+            border-left: 5px solid #16a085; border-radius: 6px; padding: 16px 18px; transition: box-shadow 0.15s, border-color 0.15s; }
+        .kachel:hover, .kachel:focus-visible { box-shadow: 0 4px 12px rgba(0,0,0,0.12); border-color: #a3e4d7; border-left-color: #117a65; outline: none; }
+        .kachel h2 { margin: 0 0 4px; font-size: 1.2rem; color: #2c3e50; }
+        .kachel .text { font-size: 0.9rem; color: #555; line-height: 1.4; }
+        .kachel .datei { margin-top: 8px; font-size: 0.75rem; color: #95a5a6; }
+        .kachel.serie { border-left-color: #e67e22; }
+        .kachel.serie:hover, .kachel.serie:focus-visible { border-left-color: #d35400; }
+        .kachel.fehlt { opacity: 0.55; pointer-events: none; }
+
+        .postfach { margin-top: 22px; padding: 11px 15px; border-radius: 4px; background: #e8f6f3; border-left: 4px solid #16a085;
+            color: #0e6655; font-size: 0.9rem; line-height: 1.5; }
+        .postfach.wartet { background: #fff3cd; border-left-color: #f39c12; color: #856404; }
+        .fuss { margin-top: 18px; font-size: 0.9rem; }
+        .fuss a { color: #117a65; }
+
+        @media (max-width: 520px) {
+            .kacheln { grid-template-columns: 1fr; }
+            body { padding: 10px; }
+            .container { padding: 16px; }
+            .kopf h1 { font-size: 1.35rem; }
+            .logo { height: 44px; }
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="kopf">
+        <img class="logo" alt="Pool-Billard-Club Bassum e.V." src="data:image/png;base64,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">
+        <div>
+            <h1>Billard Turnierverwaltung</h1>
+            <div class="unter">Turnierpläne, Serienwertung und Vereins-Rating</div>
+        </div>
+    </div>
+
+    <div class="kacheln">
+        <a class="kachel" data-programm="einzel">
+            <h2>Einzelgruppe</h2>
+            <div class="text">Jeder gegen jeden in einer Gruppe, 3 bis 12 Spieler.</div>
+            <div class="datei"></div>
+        </a>
+        <a class="kachel" data-programm="gruppen">
+            <h2>Zwei Gruppen</h2>
+            <div class="text">Gruppen A und B, danach Platzierungsduelle, 4 bis 16 Spieler.</div>
+            <div class="datei"></div>
+        </a>
+        <a class="kachel" data-programm="ko">
+            <h2>Gruppen mit KO-Runde</h2>
+            <div class="text">2 oder 4 Gruppen, KO-Runde und Platzierungsspiele, 8 bis 32 Spieler.</div>
+            <div class="datei"></div>
+        </a>
+        <a class="kachel serie" data-programm="serie">
+            <h2>Serienwertung</h2>
+            <div class="text">Serien, Turnier-Archiv und Vereins-Rating.</div>
+            <div class="datei"></div>
+        </a>
+    </div>
+
+    <div id="postfach" class="postfach" style="display:none;"></div>
+
+    <div class="fuss">
+        <a id="link-erklaerung">Wie funktioniert das Vereins-Rating?</a>
+    </div>
+</div>
+
+<script>
+    // Aktuelle Dateien im Hauptordner. Der Block zwischen den Markierungen wird
+    // von tools/startseite.py gepflegt, nicht von Hand aendern.
+    // STARTSEITE-DATEIEN-ANFANG
+    const LOKAL = {
+        einzel: 'turnierplan_billard_v64.html',
+        gruppen: 'turnierplan_billard_gruppen_v67.html',
+        ko: 'turnierplan_billard_ko_v77.html',
+        serie: 'serienwertung_billard_v17.html',
+        erklaerung: 'vereins_rating_erklaert_v01.html'
+    };
+    // STARTSEITE-DATEIEN-ENDE
+
+    // Ueber GitHub Pages liegt die Startseite in Turnierplanung/Startseite/,
+    // die Programme in den Nachbarordnern (tools/veroeffentlichen.py)
+    const GITHUB = {
+        einzel: '../einzelgruppe/',
+        gruppen: '../zwei-gruppen/',
+        ko: '../gruppen-ko/',
+        serie: '../serienwertung/',
+        erklaerung: '../vereins-rating/'
+    };
+
+    // Postfach der Programme, siehe docs/02-datenformate.md
+    const POSTFACH_KEY = 'billard-postfach:turniere';
+    const RATING_POSTFACH_KEY = 'billard-postfach:rating';
+
+    function istLokal() {
+        return location.protocol === 'file:';
+    }
+
+    function linksSetzen() {
+        const lokal = istLokal();
+        document.querySelectorAll('[data-programm]').forEach(a => {
+            const p = a.dataset.programm;
+            const ziel = lokal ? LOKAL[p] : GITHUB[p];
+            a.querySelector('.datei').textContent = lokal ? (ziel || 'Datei nicht gefunden') : '';
+            if (ziel) a.href = ziel;
+            else a.classList.add('fehlt');
+        });
+        const erkl = document.getElementById('link-erklaerung');
+        const erklZiel = lokal ? LOKAL.erklaerung : GITHUB.erklaerung;
+        if (erklZiel) erkl.href = erklZiel;
+        else erkl.parentNode.style.display = 'none';
+    }
+
+    function lesen(schluessel) {
+        try { return JSON.parse(localStorage.getItem(schluessel) || 'null'); }
+        catch (e) { return null; }
+    }
+
+    function datumZeit(iso) {
+        const d = new Date(iso);
+        if (isNaN(d)) return '';
+        return d.toLocaleDateString('de-DE') + ', ' + d.toLocaleTimeString('de-DE', { hour: '2-digit', minute: '2-digit' }) + ' Uhr';
+    }
+
+    function postfachAnzeigen() {
+        const box = document.getElementById('postfach');
+        const teile = [];
+        const liste = lesen(POSTFACH_KEY);
+        const wartend = Array.isArray(liste) ? liste.length : 0;
+        if (wartend) {
+            teile.push(wartend === 1
+                ? '1 Turnierergebnis wartet auf Übernahme in der Serienwertung.'
+                : wartend + ' Turnierergebnisse warten auf Übernahme in der Serienwertung.');
+        }
+        const rating = lesen(RATING_POSTFACH_KEY);
+        if (rating && rating.stand && rating.stand.ratingStand) {
+            const r = rating.stand.ratingStand;
+            teile.push('Rating-Stand für die Turnierpläne bereitgestellt am ' + datumZeit(rating.bereitgestellt) +
+                ' (' + (r.spieler || []).length + ' Spieler).');
+        } else {
+            teile.push('Noch kein Rating-Stand bereitgestellt. Dafür einmal die Serienwertung öffnen.');
+        }
+        box.textContent = teile.join(' ');
+        box.className = 'postfach' + (wartend ? ' wartet' : '');
+        box.style.display = '';
+    }
+
+    linksSetzen();
+    postfachAnzeigen();
+    // Aenderungen aus anderen Tabs und beim Zurueckwechseln uebernehmen
+    window.addEventListener('storage', (e) => {
+        if (e.key === POSTFACH_KEY || e.key === RATING_POSTFACH_KEY) postfachAnzeigen();
+    });
+    document.addEventListener('visibilitychange', () => {
+        if (document.visibilityState === 'visible') postfachAnzeigen();
+    });
+</script>
+</body>
+</html>
