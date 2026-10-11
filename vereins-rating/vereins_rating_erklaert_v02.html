@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Das Vereins-Rating erklärt v02</title>
+<style>
+    /* Farben und Schrift wie in Turnierplan und Serienwertung */
+    body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #f4f6f9;
+        color: #333; margin: 0; padding: 20px; line-height: 1.55; }
+    .container { max-width: 900px; margin: 0 auto; background-color: #fff; padding: 30px 35px;
+        border-radius: 8px; box-shadow: 0 4px 10px rgba(0,0,0,0.08); }
+
+    h1 { color: #1e3d2f; font-size: 1.9rem; margin: 0 0 4px 0; }
+    .untertitel { color: #7f8c8d; font-size: 0.95rem; margin: 0 0 22px 0; }
+    h2 { color: #2c3e50; font-size: 1.2rem; margin: 32px 0 12px 0; border-left: 4px solid #16a085;
+        padding-left: 10px; }
+    h3 { color: #2c3e50; font-size: 1rem; margin: 20px 0 6px 0; }
+    p { margin: 9px 0; }
+
+    /* Inhaltsverzeichnis */
+    .inhalt { background: #f8f9fa; border: 1px solid #e9ecef; border-radius: 6px; padding: 14px 20px; }
+    .inhalt ol { margin: 6px 0; padding-left: 22px; }
+    .inhalt li { margin: 3px 0; }
+    .inhalt a { color: #117a65; text-decoration: none; }
+    .inhalt a:hover { text-decoration: underline; }
+
+    /* Hervorgehobener Merksatz */
+    .merk { background-color: #e8f8f5; border-left: 4px solid #16a085; border-radius: 4px;
+        padding: 12px 16px; margin: 14px 0; }
+    .merk b { color: #117a65; }
+    /* Hinweis auf eine Grenze des Verfahrens */
+    .grenze { background-color: #fff3cd; border-left: 4px solid #f0ad4e; border-radius: 4px;
+        padding: 12px 16px; margin: 14px 0; color: #7a5b06; }
+
+    table { width: 100%; border-collapse: collapse; margin: 14px 0; background: #fff; font-size: 0.92rem; }
+    th, td { border: 1px solid #dee2e6; padding: 7px 10px; text-align: center; }
+    th { background-color: #2c3e50; color: #fff; font-weight: 600; }
+    td.links, th.links { text-align: left; }
+    tr:nth-child(even) td { background-color: #fbfcfd; }
+    caption { caption-side: bottom; font-size: 0.82rem; color: #7f8c8d; padding-top: 6px; text-align: left; }
+
+    /* Farbpunkte der Quellen-Kennzeichnung, wie im Turnierplan am Rating-Feld */
+    .punkt { display: inline-block; width: 12px; height: 12px; border-radius: 3px; vertical-align: -1px; }
+    .p-eigen { background: #27ae60; }
+    .p-vorl { background: #f0ad4e; }
+    .p-rueck { background: #3498db; }
+    .p-grau { background: #95a5a6; }
+    .p-hand { background: #2c3e50; }
+    .p-fehlt { background: #c0392b; }
+
+    .formel { background: #f8f9fa; border: 1px solid #e9ecef; border-radius: 4px; padding: 10px 14px;
+        font-family: Consolas, 'Courier New', monospace; font-size: 0.9rem; margin: 12px 0; }
+
+    ul, ol { margin: 9px 0; padding-left: 24px; }
+    li { margin: 5px 0; }
+
+    /* Frage-Antwort-Block */
+    .faq { border-bottom: 1px solid #e9ecef; padding: 10px 0; }
+    .faq:last-child { border-bottom: none; }
+    .faq .frage { font-weight: 600; color: #2c3e50; }
+    .faq .antwort { margin: 4px 0 0 0; }
+
+    .fuss { margin-top: 34px; padding-top: 14px; border-top: 1px solid #e9ecef;
+        font-size: 0.85rem; color: #7f8c8d; }
+
+    @media print {
+        body { background: #fff; padding: 0; }
+        .container { box-shadow: none; padding: 0; max-width: none; }
+        h2 { page-break-after: avoid; }
+        table, .merk, .grenze, .faq { page-break-inside: avoid; }
+        .inhalt { page-break-after: always; }
+    }
+        /* Rueckweg zur Startseite, eigene Zeile ueber dem Kopf */
+        .link-startseite { display: inline-block; margin-bottom: 14px; background-color: #fff; color: #2c3e50;
+            border: 2px solid #2c3e50; padding: 4px 12px; border-radius: 4px; font-weight: bold; font-size: 0.85rem;
+            text-decoration: none; white-space: nowrap; line-height: 1.4; }
+        .link-startseite:hover { background-color: #eaeded; }
+        @media print { .link-startseite { display: none; } }
+</style>
+</head>
+<body>
+<div class="container">
+    <a id="link-startseite" class="link-startseite" href="index.html" title="Zur Startseite der Turnierverwaltung">&larr; Startseite</a>
+    <script>
+        // Lokal liegt die Startseite als index.html daneben, ueber GitHub in Turnierplanung/Startseite/
+        if (location.protocol !== 'file:') document.getElementById('link-startseite').href = '../Startseite/';
+    </script>
+
+<h1>Das Vereins-Rating erklärt</h1>
+<p class="untertitel">Wie die Spielstärke berechnet wird, wie daraus die Vorgabe im Turnier entsteht,
+und warum das Ganze so gebaut ist.</p>
+
+<div class="inhalt">
+    <b>Inhalt</b>
+    <ol>
+        <li><a href="#kurz">In drei Sätzen</a></li>
+        <li><a href="#zahl">Was die Zahl bedeutet</a></li>
+        <li><a href="#woher">Woher die Daten kommen</a></li>
+        <li><a href="#rechnung">Wie gerechnet wird</a></li>
+        <li><a href="#wenig">Wenige Partien: vorläufige Werte</a></li>
+        <li><a href="#zeit">Der Zeitraum: zwölf Monate</a></li>
+        <li><a href="#disziplin">Disziplinen und Ersatzwerte</a></li>
+        <li><a href="#kennzeichnung">Die Kennzeichnung in der Liste</a></li>
+        <li><a href="#vorgabe">Die Vorgabe im Turnier</a></li>
+        <li><a href="#warum">Warum es so gebaut ist</a></li>
+        <li><a href="#fragen">Häufige Fragen</a></li>
+        <li><a href="#grenzen">Was das Rating nicht leisten kann</a></li>
+    </ol>
+</div>
+
+<h2 id="kurz">1. In drei Sätzen</h2>
+<p>Jeder Spieler bekommt eine Zahl, die seine Spielstärke beschreibt. Sie wird ausschließlich aus
+den Ergebnissen unserer eigenen Turniere berechnet, niemand vergibt sie von Hand. Aus dem Abstand
+zwischen zwei Zahlen ergibt sich im Turnier eine Vorgabe in Sätzen, damit auch ungleiche Paarungen
+bis zum Schluss offen bleiben.</p>
+
+<div class="merk">
+    <b>Der Vereinsschnitt liegt bei 500.</b> Wer besser als der Durchschnitt spielt, liegt darüber,
+    wer schwächer spielt, darunter. Die Zahl ist kein Urteil über eine Person, sondern eine
+    Schätzung aus gespielten Racks.
+</div>
+
+<h2 id="zahl">2. Was die Zahl bedeutet</h2>
+<p>Die Skala ist so gewählt, dass <b>100 Punkte Unterschied doppelt so viele gewonnene Racks</b>
+bedeuten. Bei 200 Punkten sind es viermal so viele, bei 300 Punkten achtmal so viele. Daraus lässt
+sich für jede Paarung ausrechnen, wie oft der Stärkere ein einzelnes Rack gewinnt:</p>
+
+<table>
+    <thead><tr><th>Rating-Unterschied</th><th>Racks für den Stärkeren</th><th>Anschaulich</th></tr></thead>
+    <tbody>
+        <tr><td>0 Punkte</td><td>50 %</td><td class="links">gleich stark</td></tr>
+        <tr><td>25 Punkte</td><td>54 %</td><td class="links">kaum spürbar</td></tr>
+        <tr><td>50 Punkte</td><td>59 %</td><td class="links">leichter Vorteil</td></tr>
+        <tr><td>100 Punkte</td><td>67 %</td><td class="links">zwei von drei Racks</td></tr>
+        <tr><td>150 Punkte</td><td>74 %</td><td class="links">drei von vier Racks</td></tr>
+        <tr><td>200 Punkte</td><td>80 %</td><td class="links">vier von fünf Racks</td></tr>
+        <tr><td>300 Punkte</td><td>89 %</td><td class="links">klar überlegen</td></tr>
+    </tbody>
+    <caption>Rack-Gewinnchance des stärkeren Spielers. Dasselbe Modell nutzt auch das
+    internationale FargoRate-System.</caption>
+</table>
+
+<p>Über ein ganzes Spiel wirkt sich das noch viel stärker aus, weil sich der kleine Vorteil Rack für
+Rack aufsummiert. Ohne Vorgabe gewinnt ein um 100 Punkte besserer Spieler ein Race to 5 in rund
+86 von 100 Fällen. Genau deshalb gibt es die Vorgabe.</p>
+
+<h2 id="woher">3. Woher die Daten kommen</h2>
+<p>Gezählt werden die Ergebnisse unserer Turniere. Der Ablauf:</p>
+<ol>
+    <li>Ein Turnier wird im Turnierplan gespielt und am Ende exportiert.</li>
+    <li>Die Datei wird in die Serienwertung eingelesen, dort liegt das Archiv aller Partien.</li>
+    <li>Aus diesem Archiv wird das Rating jederzeit neu berechnet.</li>
+</ol>
+
+<p>Dabei gelten drei Regeln:</p>
+<ul>
+    <li><b>Gezählt werden Racks, nicht Spiele.</b> Ein 5:4 ist etwas anderes als ein 5:0, und genau
+        dieser Unterschied steckt in der Rechnung.</li>
+    <li><b>Vorgabesätze zählen nicht mit.</b> Wer mit drei Sätzen Vorgabe startet und 5:3 gewinnt,
+        hat selbst 2:3 Racks gespielt. Nur diese werden gewertet.</li>
+    <li><b>Ein Turnier kann ausgenommen werden.</b> Für Spaßturniere lässt sich die Wertung
+        abschalten, ebenso für einzelne Partien, etwa nach einem Abbruch.</li>
+</ul>
+
+<div class="merk">
+    Dass die Vorgabe herausgerechnet wird, ist wichtig: <b>Das Handicap verfälscht das Rating
+    nicht.</b> Wer eine hohe Vorgabe bekommt und damit gewinnt, wird davon nicht besser eingestuft.
+</div>
+
+<h2 id="rechnung">4. Wie gerechnet wird</h2>
+<p>Das Rating wird nicht einzeln pro Spieler ermittelt, sondern <b>für alle Spieler gleichzeitig</b>.
+Gesucht wird die Kombination von Zahlen, die am besten zu allen gespielten Racks passt. Das
+Programm probiert dazu so lange Werte durch, bis sie sich nicht mehr verändern.</p>
+
+<p>Der Vorteil dieses Verfahrens: <b>Die Stärke des Gegners zählt mit.</b> Wer regelmäßig gegen die
+stärksten Spieler des Vereins antritt und knapp verliert, steht am Ende besser da als jemand, der
+gegen schwächere Gegner ebenso knapp gewinnt. Eine einfache Sieg-Niederlage-Tabelle kann das nicht
+leisten, weil dort jeder Sieg gleich viel zählt.</p>
+
+<p>Ein Beispiel aus der Rechnung: Wenn zwei Spieler nur gegeneinander antreten und einer zwei
+Drittel der Racks gewinnt, nähern sich ihre Werte mit wachsender Datenmenge den theoretischen
+100 Punkten Abstand an:</p>
+
+<table>
+    <thead><tr><th>Gespielte Racks</th><th>Ergebnis</th><th>Rating A</th><th>Rating B</th><th>Abstand</th></tr></thead>
+    <tbody>
+        <tr><td>30</td><td>20 : 10</td><td>532</td><td>468</td><td>64</td></tr>
+        <tr><td>60</td><td>40 : 20</td><td>539</td><td>461</td><td>78</td></tr>
+        <tr><td>120</td><td>80 : 40</td><td>544</td><td>456</td><td>88</td></tr>
+        <tr><td>300</td><td>200 : 100</td><td>547</td><td>453</td><td>94</td></tr>
+    </tbody>
+    <caption>Beide starten beim Vereinsschnitt 500. Je mehr Racks vorliegen, desto deutlicher darf
+    das Ergebnis den Wert verschieben.</caption>
+</table>
+
+<h2 id="wenig">5. Wenige Partien: vorläufige Werte</h2>
+<p>Bei wenigen Racks ist jedes Ergebnis Zufall. Damit daraus keine falsche Sicherheit entsteht,
+bekommt jeder Spieler zusätzlich <b>30 gedachte Racks</b>, je zur Hälfte gewonnen und verloren,
+gegen einen Gegner in Höhe seines Startwerts. Diese gedachten Racks wirken wie eine Bremse: Am
+Anfang halten sie den Wert nahe am Ausgangspunkt, und je mehr echte Racks dazukommen, desto weniger
+fallen sie ins Gewicht.</p>
+
+<p>Ohne diese Bremse hätte ein Spieler, der noch kein einziges Rack abgegeben hat, rechnerisch einen
+unendlich hohen Wert. Mit ihr sieht es so aus:</p>
+
+<table>
+    <thead><tr><th>Racks, alle gewonnen</th><th>Rating</th></tr></thead>
+    <tbody>
+        <tr><td>10 : 0</td><td>559</td></tr>
+        <tr><td>20 : 0</td><td>589</td></tr>
+        <tr><td>40 : 0</td><td>624</td></tr>
+        <tr><td>100 : 0</td><td>675</td></tr>
+    </tbody>
+    <caption>Der Wert steigt mit der Zahl der Belege, nicht mit einem einzelnen guten Abend.</caption>
+</table>
+
+<p>Zusätzlich wird der Wert gekennzeichnet: <b>Unter 100 eigenen Racks gilt er als „vorläufig“</b>,
+darüber als „eigene Daten“. Ein vorläufiger Wert wird genauso verwendet, ist aber erkennbar noch
+nicht gut abgesichert.</p>
+
+<h2 id="zeit">6. Der Zeitraum: zwölf Monate</h2>
+<p>Gerechnet wird mit den Partien der <b>letzten zwölf Monate</b>. Das Rating beschreibt damit die
+aktuelle Spielstärke und nicht die von vor fünf Jahren.</p>
+
+<p>Wer in diesen zwölf Monaten weniger als 100 Racks gespielt hat, bekommt das Fenster automatisch
+weiter zurück geöffnet – so weit, bis 100 Racks zusammenkommen, <b>höchstens aber 36 Monate</b>.
+Damit erhalten auch Gelegenheitsspieler einen brauchbaren Wert, statt auf den Vereinsschnitt
+zurückzufallen.</p>
+
+<p>Wer länger als drei Jahre nicht gespielt hat, erscheint nicht mehr in der Liste – es sei denn, für
+ihn ist ein Startwert hinterlegt. Beim nächsten Turnier beginnt er wieder beim Vereinsschnitt oder
+bei diesem Startwert.</p>
+
+<h2 id="disziplin">7. Disziplinen und Ersatzwerte</h2>
+<p>Das Rating wird für <b>8-Ball, 9-Ball, 10-Ball und Multi-Ball getrennt</b> berechnet, dazu ein
+Gesamtwert über alle Disziplinen. Wer im 8-Ball stark ist, muss es im 9-Ball nicht ebenso sein.</p>
+
+<p>Hat jemand in einer Disziplin noch nicht gespielt, wird der Wert in dieser Reihenfolge ersetzt:</p>
+<ol>
+    <li><b>Ein gesetzter Startwert</b>, falls vorhanden. Den vergibt die Turnierleitung zum Beispiel
+        für einen bekannt starken Neuzugang. Er gilt für alle Disziplinen und verliert mit jeder
+        gespielten Partie an Gewicht.</li>
+    <li><b>Der Wert aus den anderen Disziplinen.</b> Wer 8-Ball spielt, kann auch 9-Ball.</li>
+    <li><b>Der Vereinsschnitt 500</b>, wenn gar nichts vorliegt.</li>
+</ol>
+
+<h2 id="kennzeichnung">8. Die Kennzeichnung in der Liste</h2>
+<p>In der Rating-Liste steht neben jedem Wert, woher er stammt. Im Turnierplan zeigt ein farbiger
+Balken am Rating-Feld dasselbe an:</p>
+
+<table>
+    <thead><tr><th style="width:40px;"></th><th class="links">Kennzeichnung</th><th class="links">Bedeutung</th></tr></thead>
+    <tbody>
+        <tr><td><span class="punkt p-eigen"></span></td><td class="links">eigene Daten</td>
+            <td class="links">Mindestens 100 eigene Racks, gut abgesichert.</td></tr>
+        <tr><td><span class="punkt p-vorl"></span></td><td class="links">vorläufig</td>
+            <td class="links">Eigene Racks vorhanden, aber noch unter 100.</td></tr>
+        <tr><td><span class="punkt p-rueck"></span></td><td class="links">aus anderer Disziplin</td>
+            <td class="links">In dieser Disziplin noch nichts gespielt, Wert übertragen.</td></tr>
+        <tr><td><span class="punkt p-grau"></span></td><td class="links">Startwert / Vereinsschnitt</td>
+            <td class="links">Keine gewerteten Partien, Ausgangswert gesetzt oder 500.</td></tr>
+        <tr><td><span class="punkt p-hand"></span></td><td class="links">von Hand gesetzt</td>
+            <td class="links">Die Turnierleitung hat den Wert für dieses eine Turnier überschrieben.</td></tr>
+        <tr><td><span class="punkt p-fehlt"></span></td><td class="links">nicht gefunden</td>
+            <td class="links">Der Name steht nicht im geladenen Rating-Stand, es gilt 500.</td></tr>
+    </tbody>
+</table>
+
+<p>Wer den eigenen Wert nachvollziehen will, öffnet in der Rating-Liste die Lupe neben dem Namen.
+Dort stehen alle Partien, die in die Rechnung eingegangen sind.</p>
+
+<h2 id="vorgabe">9. Die Vorgabe im Turnier</h2>
+<p>Im Turnier wird das Rating in eine <b>Vorgabe in Sätzen</b> umgerechnet: Der schwächere Spieler
+startet mit Vorsprung, das Race-Ziel bleibt für beide gleich. Bei Race to 5 und zwei Sätzen Vorgabe
+steht das Spiel also 0:2 und beide brauchen 5 Sätze.</p>
+
+<p>Gesucht wird die Vorgabe, bei der das Spiel möglichst nah an eine <b>50:50-Partie</b> herankommt.
+Dabei wird der Rating-Unterschied absichtlich nur zu <b>75 Prozent</b> ausgeglichen – der stärkere
+Spieler soll einen Rest seines Vorsprungs behalten, sonst wäre Leistung am Ende gleichgültig. Dieser
+Prozentsatz ist einstellbar.</p>
+
+<table>
+    <thead><tr><th>Rating-Unterschied</th><th>Race to 3</th><th>Race to 4</th><th>Race to 5</th>
+        <th>Race to 6</th><th>Race to 7</th><th>Race to 8</th></tr></thead>
+    <tbody>
+        <tr><td>25</td><td>0</td><td>0</td><td>1</td><td>1</td><td>1</td><td>1</td></tr>
+        <tr><td>50</td><td>1</td><td>1</td><td>1</td><td>1</td><td>2</td><td>2</td></tr>
+        <tr><td>100</td><td>1</td><td>1</td><td>2</td><td>2</td><td>3</td><td>3</td></tr>
+        <tr><td>150</td><td>1</td><td>2</td><td>3</td><td>3</td><td>4</td><td>4</td></tr>
+        <tr><td>200</td><td>2</td><td>2</td><td>3</td><td>4</td><td>4</td><td>5</td></tr>
+        <tr><td>300</td><td>2</td><td>3</td><td>4</td><td>4</td><td>5</td><td>6</td></tr>
+    </tbody>
+    <caption>Vorgabe in Sätzen bei der Standardeinstellung 75 Prozent, ohne Obergrenze.</caption>
+</table>
+
+<p>Was das bewirkt, zeigt der Vergleich der Siegchancen:</p>
+
+<table>
+    <thead><tr><th>Paarung</th><th>ohne Vorgabe</th><th>mit Vorgabe</th></tr></thead>
+    <tbody>
+        <tr><td class="links">100 Punkte Unterschied, Race to 5 (Vorgabe 2)</td><td>86 : 14</td><td>57 : 43</td></tr>
+        <tr><td class="links">100 Punkte Unterschied, Race to 7 (Vorgabe 3)</td><td>90 : 10</td><td>56 : 44</td></tr>
+        <tr><td class="links">200 Punkte Unterschied, Race to 5 (Vorgabe 3)</td><td>98 : 2</td><td>66 : 34</td></tr>
+    </tbody>
+    <caption>Siegchance stärkerer zu schwächerem Spieler. Der Stärkere bleibt Favorit, aber das Spiel
+    ist offen.</caption>
+</table>
+
+<h3>Zwei Regeln im Turnierbetrieb</h3>
+<ul>
+    <li><b>Der Rating-Stand muss vor dem ersten Ergebnis geladen sein.</b> Sobald ein Satz
+        eingetragen ist, lässt sich kein Stand mehr laden. Fehlt er, weist das Programm darauf hin
+        und nennt die betroffenen Spieler; sie spielen dann mit dem Vereinsschnitt 500.</li>
+    <li><b>Beim ersten Ergebnis werden alle Werte eingefroren.</b> Damit ändert sich während eines
+        laufenden Turniers keine Vorgabe mehr – wer in Runde 1 zwei Sätze Vorgabe bekam, bekommt sie
+        auch in Runde 6.</li>
+</ul>
+
+<div class="grenze">
+    <b>Kurze Races stufen grob ab.</b> Bei Race to 3 oder 4 kann die Vorgabe höchstens 2 oder 3
+    Sätze betragen, und jeder einzelne Satz verschiebt die Chancen stark. Ab Race to 5 wird die
+    Abstufung deutlich feiner. Das Programm weist im Turnierplan darauf hin.
+</div>
+
+<h2 id="warum">10. Warum es so gebaut ist</h2>
+
+<h3>Warum überhaupt ein Rating?</h3>
+<p>In einem Verein mit gemischten Spielstärken sind viele Turnierpaarungen nach zehn Minuten
+entschieden. Das ist für beide Seiten unbefriedigend. Mit einer Vorgabe bleibt das Spiel offen, ohne
+dass jemand absichtlich schlechter spielen muss.</p>
+
+<h3>Warum Racks statt Siege?</h3>
+<p>Siege liefern zu wenige Daten. In einem Vereinsjahr kommen pro Spieler vielleicht 30 Spiele
+zusammen, aber mehrere hundert Racks. Je mehr Einzelergebnisse, desto stabiler die Schätzung.</p>
+
+<h3>Warum 100 Punkte für die doppelte Rack-Zahl?</h3>
+<p>Diese Skala ist im Pool-Billard etabliert, unter anderem durch FargoRate. Wer die Zahlen von dort
+kennt, kann unsere ohne Umrechnen einordnen. Die Größenordnung ist zudem gut merkbar.</p>
+
+<h3>Warum werden alle Spieler gemeinsam berechnet?</h3>
+<p>Weil sonst die Gegnerstärke verloren geht. Ein Sieg gegen den stärksten Spieler des Vereins muss
+mehr wert sein als einer gegen einen Anfänger. Das ergibt sich nur, wenn alle Ergebnisse in einer
+gemeinsamen Rechnung stehen.</p>
+
+<h3>Warum die gedachten Racks?</h3>
+<p>Sie verhindern Ausreißer nach einem einzelnen Abend und machen unendliche Werte unmöglich.
+Gleichzeitig verlieren sie von allein an Bedeutung, je mehr echte Daten vorliegen – es braucht
+keinen Schalter, den jemand umlegen müsste.</p>
+
+<h3>Warum zwölf Monate mit Verlängerung?</h3>
+<p>Zwölf Monate bilden die aktuelle Form ab. Ohne Verlängerung hätten Gelegenheitsspieler dauerhaft
+keinen eigenen Wert. Die Grenze von 36 Monaten verhindert, dass uralte Ergebnisse die Rechnung
+bestimmen.</p>
+
+<h3>Warum nur 75 Prozent Ausgleich?</h3>
+<p>Bei vollem Ausgleich wäre jedes Spiel eine Münze, und die bessere Leistung zählte nicht mehr. Bei
+75 Prozent bleibt der stärkere Spieler Favorit, der schwächere hat aber eine echte Chance.</p>
+
+<h3>Warum die Vorgabe herausrechnen?</h3>
+<p>Sonst würde sich das System selbst füttern: Wer Vorgabe bekommt, gewinnt öfter, stiege im Rating
+und bekäme weniger Vorgabe. Weil nur selbst gespielte Racks zählen, bleibt das Rating vom Handicap
+unberührt.</p>
+
+<h3>Warum läuft alles ohne Internet?</h3>
+<p>Alle Werkzeuge sind einzelne Dateien, die im Browser laufen. Es gibt keinen Server, kein Konto und
+keine Anmeldung. Die Daten bleiben auf dem Notebook des Vereins, und das Turnier funktioniert auch,
+wenn im Vereinsheim das Netz ausfällt.</p>
+
+<h2 id="fragen">11. Häufige Fragen</h2>
+
+<div class="faq">
+    <p class="frage">Mein Wert hat sich geändert, obwohl ich nicht gespielt habe. Wieso?</p>
+    <p class="antwort">Weil alle Werte zusammenhängen. Wenn ein Gegner von früher inzwischen stärker
+    eingestuft wird, waren die Racks, die du gegen ihn geholt hast, rückblickend mehr wert. Außerdem
+    fallen alte Partien mit der Zeit aus dem Zeitfenster heraus.</p>
+</div>
+
+<div class="faq">
+    <p class="frage">Ich habe gewonnen und trotzdem verloren meine Punkte an Wert. Wie kann das sein?</p>
+    <p class="antwort">Entscheidend ist nicht der Sieg, sondern wie deutlich. Wer gegen einen
+    deutlich schwächeren Gegner nur knapp gewinnt, liefert ein Ergebnis, das unter der Erwartung
+    liegt. Umgekehrt kann eine knappe Niederlage gegen einen starken Gegner den Wert heben.</p>
+</div>
+
+<div class="faq">
+    <p class="frage">Zählt das Spaßturnier vom Sommerfest mit?</p>
+    <p class="antwort">Nur wenn es so eingetragen wurde. Jedes Turnier hat den Schalter „Für
+    Vereins-Rating werten“, und er lässt sich auch nachträglich in der Serienwertung umlegen.</p>
+</div>
+
+<div class="faq">
+    <p class="frage">Ich bin neu im Verein. Was passiert mit mir?</p>
+    <p class="antwort">Du startest beim Vereinsschnitt 500 und bekommst nach den ersten Turnieren
+    einen eigenen, zunächst vorläufigen Wert. Ist bekannt, dass du deutlich stärker oder schwächer
+    spielst, kann die Turnierleitung einen Startwert setzen, der sich mit jeder Partie abschwächt.</p>
+</div>
+
+<div class="faq">
+    <p class="frage">Kann man das System austricksen, indem man absichtlich verliert?</p>
+    <p class="antwort">Rechnerisch ja, aber es fällt auf. Jede Partie ist in der Serienwertung
+    einzeln einsehbar, und ein Wert, der nicht zum Spiel am Tisch passt, ist schnell sichtbar. Das
+    System ist auf faire Vorgaben ausgelegt, nicht auf Betrugssicherheit.</p>
+</div>
+
+<div class="faq">
+    <p class="frage">Warum bekomme ich in einer Disziplin Vorgabe und in der anderen nicht?</p>
+    <p class="antwort">Weil jede Disziplin getrennt gerechnet wird. Wer im 9-Ball stärker ist als im
+    8-Ball, hat dort einen anderen Abstand zu seinen Gegnern.</p>
+</div>
+
+<div class="faq">
+    <p class="frage">Wo sehe ich, welche Partien in meinen Wert eingeflossen sind?</p>
+    <p class="antwort">In der Serienwertung, Reiter „Vereins-Rating“, über die Lupe neben deinem
+    Namen. Dort stehen alle gewerteten Partien mit Datum, Gegner und Satzergebnis.</p>
+</div>
+
+<h2 id="grenzen">12. Was das Rating nicht leisten kann</h2>
+<ul>
+    <li><b>Es sagt nichts über ein einzelnes Spiel.</b> Auch bei 200 Punkten Unterschied gewinnt der
+        Schwächere einzelne Racks, und mit Vorgabe eben auch ganze Spiele. Das ist gewollt.</li>
+    <li><b>Es kennt keine Tagesform.</b> Müdigkeit, ein neues Queue oder ein ungewohnter Tisch
+        tauchen in keiner Zahl auf.</li>
+    <li><b>Es ist nur so gut wie die Datenmenge.</b> In einem Verein unserer Größe sind die
+        Datenmengen klein. Deshalb gibt es die Kennzeichnung „vorläufig“ – sie ist ernst gemeint.</li>
+    <li><b>Der Übertrag zwischen Disziplinen ist eine Schätzung.</b> Wer im 8-Ball stark ist, wird im
+        10-Ball zunächst ähnlich eingestuft, obwohl das nicht zwingend stimmt. Mit den ersten eigenen
+        Partien korrigiert sich das.</li>
+    <li><b>Die Werte sind nicht mit FargoRate vergleichbar.</b> Die Skala ist dieselbe, die
+        Datengrundlage aber nur unser Verein. Eine 550 bei uns ist keine 550 bei FargoRate.</li>
+</ul>
+
+<div class="merk">
+    Fragen zum eigenen Wert beantwortet die Turnierleitung. Jede Zahl lässt sich bis auf die einzelne
+    Partie zurückverfolgen – wenn etwas nicht stimmt, lässt es sich finden und korrigieren.
+</div>
+
+<p class="fuss">
+    Stand dieser Beschreibung: September 2026 · Grundlage: Serienwertung v15 und Turnierplan v60.
+    Die genannten Einstellungen (Vereinsschnitt 500, Zeitraum 12 Monate, Mindest-Racks 100,
+    Rückgriff 36 Monate, Gewicht 30, Stärke 75 Prozent) sind die Standardwerte und lassen sich in
+    den Werkzeugen ändern.
+</p>
+
+</div>
+</body>
+</html>

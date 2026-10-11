@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Das Vereins-Rating erklärt v01</title>
+<title>Das Vereins-Rating erklärt v02</title>
 <style>
     /* Farben und Schrift wie in Turnierplan und Serienwertung */
     body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #f4f6f9;
@@ -71,10 +71,21 @@
         table, .merk, .grenze, .faq { page-break-inside: avoid; }
         .inhalt { page-break-after: always; }
     }
+        /* Rueckweg zur Startseite, eigene Zeile ueber dem Kopf */
+        .link-startseite { display: inline-block; margin-bottom: 14px; background-color: #fff; color: #2c3e50;
+            border: 2px solid #2c3e50; padding: 4px 12px; border-radius: 4px; font-weight: bold; font-size: 0.85rem;
+            text-decoration: none; white-space: nowrap; line-height: 1.4; }
+        .link-startseite:hover { background-color: #eaeded; }
+        @media print { .link-startseite { display: none; } }
 </style>
 </head>
 <body>
 <div class="container">
+    <a id="link-startseite" class="link-startseite" href="index.html" title="Zur Startseite der Turnierverwaltung">&larr; Startseite</a>
+    <script>
+        // Lokal liegt die Startseite als index.html daneben, ueber GitHub in Turnierplanung/Startseite/
+        if (location.protocol !== 'file:') document.getElementById('link-startseite').href = '../Startseite/';
+    </script>
 
 <h1>Das Vereins-Rating erklärt</h1>
 <p class="untertitel">Wie die Spielstärke berechnet wird, wie daraus die Vorgabe im Turnier entsteht,
