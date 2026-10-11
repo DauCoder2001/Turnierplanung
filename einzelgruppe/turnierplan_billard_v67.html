@@ -12,7 +12,7 @@
          daher muss apple-touch-icon.png im selben Verzeichnis liegen. -->
     <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
     <meta name="apple-mobile-web-app-title" content="Turnierplan">
-    <title>Interaktiver Billard-Turnierplan v63</title>
+    <title>Interaktiver Billard-Turnierplan v67</title>
     <style>
         body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #f4f6f9; color: #333; margin: 0; padding: 20px; }
         .container { max-width: 1400px; margin: 0 auto; background-color: #ffffff; padding: 25px; border-radius: 8px; box-shadow: 0 4px 10px rgba(0,0,0,0.08); }
@@ -342,13 +342,24 @@
         /* Fragezeichen im Ausdruck ausblenden */
         @media print { .help-icon { display: none !important; } }
 
+        /* Rueckweg zur Startseite, eigene Zeile ueber dem Kopf */
+        .link-startseite { display: inline-block; margin-bottom: 14px; background-color: #fff; color: #2c3e50;
+            border: 2px solid #2c3e50; padding: 4px 12px; border-radius: 4px; font-weight: bold; font-size: 0.85rem;
+            text-decoration: none; white-space: nowrap; line-height: 1.4; }
+        .link-startseite:hover { background-color: #eaeded; }
+        @media print { .link-startseite { display: none; } }
     </style>
 </head>
 <body>
 <div class="container">
+    <a id="link-startseite" class="link-startseite" href="index.html" title="Zur Startseite der Turnierverwaltung">&larr; Startseite</a>
+    <script>
+        // Lokal liegt die Startseite als index.html daneben, ueber GitHub in Turnierplanung/Startseite/
+        if (location.protocol !== 'file:') document.getElementById('link-startseite').href = '../Startseite/';
+    </script>
     <div class="header-bar">
         <div class="title-group">
-            <h1><img class="logo" alt="Pool-Billard-Club Bassum e.V." src="data:image/png;base64,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">Billard Turnierplan<span class="versions-badge" title="Version dieser Datei">v63</span></h1>
+            <h1><img class="logo" alt="Pool-Billard-Club Bassum e.V." src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAJ0AAACoCAMAAADNTxz6AAAA/1BMVEVsoV9dmUxTlEJOkTz8//xNkTwcaAD//wBToBmbtZt/fwCMtHukzKJQkT4qpSRVVVVRlECAr3P/AAD+/v4AAAAAAABEijE5gyVIkTVWlUUAfwBJjTfX5tPT2dHm6eYWFhacwZIwfRt1dXVDizBVVQAnJye607M3Nzd2qWiTu4hnZ2enp6eXl5dISEjHx8e3t7dXV1eHh4euzKakxpuHs3tVqlVqolt/f39inVPh7N4/fz/C2bwzgB4A/wBVlERKjTgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACJUgrUAAAAQHRSTlMiUpalAswDARQKAhMKcRUD1/8B/wD//f7+/wK5/////////zQD/////////////////////wP/Av//BP//AW7RrG/h9wAADl5JREFUeNrtnQl3ozgSgJ07nfTM7C6YI43A9jYGc+MrdhzH//9fbZUkzCUcfCbvbevNdNOA4aMulQoBHVlev3zL9irLckf+zq3zIndufn3DdnMlP8mde/mXpmjfsCmP8hPIDui+W1Pxj7/l35xO/2YN6f7L6VRd+mZtpH5nut4fuv8bOldfzOcjXJrqmk4XRnxhrg/zX84XsN/UxK1TaagvTHo43d1uhtWSNNFhNxd+RnBh3st/P4aDuiaeb4z/XOkLQzJ03ZTojqMGOl1V+2p/Dj/rq7A4zRbgtEp/kh9dwf3eddw8l8Z9xaAX1OfyN1RF1fDC4Fjw31gaws59ejgORw+6kCStT0lguyERVTVMNQMQ07njqaKSpapMiasqkqmoLi6YkqYW6DTYz1XUIaNTGd0os44hRlIUrKqNJ7q6wBU93N/gP1+oOpnAaeB8Pf4DkJ2iLOF0U9yRiOnwWrT+eIW748UY8D/IAnZXSnTvE4muKdJtZTdRdXqCEa5AZjj7Es6uZrah4891dQwLo5xOpXTDbMcGOr0/KdDRq6rR4TXr7z0x3bQ/1UGfnK6vZ7LZ0lE9wGlEdGNpeTQdld37WEw37w9dPBCl6zXRTUZGo+xWR8puunJVzRTT6aoxRUeidLiHkI6puEY3GrqMRegVyzGgN9KtIFmANZBCqKoylIR0YN6ZySlTV1FWBToNfj7Or7RORw9sNNHhZoXtLqID31f78A9FA8PXxbJbwbHGKFigg4jiSgU6jBiTnXR44EUznQKRsZFOWhGyYl5hYLAS0U1gHf6Wy04dFehWK7Iyd2p2LBEFXUpE9z41ltnuO+1uglp1hXTgsviTMbc7tcErXOh8hF4hLWjcbvCKY+mAB6wLRMZ89n3fiNKGbolBuEj3Pm6mM4t0OrVssDdOp7GzLwt0GJAW/TENmQU6s53siAqeBWaDhD3YD4wIhLE0jC3daLmCsJLRrQzYBDDw1xJcdkyg91uU6IbGiHVQPDSAdQGIrk7xoHCWCdLgFUyWQ5T7Ljp0DxDBHLtEhTkRG4rwjpwuY//G6fCfBqba4MhDmgFMAKpHwwrTLO6/TdJGfTyoAlfJD0pPB6ow+IGN3XQGZCvqYskXdENAp2D2U6LrUzrKBEDqki7BVogxuMfc2FqGCwfVqO/jT/7NT2cyOoXlanW6ZX4AMuTLBlswaOMbcRF9WzINM99ksNWGyXZh/0vZFrOYWhpDUj4oyc+y/JO5/6H7Q/eH7g/dSRqJfT8mDRtjL0xS8lV0Zup0abMHAgYzZBuDr6FLrW7eBrXNTrYp+AK6TDRZcyriG+SbzMvTOd1Ks0t4cWFLenG6pFtrTlGydmFDeGm6oCtogwZ469J0loiuu9WtX14flXROzk0nFF0uPLMCX/DaGOw1PjNdKKazGzZ7W3P08J/JmenEis1UGzRRB5YwAJ6YjjTAMZ2RBuqYBSErOLPdRU10foPa/UypoGVT+kq6VOguXKlOdP6Iskuzwm122KDUS3uF021snnmZaNwcUfxGNiu6VF/RHI2TZtEl8Zf3ZFZ3RwujL8wCvHLi1Nr0Tp9BheJ+bPAJXdfyL0Fn1nzTItJOj611upfM3GlqTLotWjXHv8Cox9vly5/ElvOMGMmA5+e2RxrzeSFefKnRdhD4W02ZVrdli76gUhG3hWMudGE6rzVd1zYvTme3pysOIy9DR7r7tMGF6by96PKh2SXoYmc/uO1Y6AJ05p6CK+r27HSB1T2gkYvQRU73oOZdgO4QpZaEd066bCxoHyy889FF2VjQPMTyLPOcdCbPhRPSNEz7pKVnpPOZNp24WgFwBi1bcDY6wpWa1joxy9zrQOegy5VaG0/4X32vhyvVZp1lWa/JF9+J4krNav1H6fXkdFypIRHeu/Clr6SLuVK3FMfp9aR0JKkmj9Fxej0lXVpR6vF6PR1dVpj260Z4sF5PRZcpFT3VJJEfDLyw0vkfoNcT0WWVCWuQOLa1o+h+cjoUhX/8sCGUTkhnRrGfDpKQi8I8NsM8SK9COr+uHXLssCGQjqB7LdKVQqhlo3VHRw4bwgMNGicbPgLdfUF2lCnxBlbXIaaJpbd4Z79ln0mvjK4DdI/0abcswqc8mDqc1t9RWHKi9Ex6zenu5RtNUbK8YpCVZgLwWLtCZxKS0+EtJP9MepWkKaVbd94oncErgTYxSewJZ2b4obUtaQ5sVsff5RmWE5oH07lFOv7gCKZoVuEWW1EziUhb9dqhZYeJl/oxOZwM21xVNj9lGeg+NPZMQ55aWJGUhuUJS4k4+Ge9rO2EXhrEkXkc1LbpqraRKd2VRqdwU7zEBqdN66fwGx0ROpSInIgpb+Cov+TfcmcmdxQ2P3pXc7p7TMQ5vhmKot3Ib3LnidK5+5Qww7PTEVXR/kK6tfxjQ6eNt6+c22enGwPdlQxqlV/ycPxt6HgwBrr7POB9G83ycAd0b/JfWv70Q43Lr3tFcHY6HlCA7p9GpyWBZ/NEIN5j/tepXPYe6f5D6apuEQWJXdSjJyjbn9kp3vjbDH5leQBPj9PQLqRIUWmcZZ0fjucAr5TuTb7e9mVSPAizkUwS+GGh54J+xLKc1Dw/HD6tsnlmdgdhBfuyUdE5rSSNeHJenPRgXgKNmd0v8AdKt6aGt8h6exuEl2S1ESuQLt/Q7D7Q7KjdsRcasIhHYuoBhA2jPfML4Hi0y97xwZKoSbFG41i8+HuuVpsqXcjWQLGbW5nbHfYY5ZjinD0V8arVFdJ1/IJi/6KKZRGlqNrtTExyRji8k5FUcLezUnLFMjqmWv7QfGyV6oRnSpHsCl5gZ2OYZa5YRndLVavn+UjFKvxBempJkpr0orwMkCmWv/nmN6o2C8hOZa4jHfefvItAPK8hFNP8JKdjAZknyJUoElmC+SLHNN8OduCtVAzF9wXNQoMEuSHJszEme6fL6qLMrMV4Lk+Li3TML6aiK2XzWJzDayLCAhHG0kiAZ4BeNz+27zRifz2gXyiKKYpMGPhM+4RpHbspBB04Sm9QF91HJrqtZmc0URHkoCFaHD4b4Z3QJVjxLyE1PPqUav6OqmzpVSA8L2BmRzC7s0/a5Zqs4pxiqjFoFF3+Lq0ZracULS+habDNDG5w6oDH7jLbSanLRKtTOuuHGt3Tmgovd9uAJp7Q55xrHEG82ligIrrCe8iY5bnFVCBm+UrRoJPkhBlflJSf/llRh31ZC+jWLyi8fOho01F1UnKHRDhJ8xi+sDjxTi/GujIdrMWYpxecNaXCj2rl4kO8tMmp4m3mRHvYze2TLKST/7ndFKJKVJt2hoOOFO8S761cyEAGbYYTGE1mDXQsqmxfoBNUn7ka0LQi6rY4U0U8rcrvcxXH2DO5gY47xla3ceJ4UTnE+PTPvWQX02Gn96mx4g0U5bngElW6h9efG0Xc3XJLjHFGNheD57VKW+x2iTaGurJL1N5syHU7bBoM0JG3F2ytsE3/4bervOh1vdbeu0j9tqleFpQsLqBWSOxPexGnjaG6LNQ97KSTZ7c3RdPLJSBVI3NIJZlmHZHJCgUmIdUad8yFXLoK4tRmP2t8qLOD7knuaII6coyPLpV6NcLcMLNCz7Lo/CJP8FhviBGdJMXpzlF59jO+B4QP/3fSsSS+lks51FHtgqUFWXgJt71IwkhquRZGzqRcMwXfKjxci5FOu67DCd73SdPk0qtuMgiUnVlW7CALLx7vQ2zR4xK8Oy2OQs1CEWSpgUfc/SwHkwY6VjErO25M1RUU7G6rWC5Nj91VoxMCPVHZeccIWRcbnZhu/Rs9o4Rn4sjHL5aMK4pldBGrsHmiWNQ8aFowuJncik5+WP+8q+Cl1SedWX61VSyjC1h9ORFWJuJdcFdCOPF7ZiEoC/Ecs6hYaZs4UzrLAqEFXUs4PSblVxYHDXBvcms6xPsX4hXes0RSzy+dzSsqFgceIQAMurw2KRCeT7PNcuxe6rvgmt7RO5OfqfR6zfGfKdbP6UB84J2ekA7t1PZqdTdD2wnX+AbhTLnTpns/ZcUiHcgTkj8YbIVNyUC1YDmkL5Rthmt+v/FM/kEDy7yhZ2eKTfLczwKPgHG030Dn16PKBNlAcvfy3nQgvVuKpxOhkaclxcIai9io1qiBTnKqFXLs+DUIJX/LB9BhdEQ8kfH5OPnULya8wGuGXRgpkSa6SnJgUH+46zSr9ZM3V69faJ8LOcFS4BXltB7pBrQvtUpDzKY2QZPTrn+I41wbOuzUmG8o42qECCthF+l82k+0oTPm1OQ+ZFH31ZoO8H4w7brVhDRK07gcMcyIBowWdD0quLsr+eVWPoYOBX+lUfHtntgQYJyltY1P6VYLKrjrZ/nx03eSf7bD+l7uMPHp4910kUQnnVm7R+OGq1JfvZJ3m1w7ulx8iroYNpccBgNT8lMY8vvBjgK4MVWY4DpydQxxIJ38+gLiU1C96nx41M1DznbXSnCt34UPh+LqVfXJwRUxl7FpH7fy3w/y6ejkBzDgqzvGp02NA9gmC5WyKdc/Wwpun+8IQGC6vbpTGOBish/g0FUYGxpca7a9vnKAB7264XzKvNcS0By6Gke7+3iGwzzI56BjfOgfDFDV3fEnhMvhaM6kBhd1c4U6vd3rGwz7fbJh9iLLzyhADqjo7mhMliL/HPZc9mpSinaHKt1LbgfQgf1hgO98cECKCIwLdzrqTcbQJr3R1J3rfANVqLK57qDIZuu9v1+x/ycv1ihAuXN1c4dfllC2jKXGVuP2mw+K9vZ6yNc1Dvomx+sbAt52Pq7vKELtGxPsCxSbm48reoLZ7KDTHP5lktcZ68OfO1cfNzebMtxm8+sawKgHvBwktSPpmAizIcFtB9rjf6E94tJPvvr+bX9bOxkdq+bO3h5faqvv395mr8ce+2TfnFm/0vZE/1yvT3TU/wHwmsRYKjKg6QAAAABJRU5ErkJggg==">Billard Turnierplan<span class="versions-badge" title="Version dieser Datei">v67</span></h1>
             <button id="btn-add-player" class="btn-add-player no-print" title="Nachzügler aufnehmen: bereits eingetragene Ergebnisse bleiben erhalten">Spieler nachtragen</button>
             <button id="btn-reset-all" class="btn-reset-all no-print" title="Neues Turnier starten: alle Eingaben werden gelöscht">Turnierplan zurücksetzen</button>
             <button id="btn-fullscreen" class="btn-fullscreen no-print" type="button" title="Vollbildmodus ein- oder ausschalten">Vollbild</button>
@@ -416,7 +427,8 @@
                 <option value="6">6</option>
                 <option value="8">8</option>
             </select>
-            <button type="button" id="btn-hc-laden" class="hc-btn" title="Rating-Stand aus der Serienwertung laden (Reiter Vereins-Rating, Schaltfläche Rating-Stand exportieren)">Rating-Stand laden</button>
+            <button type="button" id="btn-hc-postfach" class="hc-btn" disabled>Aus Serienwertung</button>
+            <button type="button" id="btn-hc-laden" class="hc-btn" title="Rating-Stand aus einer Datei laden (Serienwertung, Reiter Vereins-Rating, Schaltfläche Rating-Stand exportieren)">Aus Datei</button>
             <input type="file" id="hc-datei" accept="application/json,.json" style="display:none;">
             <span id="hc-info" class="hc-info"></span>
             <button type="button" id="btn-hc-verstecken" class="hc-btn secondary" title="Blendet die Rating-Werte in Spielerliste, Spielplan, Rangliste, Bericht und Mail aus. Die Vorgabe wird weiterhin berechnet.">Rating ausblenden</button>
@@ -458,7 +470,7 @@
                     <div id="shootout-info" class="shootout-hint" style="display:none;"></div>
                     <table class="table-style ranking-table">
                         <colgroup><col style="width:48px"><col><col style="width:40px"><col style="width:54px"><col style="width:54px"></colgroup>
-                        <thead><tr><th>Platz</th><th class="col-name">Name</th><th>Pkt.</th><th>Sum.</th><th>Satz-Diff.</th><th id="ranking-th-rtg" style="display:none;">Rtg.</th></tr></thead>
+                        <thead><tr><th>Platz</th><th class="col-name">Name</th><th>Pkt.</th><th>Sum.</th><th title="Satz-Differenz">Diff.</th><th id="ranking-th-rtg" style="display:none;">Rtg.</th></tr></thead>
                         <tbody id="ranking-body"></tbody>
                     </table>
                     <div class="export-row no-print">
@@ -656,7 +668,9 @@
 
         // Automatisch gesicherten Stand wiederherstellen, sonst leeres Turnier aufbauen
         if (!restoreAutosave()) {
+            const vor = voreinstellungenVorbereiten();
             initTournament(playerCount);
+            voreinstellungenAbschliessen(vor);
         }
         hcUiAktualisieren();
     });
@@ -888,6 +902,74 @@
         return String(d.getHours()).padStart(2, '0') + ':' + String(d.getMinutes()).padStart(2, '0');
     }
 
+
+    // =====================================================================
+    // Voreinstellungen fuer neue Turniere (Systemseite, Karte 5)
+    // =====================================================================
+    // Gelten beim Start ohne gespeicherten Stand und bei "Turnierplan
+    // zuruecksetzen", nie in einem laufenden Turnier. Werte, die ein
+    // Auswahlfeld nicht anbietet, werden uebergangen; dann bleibt der bisherige
+    // Wert. Format siehe docs/02-datenformate.md.
+    const VOREINSTELLUNGEN_KEY = 'billard-system:voreinstellungen';
+
+    function voreinstellungenLesen() {
+        try {
+            const v = JSON.parse(localStorage.getItem(VOREINSTELLUNGEN_KEY) || 'null');
+            return v && typeof v === 'object' ? v : null;
+        } catch (e) { return null; }
+    }
+
+    // Auswahlfeld setzen, wenn es den Wert anbietet; liefert den Wert als Text oder null
+    function voreinstellungWaehlen(id, wert) {
+        const sel = document.getElementById(id);
+        if (!sel || wert === undefined || wert === null || wert === '') return null;
+        const text = String(wert);
+        if (!Array.from(sel.options).some(o => o.value === text)) return null;
+        sel.value = text;
+        return text;
+    }
+
+    // Fuer alle Turnierplaene gleich: Spielart, Wertung, Handicap
+    function voreinstellungenAllgemein(a) {
+        if (!a) return;
+        const art = voreinstellungWaehlen('game-type', a.spielart);
+        if (art) document.getElementById('game-type-display').innerText = `(${art})`;
+        if (typeof a.ratingWerten === 'boolean') ratingWerten = a.ratingWerten;
+        document.getElementById('rating-werten').checked = ratingWerten;
+        if (typeof a.handicap === 'boolean') handicap.aktiv = a.handicap;
+        if (voreinstellungWaehlen('hc-staerke', a.staerke) !== null) handicap.staerke = parseInt(a.staerke, 10);
+        if (voreinstellungWaehlen('hc-obergrenze', a.obergrenze) !== null) handicap.obergrenze = parseInt(a.obergrenze, 10);
+        if (typeof a.ausblenden === 'boolean') handicap.versteckt = a.ausblenden;
+    }
+
+    // Nach dem Aufbau des Turniers: Rueckmeldung und auf Wunsch den
+    // bereitgestellten Rating-Stand der Serienwertung uebernehmen
+    function voreinstellungenAbschliessen(v, anfang) {
+        if (!v) return;
+        let text = anfang ? anfang + ', Voreinstellungen übernommen.' : 'Neues Turnier mit Voreinstellungen angelegt.';
+        const d = (v.allgemein && v.allgemein.ratingStandAuto) ? hcPostfachLesen() : null;
+        if (d && !hcGestartet()) {
+            try {
+                text += ' ' + hcStandAnwenden(hcStandAusDatei(d.stand, 'Serienwertung'), 'aus der Serienwertung übernommen');
+            } catch (e) {
+                text += ' Der Rating-Stand der Serienwertung konnte nicht gelesen werden.';
+            }
+        }
+        hcUiAktualisieren();
+        showStatus(text);
+    }
+
+    // Voreinstellungen vor dem Aufbau eines neuen Turniers setzen; liefert sie oder null
+    function voreinstellungenVorbereiten() {
+        const v = voreinstellungenLesen();
+        if (!v) return null;
+        voreinstellungenAllgemein(v.allgemein);
+        const e = v.einzel || {};
+        if (voreinstellungWaehlen('player-count', e.teilnehmer) !== null) playerCount = parseInt(e.teilnehmer, 10);
+        if (voreinstellungWaehlen('race-to', e.raceTo) !== null) raceTo = parseInt(e.raceTo, 10);
+        return v;
+    }
+
     // Kompletter Neustart, nur nach ausdruecklicher Bestaetigung
     function resetTournament() {
         if (!confirm(
@@ -899,11 +981,14 @@
         restorePunktAnlegen('Vor: Turnierplan zurücksetzen');
         clearAutosave();
         document.getElementById('tournament-name').value = '';
-        // Ein neues Turnier wird wieder fuer das Vereins-Rating gewertet
+        // Ein neues Turnier wird wieder fuer das Vereins-Rating gewertet;
+        // gespeicherte Voreinstellungen gehen vor
         ratingWerten = true;
         document.getElementById('rating-werten').checked = true;
+        const vor = voreinstellungenVorbereiten();
         initTournament(playerCount);
         showStatus('Turnierplan zurückgesetzt.');
+        voreinstellungenAbschliessen(vor, 'Turnierplan zurückgesetzt');
         zeigeRestoreBanner('Turnierplan zurückgesetzt.');
         setAutosaveStatus('Automatische Sicherung aktiv: Eingaben überstehen das Schließen des Fensters.', '');
     }
@@ -1307,25 +1392,60 @@
         const reader = new FileReader();
         reader.onload = (e) => {
             try {
-                const stand = hcStandAusDatei(JSON.parse(e.target.result), datei.name);
-                const vorher = hcVorgabenMerken();
-                handicap.stand = stand;
-                hcCacheLeeren();
-                // Vor dem ersten Ergebnis ist nichts eingefroren, der Stand
-                // wirkt daher unmittelbar auf alle Spieler.
-                hcVorgabenAnwenden(vorher);
-                hcUiAktualisieren();
-                hcNeuZeichnen();
-                const gefunden = currentNames.filter(n => !!hcAusStand(n)).length;
-                showStatus('Rating-Stand vom ' + hcStichtagText() + ' geladen: ' +
-                    gefunden + ' von ' + currentNames.length + ' Spielern gefunden.',
-                    gefunden < currentNames.length);
+                hcStandAnwenden(hcStandAusDatei(JSON.parse(e.target.result), datei.name), 'geladen');
             } catch (err) {
                 showStatus('Rating-Stand konnte nicht gelesen werden: ' + err.message, true);
             }
         };
         reader.onerror = () => showStatus('Rating-Stand konnte nicht gelesen werden.', true);
         reader.readAsText(datei);
+    }
+
+    // Gelesenen Rating-Stand uebernehmen, gemeinsam fuer Datei und Postfach
+    function hcStandAnwenden(stand, wie) {
+        const vorher = hcVorgabenMerken();
+        handicap.stand = stand;
+        hcCacheLeeren();
+        // Vor dem ersten Ergebnis ist nichts eingefroren, der Stand
+        // wirkt daher unmittelbar auf alle Spieler.
+        hcVorgabenAnwenden(vorher);
+        hcUiAktualisieren();
+        hcNeuZeichnen();
+        const gefunden = currentNames.filter(n => !!hcAusStand(n)).length;
+        const text = 'Rating-Stand vom ' + hcStichtagText() + ' ' + wie + ': ' +
+            gefunden + ' von ' + currentNames.length + ' Spielern gefunden.';
+        showStatus(text, gefunden < currentNames.length);
+        return text;
+    }
+
+    // Rating-Stand aus dem Postfach: die Serienwertung stellt ihn bei jedem
+    // Speichern im gemeinsamen Browser-Speicher bereit (Stichtag heute).
+    // Format siehe docs/02-datenformate.md.
+    const HC_POSTFACH_KEY = 'billard-postfach:rating';
+
+    function hcPostfachLesen() {
+        try {
+            const d = JSON.parse(localStorage.getItem(HC_POSTFACH_KEY) || 'null');
+            return d && d.stand && d.stand.ratingStand ? d : null;
+        } catch (e) { return null; }
+    }
+
+    function hcStandAusPostfach() {
+        if (hcGestartet()) {
+            showStatus('Rating-Stand kann nicht geladen werden, solange ein Ergebnis eingetragen ist. ' +
+                'Ergebnisse auf die Vorgabe zurücksetzen, dann ist das Laden wieder möglich.', true);
+            return;
+        }
+        const d = hcPostfachLesen();
+        if (!d) {
+            showStatus('Die Serienwertung hat noch keinen Rating-Stand bereitgestellt. Sie einmal öffnen, danach steht er hier bereit.', true);
+            return;
+        }
+        try {
+            hcStandAnwenden(hcStandAusDatei(d.stand, 'Serienwertung'), 'aus der Serienwertung übernommen');
+        } catch (err) {
+            showStatus('Rating-Stand der Serienwertung konnte nicht gelesen werden: ' + err.message, true);
+        }
     }
 
     // ---------------------------------------------------------------------
@@ -1548,7 +1668,19 @@
             ladenBtn.disabled = gesperrt;
             ladenBtn.title = gesperrt
                 ? 'Gesperrt, solange ein Ergebnis eingetragen ist. Ergebnisse auf die Vorgabe zurücksetzen, dann ist das Laden wieder möglich.'
-                : 'Rating-Stand aus der Serienwertung laden (Reiter Vereins-Rating, Schaltfläche Rating-Stand exportieren)';
+                : 'Rating-Stand aus einer Datei laden (Serienwertung, Reiter Vereins-Rating, Schaltfläche Rating-Stand exportieren)';
+        }
+        const postfachBtn = document.getElementById('btn-hc-postfach');
+        if (postfachBtn) {
+            const d = hcPostfachLesen();
+            const st = d && /^\d{4}-\d{2}-\d{2}$/.test(d.stand.ratingStand.stichtag || '') ? d.stand.ratingStand.stichtag : '';
+            postfachBtn.disabled = gesperrt || !d;
+            postfachBtn.title = gesperrt
+                ? 'Gesperrt, solange ein Ergebnis eingetragen ist. Ergebnisse auf die Vorgabe zurücksetzen, dann ist das Laden wieder möglich.'
+                : (d ? 'Rating-Stand der Serienwertung übernehmen (Stichtag ' +
+                       (st ? st.slice(8, 10) + '.' + st.slice(5, 7) + '.' + st.slice(0, 4) : 'unbekannt') + ', ' +
+                       d.stand.ratingStand.spieler.length + ' Spieler)'
+                     : 'Die Serienwertung hat noch keinen Rating-Stand bereitgestellt. Sie einmal öffnen, danach steht er hier bereit.');
         }
 
         const warn = document.getElementById('hc-warnung');
@@ -1574,6 +1706,9 @@
         document.getElementById('btn-hc-laden').addEventListener('click', () =>
             document.getElementById('hc-datei').click());
         document.getElementById('hc-datei').addEventListener('change', hcStandLaden);
+        document.getElementById('btn-hc-postfach').addEventListener('click', hcStandAusPostfach);
+        // Neuer Stand der Serienwertung (anderer Tab): Knopf sofort freigeben
+        window.addEventListener('storage', (e) => { if (e.key === HC_POSTFACH_KEY) hcUiAktualisieren(); });
     }
 
     // Handicap-Teil eines gespeicherten Standes uebernehmen
