@@ -12,7 +12,7 @@
          daher muss apple-touch-icon.png im selben Verzeichnis liegen. -->
     <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
     <meta name="apple-mobile-web-app-title" content="Turnierplan Gruppen">
-    <title>Billard Turnierplan - Zwei Gruppen v70</title>
+    <title>Billard Turnierplan - Zwei Gruppen v71</title>
     <style>
         body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #f4f6f9; color: #333; margin: 0; padding: 20px; }
         .container { max-width: 1600px; margin: 0 auto; background-color: #ffffff; padding: 25px; border-radius: 8px; box-shadow: 0 4px 10px rgba(0,0,0,0.08); }
@@ -158,6 +158,19 @@
         /* Abgeschlossene Runde: Kopfzeile und Zeilen ruhig gruen hinterlegt */
         .round-header.locked { background-color: #d4edda !important; color: #155724 !important; }
         tr.locked-row td { background-color: #f4fbf6; }
+        /* Knopf je Spiel: schmale eigene Spalte, damit Namen nicht umbrechen */
+        th.spiel-spalte, td.spiel-spalte { width: 38px; text-align: center; padding: 4px !important; }
+        /* Schmale rechte Spalte (Tablet, kleines Fenster, Spalte zusammengeschoben):
+           Knopfspalte und Abstaende kompakter, damit die Tabelle nicht seitlich
+           ueberstehen muss. Greift nur, wenn die Spalte unter 520 px breit ist. */
+        .grid-col-right { container-type: inline-size; }
+        @container (max-width: 520px) {
+            th.spiel-spalte, td.spiel-spalte { width: 26px; padding: 2px !important; }
+            .spiel-btn { width: 24px !important; height: 24px !important; }
+            .spiel-btn svg { width: 13px; height: 13px; }
+            .table-style td:first-child, .table-style th:first-child { padding-left: 4px !important; padding-right: 4px !important; }
+            .score-cell { padding-left: 4px !important; padding-right: 4px !important; }
+        }
         .lock-hinweis { font-weight: normal; font-size: 0.78rem; color: #155724; }
         /* Im Ausdruck sind die Bedienknoepfe ueberfluessig */
         @media print { .round-btn { display: none !important; } }
@@ -413,7 +426,7 @@
     </script>
     <div class="header-bar">
         <div class="title-group">
-            <h1><img class="logo" alt="Pool-Billard-Club Bassum e.V." src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAJ0AAACoCAMAAADNTxz6AAAA/1BMVEVsoV9dmUxTlEJOkTz8//xNkTwcaAD//wBToBmbtZt/fwCMtHukzKJQkT4qpSRVVVVRlECAr3P/AAD+/v4AAAAAAABEijE5gyVIkTVWlUUAfwBJjTfX5tPT2dHm6eYWFhacwZIwfRt1dXVDizBVVQAnJye607M3Nzd2qWiTu4hnZ2enp6eXl5dISEjHx8e3t7dXV1eHh4euzKakxpuHs3tVqlVqolt/f39inVPh7N4/fz/C2bwzgB4A/wBVlERKjTgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACJUgrUAAAAQHRSTlMiUpalAswDARQKAhMKcRUD1/8B/wD//f7+/wK5/////////zQD/////////////////////wP/Av//BP//AW7RrG/h9wAADl5JREFUeNrtnQl3ozgSgJ07nfTM7C6YI43A9jYGc+MrdhzH//9fbZUkzCUcfCbvbevNdNOA4aMulQoBHVlev3zL9irLckf+zq3zIndufn3DdnMlP8mde/mXpmjfsCmP8hPIDui+W1Pxj7/l35xO/2YN6f7L6VRd+mZtpH5nut4fuv8bOldfzOcjXJrqmk4XRnxhrg/zX84XsN/UxK1TaagvTHo43d1uhtWSNNFhNxd+RnBh3st/P4aDuiaeb4z/XOkLQzJ03ZTojqMGOl1V+2p/Dj/rq7A4zRbgtEp/kh9dwf3eddw8l8Z9xaAX1OfyN1RF1fDC4Fjw31gaws59ejgORw+6kCStT0lguyERVTVMNQMQ07njqaKSpapMiasqkqmoLi6YkqYW6DTYz1XUIaNTGd0os44hRlIUrKqNJ7q6wBU93N/gP1+oOpnAaeB8Pf4DkJ2iLOF0U9yRiOnwWrT+eIW748UY8D/IAnZXSnTvE4muKdJtZTdRdXqCEa5AZjj7Es6uZrah4891dQwLo5xOpXTDbMcGOr0/KdDRq6rR4TXr7z0x3bQ/1UGfnK6vZ7LZ0lE9wGlEdGNpeTQdld37WEw37w9dPBCl6zXRTUZGo+xWR8puunJVzRTT6aoxRUeidLiHkI6puEY3GrqMRegVyzGgN9KtIFmANZBCqKoylIR0YN6ZySlTV1FWBToNfj7Or7RORw9sNNHhZoXtLqID31f78A9FA8PXxbJbwbHGKFigg4jiSgU6jBiTnXR44EUznQKRsZFOWhGyYl5hYLAS0U1gHf6Wy04dFehWK7Iyd2p2LBEFXUpE9z41ltnuO+1uglp1hXTgsviTMbc7tcErXOh8hF4hLWjcbvCKY+mAB6wLRMZ89n3fiNKGbolBuEj3Pm6mM4t0OrVssDdOp7GzLwt0GJAW/TENmQU6s53siAqeBWaDhD3YD4wIhLE0jC3daLmCsJLRrQzYBDDw1xJcdkyg91uU6IbGiHVQPDSAdQGIrk7xoHCWCdLgFUyWQ5T7Ljp0DxDBHLtEhTkRG4rwjpwuY//G6fCfBqba4MhDmgFMAKpHwwrTLO6/TdJGfTyoAlfJD0pPB6ow+IGN3XQGZCvqYskXdENAp2D2U6LrUzrKBEDqki7BVogxuMfc2FqGCwfVqO/jT/7NT2cyOoXlanW6ZX4AMuTLBlswaOMbcRF9WzINM99ksNWGyXZh/0vZFrOYWhpDUj4oyc+y/JO5/6H7Q/eH7g/dSRqJfT8mDRtjL0xS8lV0Zup0abMHAgYzZBuDr6FLrW7eBrXNTrYp+AK6TDRZcyriG+SbzMvTOd1Ks0t4cWFLenG6pFtrTlGydmFDeGm6oCtogwZ469J0loiuu9WtX14flXROzk0nFF0uPLMCX/DaGOw1PjNdKKazGzZ7W3P08J/JmenEis1UGzRRB5YwAJ6YjjTAMZ2RBuqYBSErOLPdRU10foPa/UypoGVT+kq6VOguXKlOdP6Iskuzwm122KDUS3uF021snnmZaNwcUfxGNiu6VF/RHI2TZtEl8Zf3ZFZ3RwujL8wCvHLi1Nr0Tp9BheJ+bPAJXdfyL0Fn1nzTItJOj611upfM3GlqTLotWjXHv8Cox9vly5/ElvOMGMmA5+e2RxrzeSFefKnRdhD4W02ZVrdli76gUhG3hWMudGE6rzVd1zYvTme3pysOIy9DR7r7tMGF6by96PKh2SXoYmc/uO1Y6AJ05p6CK+r27HSB1T2gkYvQRU73oOZdgO4QpZaEd066bCxoHyy889FF2VjQPMTyLPOcdCbPhRPSNEz7pKVnpPOZNp24WgFwBi1bcDY6wpWa1joxy9zrQOegy5VaG0/4X32vhyvVZp1lWa/JF9+J4krNav1H6fXkdFypIRHeu/Clr6SLuVK3FMfp9aR0JKkmj9Fxej0lXVpR6vF6PR1dVpj260Z4sF5PRZcpFT3VJJEfDLyw0vkfoNcT0WWVCWuQOLa1o+h+cjoUhX/8sCGUTkhnRrGfDpKQi8I8NsM8SK9COr+uHXLssCGQjqB7LdKVQqhlo3VHRw4bwgMNGicbPgLdfUF2lCnxBlbXIaaJpbd4Z79ln0mvjK4DdI/0abcswqc8mDqc1t9RWHKi9Ex6zenu5RtNUbK8YpCVZgLwWLtCZxKS0+EtJP9MepWkKaVbd94oncErgTYxSewJZ2b4obUtaQ5sVsff5RmWE5oH07lFOv7gCKZoVuEWW1EziUhb9dqhZYeJl/oxOZwM21xVNj9lGeg+NPZMQ55aWJGUhuUJS4k4+Ge9rO2EXhrEkXkc1LbpqraRKd2VRqdwU7zEBqdN66fwGx0ROpSInIgpb+Cov+TfcmcmdxQ2P3pXc7p7TMQ5vhmKot3Ib3LnidK5+5Qww7PTEVXR/kK6tfxjQ6eNt6+c22enGwPdlQxqlV/ycPxt6HgwBrr7POB9G83ycAd0b/JfWv70Q43Lr3tFcHY6HlCA7p9GpyWBZ/NEIN5j/tepXPYe6f5D6apuEQWJXdSjJyjbn9kp3vjbDH5leQBPj9PQLqRIUWmcZZ0fjucAr5TuTb7e9mVSPAizkUwS+GGh54J+xLKc1Dw/HD6tsnlmdgdhBfuyUdE5rSSNeHJenPRgXgKNmd0v8AdKt6aGt8h6exuEl2S1ESuQLt/Q7D7Q7KjdsRcasIhHYuoBhA2jPfML4Hi0y97xwZKoSbFG41i8+HuuVpsqXcjWQLGbW5nbHfYY5ZjinD0V8arVFdJ1/IJi/6KKZRGlqNrtTExyRji8k5FUcLezUnLFMjqmWv7QfGyV6oRnSpHsCl5gZ2OYZa5YRndLVavn+UjFKvxBempJkpr0orwMkCmWv/nmN6o2C8hOZa4jHfefvItAPK8hFNP8JKdjAZknyJUoElmC+SLHNN8OduCtVAzF9wXNQoMEuSHJszEme6fL6qLMrMV4Lk+Li3TML6aiK2XzWJzDayLCAhHG0kiAZ4BeNz+27zRifz2gXyiKKYpMGPhM+4RpHbspBB04Sm9QF91HJrqtZmc0URHkoCFaHD4b4Z3QJVjxLyE1PPqUav6OqmzpVSA8L2BmRzC7s0/a5Zqs4pxiqjFoFF3+Lq0ZracULS+habDNDG5w6oDH7jLbSanLRKtTOuuHGt3Tmgovd9uAJp7Q55xrHEG82ligIrrCe8iY5bnFVCBm+UrRoJPkhBlflJSf/llRh31ZC+jWLyi8fOho01F1UnKHRDhJ8xi+sDjxTi/GujIdrMWYpxecNaXCj2rl4kO8tMmp4m3mRHvYze2TLKST/7ndFKJKVJt2hoOOFO8S761cyEAGbYYTGE1mDXQsqmxfoBNUn7ka0LQi6rY4U0U8rcrvcxXH2DO5gY47xla3ceJ4UTnE+PTPvWQX02Gn96mx4g0U5bngElW6h9efG0Xc3XJLjHFGNheD57VKW+x2iTaGurJL1N5syHU7bBoM0JG3F2ytsE3/4bervOh1vdbeu0j9tqleFpQsLqBWSOxPexGnjaG6LNQ97KSTZ7c3RdPLJSBVI3NIJZlmHZHJCgUmIdUad8yFXLoK4tRmP2t8qLOD7knuaII6coyPLpV6NcLcMLNCz7Lo/CJP8FhviBGdJMXpzlF59jO+B4QP/3fSsSS+lks51FHtgqUFWXgJt71IwkhquRZGzqRcMwXfKjxci5FOu67DCd73SdPk0qtuMgiUnVlW7CALLx7vQ2zR4xK8Oy2OQs1CEWSpgUfc/SwHkwY6VjErO25M1RUU7G6rWC5Nj91VoxMCPVHZeccIWRcbnZhu/Rs9o4Rn4sjHL5aMK4pldBGrsHmiWNQ8aFowuJncik5+WP+8q+Cl1SedWX61VSyjC1h9ORFWJuJdcFdCOPF7ZiEoC/Ecs6hYaZs4UzrLAqEFXUs4PSblVxYHDXBvcms6xPsX4hXes0RSzy+dzSsqFgceIQAMurw2KRCeT7PNcuxe6rvgmt7RO5OfqfR6zfGfKdbP6UB84J2ekA7t1PZqdTdD2wnX+AbhTLnTpns/ZcUiHcgTkj8YbIVNyUC1YDmkL5Rthmt+v/FM/kEDy7yhZ2eKTfLczwKPgHG030Dn16PKBNlAcvfy3nQgvVuKpxOhkaclxcIai9io1qiBTnKqFXLs+DUIJX/LB9BhdEQ8kfH5OPnULya8wGuGXRgpkSa6SnJgUH+46zSr9ZM3V69faJ8LOcFS4BXltB7pBrQvtUpDzKY2QZPTrn+I41wbOuzUmG8o42qECCthF+l82k+0oTPm1OQ+ZFH31ZoO8H4w7brVhDRK07gcMcyIBowWdD0quLsr+eVWPoYOBX+lUfHtntgQYJyltY1P6VYLKrjrZ/nx03eSf7bD+l7uMPHp4910kUQnnVm7R+OGq1JfvZJ3m1w7ulx8iroYNpccBgNT8lMY8vvBjgK4MVWY4DpydQxxIJ38+gLiU1C96nx41M1DznbXSnCt34UPh+LqVfXJwRUxl7FpH7fy3w/y6ejkBzDgqzvGp02NA9gmC5WyKdc/Wwpun+8IQGC6vbpTGOBish/g0FUYGxpca7a9vnKAB7264XzKvNcS0By6Gke7+3iGwzzI56BjfOgfDFDV3fEnhMvhaM6kBhd1c4U6vd3rGwz7fbJh9iLLzyhADqjo7mhMliL/HPZc9mpSinaHKt1LbgfQgf1hgO98cECKCIwLdzrqTcbQJr3R1J3rfANVqLK57qDIZuu9v1+x/ycv1ihAuXN1c4dfllC2jKXGVuP2mw+K9vZ6yNc1Dvomx+sbAt52Pq7vKELtGxPsCxSbm48reoLZ7KDTHP5lktcZ68OfO1cfNzebMtxm8+sawKgHvBwktSPpmAizIcFtB9rjf6E94tJPvvr+bX9bOxkdq+bO3h5faqvv395mr8ce+2TfnFm/0vZE/1yvT3TU/wHwmsRYKjKg6QAAAABJRU5ErkJggg==">Billard Turnierplan - Zwei Gruppen<span class="versions-badge" title="Version dieser Datei">v70</span></h1>
+            <h1><img class="logo" alt="Pool-Billard-Club Bassum e.V." src="data:image/png;base64,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">Billard Turnierplan - Zwei Gruppen<span class="versions-badge" title="Version dieser Datei">v71</span></h1>
             <button id="btn-add-player" class="btn-add-player no-print" style="display:none;" title="Nachzügler aufnehmen: bereits eingetragene Ergebnisse bleiben erhalten">Spieler nachtragen</button>
             <button id="btn-reset-all" class="btn-reset-all no-print" title="Neues Turnier starten: alle Eingaben werden gelöscht">Turnierplan zurücksetzen</button>
             <button id="btn-fullscreen" class="btn-fullscreen no-print" type="button" title="Vollbildmodus ein- oder ausschalten">Vollbild</button>
@@ -601,7 +614,7 @@
                                 <tbody id="ranking-body-a"></tbody>
                             </table>
                             <table class="table-style">
-                                <thead><tr><th style="width:45px;">Spiel</th><th>Spieler 1</th><th>Sätze</th><th>Spieler 2</th></tr></thead>
+                                <thead><tr><th style="width:45px;">Spiel</th><th>Spieler 1</th><th>Sätze</th><th>Spieler 2</th><th class="spiel-spalte no-print"></th></tr></thead>
                                 <tbody id="schedule-body-a"></tbody>
                             </table>
                         </div>
@@ -616,7 +629,7 @@
                                 <tbody id="ranking-body-b"></tbody>
                             </table>
                             <table class="table-style">
-                                <thead><tr><th style="width:45px;">Spiel</th><th>Spieler 1</th><th>Sätze</th><th>Spieler 2</th></tr></thead>
+                                <thead><tr><th style="width:45px;">Spiel</th><th>Spieler 1</th><th>Sätze</th><th>Spieler 2</th><th class="spiel-spalte no-print"></th></tr></thead>
                                 <tbody id="schedule-body-b"></tbody>
                             </table>
                         </div>
@@ -638,6 +651,7 @@
                                 <th>Sätze</th>
                                 <th>Gruppe B</th>
                                 <th style="width:110px;">Spielt um</th>
+                                <th class="spiel-spalte no-print"></th>
                             </tr>
                         </thead>
                         <tbody id="finals-body"></tbody>
@@ -777,6 +791,14 @@
         });
 
         document.getElementById('btn-export-file').addEventListener('click', exportToFile);
+        // Knopf je Spiel: abschliessen bzw. freigeben, beim Tippen nachziehen
+        document.addEventListener('click', (e) => {
+            const btn = e.target.closest ? e.target.closest('.spiel-btn') : null;
+            if (btn && !btn.disabled) toggleGameLock(btn.dataset.spiel);
+        });
+        document.addEventListener('input', (e) => {
+            if (e.target.classList && e.target.classList.contains('score-input')) spielKnopfNachziehen(e.target.closest('tr'));
+        });
         // Ergebnis ohne Datei an die Serienwertung uebergeben
         document.getElementById('btn-postfach').addEventListener('click', postfachUebergeben);
         // Uebernahme in der Serienwertung (anderer Tab) sofort anzeigen
@@ -1179,6 +1201,7 @@
         finalScores = {};
         manualOrder = {};
         lockedRounds = {};
+        lockedGames = {};
         tieGroups = { A: [], B: [] };
         highlighted.clear();
         markOpen = false;
@@ -1491,6 +1514,7 @@
         finalScores = {};
         manualOrder = {};
         lockedRounds = {};
+        lockedGames = {};
         tieGroups = { A: [], B: [] };
         phase2 = null;
         tournamentStart = null;
@@ -1517,6 +1541,7 @@
         finalScores = {};
         manualOrder = {};
         lockedRounds = {};
+        lockedGames = {};
         tieGroups = { A: [], B: [] };
         phase2 = null;
         tournamentStart = null;
@@ -1989,6 +2014,7 @@
         finalScores = {};
         manualOrder = {};
         lockedRounds = {};
+        lockedGames = {};
         tieGroups = { A: [], B: [] };
         phase2 = null;
         tournamentStart = null;
@@ -2053,7 +2079,7 @@
         tbody.innerHTML = '';
 
         if (!groupRounds[grp] || groupRounds[grp].length === 0) {
-            tbody.innerHTML = '<tr><td colspan="4" style="color:#7f8c8d;">Noch keine Auslosung.</td></tr>';
+            tbody.innerHTML = '<tr><td colspan="5" style="color:#7f8c8d;">Noch keine Auslosung.</td></tr>';
             return;
         }
 
@@ -2067,7 +2093,7 @@
             const rKey = roundKey(grp, rIdx);
             const gesperrt = isRoundLocked(rKey);
             const trHeader = document.createElement('tr');
-            trHeader.innerHTML = `<th colspan="4" class="round-header${gesperrt ? ' locked' : ''}">` +
+            trHeader.innerHTML = `<th colspan="5" class="round-header${gesperrt ? ' locked' : ''}">` +
                 roundHeaderHtml(rKey, esc(round.name), countOpenGamesInRound(grp, rIdx)) + '</th>';
             tbody.appendChild(trHeader);
 
@@ -2080,7 +2106,7 @@
                 if (pair[1] === -1) {
                     tr.innerHTML = `
                         <td style="color:#7f8c8d;">-</td>
-                        <td colspan="3" style="text-align:left; padding-left:14px;">
+                        <td colspan="4" style="text-align:left; padding-left:14px;">
                             <span data-pname="${pair[0]}" style="font-weight:600; color:#333;">${esc(currentNames[pair[0]])}</span>
                             <span class="spielfrei-text">(Spielfrei)</span>
                         </td>
@@ -2091,15 +2117,19 @@
                     const v = hcVorgabe(pair[0], pair[1], raceGroup);
                     // Kennung fuer die Markierung offener Paarungen (Gruppe, Runde, Spiel)
                     tr.dataset.okey = `${grp}-${rIdx}-${gIdx}`;
+                    const sKey = paarSchluessel(pair[0], pair[1]);
+                    const zu = isGameLocked(sKey);
+                    if (zu) tr.classList.add('locked-row');
                     tr.innerHTML = `
                         <td style="color:#7f8c8d; font-weight:bold;">${matchCounter++}</td>
                         <td class="player-name-cell" style="text-align:right;">${hcVorgabeSpan(v[0])}<span data-pname="${pair[0]}">${esc(currentNames[pair[0]])}</span>${hcRatingSpan(pair[0])}</td>
                         <td class="score-cell">
-                            <input type="number" min="${v[0]}" max="${maxFor(scores[k2], raceGroup)}" data-min="${v[0]}" class="score-input" data-store="g" data-race="${raceGroup}" data-key="${k1}" value="${scores[k1] ?? ''}"${(phase1Locked || gesperrt) ? ' disabled' : ''}>
+                            <input type="number" min="${v[0]}" max="${maxFor(scores[k2], raceGroup)}" data-min="${v[0]}" class="score-input" data-store="g" data-race="${raceGroup}" data-key="${k1}" value="${scores[k1] ?? ''}"${(phase1Locked || zu) ? ' disabled' : ''}>
                             <span class="vs-text">:</span>
-                            <input type="number" min="${v[1]}" max="${maxFor(scores[k1], raceGroup)}" data-min="${v[1]}" class="score-input" data-store="g" data-race="${raceGroup}" data-key="${k2}" value="${scores[k2] ?? ''}"${(phase1Locked || gesperrt) ? ' disabled' : ''}>
+                            <input type="number" min="${v[1]}" max="${maxFor(scores[k1], raceGroup)}" data-min="${v[1]}" class="score-input" data-store="g" data-race="${raceGroup}" data-key="${k2}" value="${scores[k2] ?? ''}"${(phase1Locked || zu) ? ' disabled' : ''}>
                         </td>
                         <td class="player-name-cell" style="text-align:left;">${hcRatingSpan(pair[1])}<span data-pname="${pair[1]}">${esc(currentNames[pair[1]])}</span>${hcVorgabeSpan(v[1])}</td>
+                        ${spielKnopfZelle(sKey, isGameFinished(scores[k1], scores[k2], raceGroup), phase1Locked)}
                     `;
                 }
                 tbody.appendChild(tr);
@@ -2207,9 +2237,76 @@
     const SVG_DISKETTE = '<svg viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M2 2h9.5L14 4.5V14H2V2zm2 1v4h7V3H4zm1 1h2v2H5V4zM4 10h8v3H4v-3z"/></svg>';
     const SVG_STIFT = '<svg viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M12.1 1.6a1.5 1.5 0 0 1 2.1 2.1l-.9.9-2.1-2.1.9-.9zM10.3 3.4l2.1 2.1-7 7L2 13.7l1.2-3.3 7.1-7z"/></svg>';
 
-    // Ist die Runde mit diesem Schluessel abgeschlossen?
+    // =====================================================================
+    // Sperre einzelner Spiele (auch fuer ganze Runden)
+    // =====================================================================
+    // Ein beendetes Spiel laesst sich einzeln abschliessen und gegen
+    // Aenderungen sperren, wie eine ganze Runde. Schluessel: in Gruppenphasen
+    // das Spielerpaar ("g:3:7"), damit die Sperre "Spieler nachtragen"
+    // uebersteht; sonst die feste Spielnummer ("f:0" Platzierungsduell,
+    // "k:qf1" KO-Runde, "p:2" Platzierungsspiel).
+    // Einzige Sperre fuer Ergebnisse. Eine Runde gilt als abgeschlossen, wenn
+    // alle ihre Spiele gesperrt sind; der Rundenknopf sperrt bzw. gibt alle
+    // Spiele der Runde auf einmal frei.
+    let lockedGames = {};
+
+    function paarSchluessel(a, b) { return 'g:' + Math.min(a, b) + ':' + Math.max(a, b); }
+
+    function isGameLocked(key) { return lockedGames[key] === true; }
+
+    // Tabellenzelle mit dem Knopf. rundeGesperrt: Runde oder Phase ist ohnehin gesperrt.
+    function spielKnopfZelle(key, beendet, rundeGesperrt) {
+        const gesperrt = isGameLocked(key);
+        const titel = rundeGesperrt ? 'Gesperrt mit der ganzen Runde oder Phase'
+            : (gesperrt ? 'Spiel zur Korrektur wieder freigeben'
+                : (beendet ? 'Spiel abschließen und gegen Änderungen sperren' : 'Erst möglich, wenn das Spiel beendet ist'));
+        return '<td class="spiel-spalte no-print"><button type="button" class="round-btn spiel-btn' + (gesperrt ? ' locked' : '') +
+            '" data-spiel="' + key + '"' + ((rundeGesperrt || (!gesperrt && !beendet)) ? ' disabled' : '') +
+            ' title="' + titel + '">' + (gesperrt ? SVG_STIFT : SVG_DISKETTE) + '</button></td>';
+    }
+
+    // Abschliessen ohne Rueckfrage, Freigeben nur nach Bestaetigung (wie bei Runden)
+    function toggleGameLock(key) {
+        if (isGameLocked(key)) {
+            if (!confirm('Spiel wieder freigeben?\n\nDas Ergebnis lässt sich danach erneut ändern.')) return;
+            delete lockedGames[key];
+        } else {
+            lockedGames[key] = true;
+        }
+        renderAll();
+    }
+
+    // Beim Tippen den Knopf der Zeile nachziehen, ohne die Tabelle neu
+    // aufzubauen (sonst verliesse der Schreibzeiger das Feld)
+    function spielKnopfNachziehen(tr) {
+        const btn = tr && tr.querySelector('.spiel-btn');
+        if (!btn || btn.classList.contains('locked')) return;
+        const felder = tr.querySelectorAll('.score-input');
+        if (felder.length !== 2 || felder[0].disabled) return;
+        const race = parseInt(felder[0].dataset.race, 10);
+        const s1 = parseInt(felder[0].value, 10);
+        const s2 = parseInt(felder[1].value, 10);
+        const beendet = !isNaN(s1) && !isNaN(s2) && Math.max(s1, s2) >= race;
+        btn.disabled = !beendet;
+        btn.title = beendet ? 'Spiel abschließen und gegen Änderungen sperren' : 'Erst möglich, wenn das Spiel beendet ist';
+    }
+
+    // Sperren verwerfen; ohne Praefix alle, sonst nur passende ("k:", "p:", "f:")
+    function clearGameLocks(praefix) {
+        if (!praefix) { lockedGames = {}; return; }
+        Object.keys(lockedGames).forEach(k => { if (k.indexOf(praefix) === 0) delete lockedGames[k]; });
+    }
+
+    // Runde abgeschlossen = alle ihre Spiele gesperrt. Staende aus Versionen
+    // vor der Spielsperre kennen nur die Rundensperre in lockedRounds; sie wird
+    // hier beim ersten Abfragen in Sperren der einzelnen Spiele umgewandelt.
     function isRoundLocked(key) {
-        return lockedRounds[key] === true;
+        const spiele = rundenSpieleVon(key);
+        if (lockedRounds[key] === true && spiele.length) {
+            spiele.forEach(k => { lockedGames[k] = true; });
+            delete lockedRounds[key];
+        }
+        return spiele.length > 0 && spiele.every(isGameLocked);
     }
 
     // Kopfzeile einer Runde mit Symbolknopf aufbauen
@@ -2220,8 +2317,8 @@
             ? '<span class="lock-hinweis">abgeschlossen</span>'
             : (kann ? '' : `<span class="stand">${offeneSpiele} Spiel(e) noch nicht beendet</span>`);
         const titel = gesperrt
-            ? 'Runde zur Korrektur wieder freigeben'
-            : (kann ? 'Runde abschließen und gegen Änderungen sperren'
+            ? 'Alle Spiele der Runde zur Korrektur wieder freigeben'
+            : (kann ? 'Alle Spiele der Runde abschließen und gegen Änderungen sperren'
                     : 'Erst möglich, wenn alle Spiele der Runde beendet sind');
         return '<div class="round-head-row">' +
                    `<span class="titel">${name} ${zusatz}</span>` +
@@ -2232,15 +2329,23 @@
                '</div>';
     }
 
-    // Klick auf das Symbol: abschliessen ohne Rueckfrage, Freigeben nur nach Bestaetigung
+    // Rundenknopf: alle Spiele der Runde sperren, freigeben nur nach Bestaetigung
     function toggleRoundLock(key) {
+        const spiele = rundenSpieleVon(key);
         if (isRoundLocked(key)) {
-            if (!confirm('Runde wieder freigeben?\n\nDie Ergebnisse dieser Runde lassen sich danach erneut ändern.')) return;
-            delete lockedRounds[key];
+            if (!confirm('Alle Spiele dieser Runde wieder freigeben?\n\nDie Ergebnisse lassen sich danach erneut ändern.')) return;
+            spiele.forEach(k => { delete lockedGames[k]; });
         } else {
-            lockedRounds[key] = true;
+            spiele.forEach(k => { lockedGames[k] = true; });
         }
         renderAll();
+    }
+
+    // Spielschluessel einer Gruppenrunde ("A-r0"), Freilose zaehlen nicht
+    function rundenSpieleVon(key) {
+        const m = /^([A-D])-r(\d+)$/.exec(key);
+        const runde = m ? (groupRounds[m[1]] || [])[parseInt(m[2], 10)] : null;
+        return runde ? runde.pairs.filter(p => p[1] !== -1).map(p => paarSchluessel(p[0], p[1])) : [];
     }
 
     // Sperren einzelner Runden verwerfen. Ohne Praefix werden alle geloescht,
@@ -2633,6 +2738,7 @@
         restorePunktAnlegen('Vor: Phase 2 zurücksetzen');
         phase2 = null;
         finalScores = {};
+        clearGameLocks('f:');
         renderPhase2();
         renderFinalTable();
         updateAddPlayerButton();
@@ -2700,7 +2806,9 @@
             const k2 = fKey(i, 2);
 
             const tr = document.createElement('tr');
-            tr.className = 'match-row';
+            const sKey = 'f:' + i;
+            const zu = isGameLocked(sKey);
+            tr.className = 'match-row' + (zu ? ' locked-row' : '');
             tr.dataset.p1 = a;
             tr.dataset.p2 = b;
             const v = hcVorgabe(a, b, racePhase2);
@@ -2711,15 +2819,16 @@
                     <span class="gbadge a" style="margin-left:6px;">A${i + 1}</span>
                 </td>
                 <td class="score-cell">
-                    <input type="number" min="${v[0]}" max="${maxFor(finalScores[k2], racePhase2)}" data-min="${v[0]}" class="score-input" data-store="f" data-race="${racePhase2}" data-key="${k1}" value="${finalScores[k1] ?? ''}">
+                    <input type="number" min="${v[0]}" max="${maxFor(finalScores[k2], racePhase2)}" data-min="${v[0]}" class="score-input" data-store="f" data-race="${racePhase2}" data-key="${k1}" value="${finalScores[k1] ?? ''}"${zu ? ' disabled' : ''}>
                     <span class="vs-text">:</span>
-                    <input type="number" min="${v[1]}" max="${maxFor(finalScores[k1], racePhase2)}" data-min="${v[1]}" class="score-input" data-store="f" data-race="${racePhase2}" data-key="${k2}" value="${finalScores[k2] ?? ''}">
+                    <input type="number" min="${v[1]}" max="${maxFor(finalScores[k1], racePhase2)}" data-min="${v[1]}" class="score-input" data-store="f" data-race="${racePhase2}" data-key="${k2}" value="${finalScores[k2] ?? ''}"${zu ? ' disabled' : ''}>
                 </td>
                 <td class="player-name-cell" style="text-align:left;">
                     <span class="gbadge b" style="margin-right:6px;">B${i + 1}</span>
                     ${hcRatingSpan(b)}<span data-pname="${b}">${esc(currentNames[b])}</span>${hcVorgabeSpan(v[1])}
                 </td>
                 <td style="font-size:0.85rem; color:#7f8c8d;">Platz ${2 * i + 1} / ${2 * i + 2}</td>
+                ${spielKnopfZelle(sKey, isGameFinished(finalScores[k1], finalScores[k2], racePhase2), false)}
             `;
             tbody.appendChild(tr);
         }
@@ -2742,6 +2851,7 @@
                         <span class="spielfrei-text" style="margin-left:6px;">(kein Gegner - spielfrei)</span>
                     </td>
                     <td style="font-size:0.85rem; color:#7f8c8d;">Platz ${place}</td>
+                    <td class="spiel-spalte no-print"></td>
                 `;
                 tbody.appendChild(tr);
             }
@@ -3625,6 +3735,7 @@
             seeded: Object.assign({}, seeded),
             manualOrder: JSON.parse(JSON.stringify(manualOrder)),
             lockedRounds: Object.assign({}, lockedRounds),
+            lockedGames: Object.assign({}, lockedGames),
             phase2: phase2 ? { A: phase2.A.slice(), B: phase2.B.slice() } : null,
             tournamentStart: tournamentStart,
             tournamentEnd: tournamentEnd,
@@ -3671,6 +3782,8 @@
         pruneSeeded();
         // Aeltere Staende kennen keine abgeschlossenen Runden
         lockedRounds = (snap.lockedRounds && typeof snap.lockedRounds === 'object') ? Object.assign({}, snap.lockedRounds) : {};
+        // Aeltere Staende kennen keine Sperre einzelner Spiele
+        lockedGames = (snap.lockedGames && typeof snap.lockedGames === 'object') ? Object.assign({}, snap.lockedGames) : {};
         tieGroups = { A: [], B: [] };
         phase2 = (snap.phase2 && Array.isArray(snap.phase2.A) && Array.isArray(snap.phase2.B))
             ? { A: snap.phase2.A.slice(), B: snap.phase2.B.slice() }
