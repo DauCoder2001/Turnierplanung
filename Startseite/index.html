@@ -25,6 +25,12 @@
         .kachel .datei { margin-top: 8px; font-size: 0.75rem; color: #95a5a6; }
         .kachel.serie { border-left-color: #e67e22; }
         .kachel.serie:hover, .kachel.serie:focus-visible { border-left-color: #d35400; }
+        /* Systemseite: flach und grau, ueber die volle Breite */
+        .kachel.kachel-system { grid-column: 1 / -1; display: flex; align-items: baseline; gap: 14px; flex-wrap: wrap;
+            padding: 11px 18px; border-left-color: #7f8c8d; background-color: #fbfbfc; }
+        .kachel.kachel-system:hover, .kachel.kachel-system:focus-visible { border-left-color: #5d6d6e; }
+        .kachel.kachel-system h2 { font-size: 1.05rem; margin: 0; }
+        .kachel.kachel-system .datei { margin: 0 0 0 auto; }
         .kachel.fehlt { opacity: 0.55; pointer-events: none; }
 
         .postfach { margin-top: 22px; padding: 11px 15px; border-radius: 4px; background: #e8f6f3; border-left: 4px solid #16a085;
@@ -73,6 +79,11 @@
             <div class="text">Serien, Turnier-Archiv und Vereins-Rating.</div>
             <div class="datei"></div>
         </a>
+        <a class="kachel kachel-system" data-programm="system">
+            <h2>System</h2>
+            <div class="text">Prüfung, Speicher-Übersicht, Postfach und Gesamtsicherung</div>
+            <div class="datei"></div>
+        </a>
     </div>
 
     <div id="postfach" class="postfach" style="display:none;"></div>
@@ -91,7 +102,8 @@
         gruppen: 'turnierplan_billard_gruppen_v69.html',
         ko: 'turnierplan_billard_ko_v79.html',
         serie: 'serienwertung_billard_v19.html',
-        erklaerung: 'vereins_rating_erklaert_v02.html'
+        erklaerung: 'vereins_rating_erklaert_v02.html',
+        system: 'system_billard_v01.html'
     };
     // STARTSEITE-DATEIEN-ENDE
 
@@ -102,6 +114,7 @@
         gruppen: '../zwei-gruppen/',
         ko: '../gruppen-ko/',
         serie: '../serienwertung/',
+        system: '../system/',
         erklaerung: '../vereins-rating/'
     };
 
