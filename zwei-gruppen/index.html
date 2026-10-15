@@ -12,7 +12,7 @@
          daher muss apple-touch-icon.png im selben Verzeichnis liegen. -->
     <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
     <meta name="apple-mobile-web-app-title" content="Turnierplan Gruppen">
-    <title>Billard Turnierplan - Zwei Gruppen v72</title>
+    <title>Billard Turnierplan - Zwei Gruppen v73</title>
     <style>
         body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #f4f6f9; color: #333; margin: 0; padding: 20px; }
         .container { max-width: 1600px; margin: 0 auto; background-color: #ffffff; padding: 25px; border-radius: 8px; box-shadow: 0 4px 10px rgba(0,0,0,0.08); }
@@ -283,6 +283,11 @@
         @media print { .browser-warnung { display: none !important; } }
 
         #print-report { display: none; }
+        /* Vereinskopf im Bericht: Logo und Kurzname */
+        #print-report .bericht-verein { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; padding-bottom: 8px;
+            border-bottom: 1px solid #dee2e6; }
+        #print-report .bericht-verein img { height: 40px; width: auto; }
+        #print-report .bericht-verein span { font-weight: bold; color: #2c3e50; font-size: 1rem; }
         #print-report h1 { font-size: 1.4rem; margin-bottom: 4px; }
         #print-report h2 { font-size: 1.1rem; margin-top: 18px; }
         /* Seitenumbruch: markierter Abschnitt beginnt im PDF auf einer neuen Seite */
@@ -409,6 +414,43 @@
         /* Fragezeichen im Ausdruck ausblenden */
         @media print { .help-icon { display: none !important; } }
 
+        /* Anwesende aus der Spielerliste ankreuzen */
+        .btn-anwesende { display: block; width: 100%; margin-bottom: 12px; background-color: #7f8c8d; color: #fff; border: none;
+            padding: 7px 12px; border-radius: 4px; font-weight: bold; font-size: 0.85rem; cursor: pointer; }
+        .btn-anwesende:hover { background-color: #6c7a7a; }
+        .anw-schleier { position: fixed; inset: 0; background: rgba(44,62,80,0.45); z-index: 1000; display: flex;
+            align-items: flex-start; justify-content: center; padding: 40px 12px; overflow-y: auto; box-sizing: border-box; }
+        .anw-dialog { background: #fff; border-radius: 8px; box-shadow: 0 8px 30px rgba(0,0,0,0.25); width: 640px; max-width: 100%;
+            padding: 18px 20px; box-sizing: border-box; }
+        .anw-dialog h3 { margin: 0 0 4px; color: #2c3e50; font-size: 1.15rem; }
+        .anw-unter { color: #7f8c8d; font-size: 0.85rem; margin-bottom: 10px; }
+        .anw-hinweis { background: #fff3cd; border-left: 4px solid #f39c12; color: #856404; padding: 8px 12px; border-radius: 4px;
+            font-size: 0.88rem; margin-bottom: 10px; }
+        .anw-suche { width: 100%; box-sizing: border-box; padding: 7px 9px; border: 1px solid #ced4da; border-radius: 4px; font-size: 0.95rem; }
+        .anw-dialog h4 { margin: 12px 0 4px; font-size: 0.8rem; color: #7f8c8d; text-transform: uppercase; letter-spacing: 0.04em; }
+        .anw-raster { display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 4px 10px; }
+        .anw-wahl { display: flex; align-items: center; gap: 6px; padding: 5px 6px; border-radius: 4px; cursor: pointer;
+            font-size: 0.92rem; font-weight: normal; border: 1px solid transparent; min-width: 0; }
+        .anw-wahl:hover { background: #f1f8f6; }
+        .anw-wahl input { width: 16px; height: 16px; margin: 0; flex-shrink: 0; }
+        .anw-nr { display: none; min-width: 18px; height: 18px; border-radius: 9px; background: #16a085; color: #fff; font-size: 0.72rem;
+            font-weight: bold; text-align: center; line-height: 18px; flex-shrink: 0; }
+        .anw-wahl.an { background: #e8f6f3; border-color: #b8e0d6; font-weight: 600; }
+        .anw-wahl.an .anw-nr { display: inline-block; }
+        .anw-name { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+        .anw-fuss { display: flex; align-items: center; gap: 10px; margin-top: 14px; padding-top: 12px; border-top: 1px solid #e9ecef; flex-wrap: wrap; }
+        .anw-stand { flex: 1; min-width: 200px; font-size: 0.9rem; color: #2c3e50; }
+        .anw-stand b { color: #117a65; }
+        .anw-klein { display: block; font-size: 0.8rem; color: #7f8c8d; }
+        .anw-warn { display: block; font-size: 0.82rem; color: #a05a00; }
+        .anw-btn { background: #16a085; color: #fff; border: none; padding: 7px 14px; border-radius: 4px; font-weight: bold;
+            font-size: 0.85rem; cursor: pointer; }
+        .anw-btn:hover { background: #117a65; }
+        .anw-btn.grau { background: #7f8c8d; }
+        .anw-btn.grau:hover { background: #6c7a7a; }
+        .anw-btn:disabled { background: #ced4da; color: #868e96; cursor: not-allowed; }
+        @media print { .btn-anwesende, .anw-schleier { display: none !important; } }
+
         /* Rueckweg zur Startseite, eigene Zeile ueber dem Kopf */
         .link-startseite { display: inline-block; margin-bottom: 14px; background-color: #fff; color: #2c3e50;
             border: 2px solid #2c3e50; padding: 4px 12px; border-radius: 4px; font-weight: bold; font-size: 0.85rem;
@@ -426,7 +468,7 @@
     </script>
     <div class="header-bar">
         <div class="title-group">
-            <h1><img class="logo" alt="Pool-Billard-Club Bassum e.V." src="data:image/png;base64,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">Billard Turnierplan - Zwei Gruppen<span class="versions-badge" title="Version dieser Datei">v72</span></h1>
+            <h1><img class="logo" alt="Pool-Billard-Club Bassum e.V." src="data:image/png;base64,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">Billard Turnierplan - Zwei Gruppen<span class="versions-badge" title="Version dieser Datei">v73</span></h1>
             <button id="btn-add-player" class="btn-add-player no-print" style="display:none;" title="Nachzügler aufnehmen: bereits eingetragene Ergebnisse bleiben erhalten">Spieler nachtragen</button>
             <button id="btn-reset-all" class="btn-reset-all no-print" title="Neues Turnier starten: alle Eingaben werden gelöscht">Turnierplan zurücksetzen</button>
             <button id="btn-fullscreen" class="btn-fullscreen no-print" type="button" title="Vollbildmodus ein- oder ausschalten">Vollbild</button>
@@ -545,8 +587,11 @@
                         <h2>1. Spieler <span class="help-glue">benennen<span class="help-icon" tabindex="0" role="button" aria-label="Erklärung anzeigen">?<span class="help-body">Gruppe über das Auswahlfeld ändern. Der Wechsel erfolgt immer als Tausch mit einem Spieler der anderen Gruppe, die Gruppenstärken bleiben dadurch gleich. Nach dem ersten eingetragenen Ergebnis ist die Zuordnung gesperrt.</span></span></span></h2>
                         <button type="button" id="btn-toggle-players" class="toggle-players-btn no-print" aria-expanded="true">Schließen</button>
                     </div>
-                    <div id="player-inputs-container"></div>
-                    <!-- Vorschlagsliste der Namensfelder, wird aus dem Rating-Stand gefuellt -->
+                    <div id="spieler-eingabe">
+                        <button type="button" id="btn-anwesende" class="btn-anwesende no-print" title="Spieler aus der Spielerliste des Vereins ankreuzen (Systemseite, „1. Verein“). Namen und Teilnehmerzahl werden übernommen.">Anwesende ankreuzen…</button>
+                        <div id="player-inputs-container"></div>
+                    </div>
+                    <!-- Vorschlagsliste der Namensfelder: Spielerliste des Vereins und Rating-Stand -->
                     <datalist id="spieler-namen"></datalist>
                     <div id="swap-panel" class="swap-panel" style="display:none;"></div>
                     <div id="group-edit-note" class="group-edit-note"></div>
@@ -754,10 +799,13 @@
     // Initialisierung
     // ---------------------------------------------------------------------
     window.addEventListener('DOMContentLoaded', () => {
+        // Name und Logo des Vereins (Systemseite), Knopf fuer die Anwesenden
+        vereinStarten(vereinLogoPdfVorbereiten);
+        document.getElementById('btn-anwesende').addEventListener('click', anwesendeOeffnen);
         document.getElementById('player-count').addEventListener('change', (e) => {
             if (confirm("Bist du sicher? Bei Änderung der Teilnehmerzahl werden Auslosung und alle Ergebnisse gelöscht!\nNamen und gesetzte Spieler bleiben erhalten.\n\nDenk an das Speichern des Turnierergebnisses.")) {
                 restorePunktAnlegen('Vor: Teilnehmerzahl ändern');
-                initTournament(parseInt(e.target.value), eingabenBehalten());
+                teilnehmerzahlSetzen(parseInt(e.target.value), eingabenBehalten());
                 zeigeRestoreBanner('Teilnehmerzahl geändert.');
             } else {
                 e.target.value = playerCount;
@@ -1208,6 +1256,12 @@
             seeded: typeof seeded === 'object' ? Object.assign({}, seeded) : {},
             manuell: Object.assign({}, handicap.manuell)
         };
+    }
+
+    // Teilnehmerzahl setzen und den Plan neu aufbauen (behalten wie bei initTournament)
+    function teilnehmerzahlSetzen(num, behalten) {
+        document.getElementById('player-count').value = String(num);
+        initTournament(num, behalten);
     }
 
     // behalten (optional): Ergebnis von eingabenBehalten()
@@ -3296,17 +3350,330 @@
     }
 
     // ---------------------------------------------------------------------
-    // Namensvorschlaege aus dem Rating-Stand
+    // Verein: Name, Logo und Spielerliste (Systemseite, Karte "1. Verein")
     // ---------------------------------------------------------------------
-    // Die Namensfelder der Spielerliste bieten die Namen des geladenen
-    // Rating-Stands als Auswahlliste an. Gefiltert wird nach dem Wortanfang:
-    // "M" zeigt alle Namen mit M, "Ma" nur noch Martin, Matthias und so fort.
-    // Namen, die in einem anderen Feld schon stehen, werden nicht angeboten.
+    // Gemeinsam fuer alle Programme im Browser-Speicher. Ohne Eintrag gilt
+    // Bassum: Name wie unten, Logo wie im Kopf dieser Datei. Im Eintrag
+    // heisst logo fehlt = eingebautes Logo, logo '' = kein Logo.
+    // Status der Spieler: mitglied, gast, aus (ausgetreten).
+    const VEREIN_KEY = 'billard-system:verein';
+    const VEREIN_STANDARD = { name: 'Pool-Billard-Club Bassum e.V.', kurzname: 'PBC Bassum' };
+    let vereinLogoEingebaut = '';       // Logo aus dem Kopf dieser Datei, beim Start gemerkt
 
-    // Namen des geladenen Rating-Stands, alphabetisch sortiert
-    function hcStandNamen() {
-        if (!handicap.stand) return [];
-        return handicap.stand.spieler.map(sp => sp.name).filter(n => !!n)
+    function vereinNorm(name) {
+        return String(name === null || name === undefined ? '' : name).trim().toLowerCase().replace(/\s+/g, ' ');
+    }
+
+    function vereinLesen() {
+        try {
+            const v = JSON.parse(localStorage.getItem(VEREIN_KEY) || 'null');
+            return (v && typeof v === 'object' && !Array.isArray(v)) ? v : null;
+        } catch (e) { return null; }
+    }
+
+    function vereinName() {
+        const v = vereinLesen();
+        return v ? String(v.name || '').trim() : VEREIN_STANDARD.name;
+    }
+
+    // Kurzname fuer Bericht, PDF und Mail; ohne Kurzname der volle Name
+    function vereinKurzname() {
+        const v = vereinLesen();
+        if (!v) return VEREIN_STANDARD.kurzname;
+        return String(v.kurzname || '').trim() || String(v.name || '').trim();
+    }
+
+    function vereinLogo() {
+        const v = vereinLesen();
+        if (!v || v.logo === undefined || v.logo === null) return vereinLogoEingebaut;
+        return /^data:image\//.test(String(v.logo)) ? String(v.logo) : '';
+    }
+
+    // Spieler mit Status mitglied oder gast, alphabetisch
+    function vereinSpieler() {
+        const v = vereinLesen();
+        return (v && Array.isArray(v.spieler) ? v.spieler : [])
+            .filter(s => s && vereinNorm(s.name) && s.status !== 'aus')
+            .map(s => ({ name: String(s.name).trim().replace(/\s+/g, ' '), status: s.status === 'gast' ? 'gast' : 'mitglied' }))
+            .sort((a, b) => a.name.localeCompare(b.name, 'de'));
+    }
+
+    // Ausgetretene Spieler als { normierter Name: true }
+    function vereinAusgetreten() {
+        const v = vereinLesen();
+        const aus = {};
+        (v && Array.isArray(v.spieler) ? v.spieler : []).forEach(s => { if (s && s.status === 'aus') aus[vereinNorm(s.name)] = true; });
+        return aus;
+    }
+
+    // Logo und Name im Kopf, ein eigenes Logo auch im Browser-Tab
+    function vereinAnwenden() {
+        const logo = vereinLogo();
+        const name = vereinName();
+        document.querySelectorAll('img.logo').forEach(img => {
+            if (logo) img.setAttribute('src', logo);
+            img.style.display = logo ? '' : 'none';
+            img.alt = name;
+            img.title = name;
+        });
+        const eigenes = !!logo && logo !== vereinLogoEingebaut;
+        document.querySelectorAll('link[rel="icon"]').forEach(l => {
+            if (l.dataset.eingebaut === undefined) {
+                l.dataset.eingebaut = l.getAttribute('href') || '';
+                l.dataset.typ = l.getAttribute('type') || '';
+            }
+            l.setAttribute('href', eigenes ? logo : l.dataset.eingebaut);
+            const typ = eigenes ? (/^data:([^;,]+)/.exec(logo) || [])[1] : l.dataset.typ;
+            if (typ) l.setAttribute('type', typ);
+        });
+    }
+
+    // Beim Start: eingebautes Logo merken, anwenden und auf Aenderungen aus
+    // anderen Tabs hoeren. nachher (optional) laeuft nach jedem Anwenden.
+    function vereinStarten(nachher) {
+        const img = document.querySelector('img.logo');
+        vereinLogoEingebaut = img ? (img.getAttribute('src') || '') : '';
+        const anwenden = () => { vereinAnwenden(); if (nachher) nachher(); };
+        anwenden();
+        window.addEventListener('storage', (e) => { if (!e.key || e.key === VEREIN_KEY) anwenden(); });
+    }
+
+    let vereinLogoPdf = null;           // Logo als JPEG fuer den PDF-Bericht { daten, breite, hoehe }
+
+    // Logo fuer den PDF-Bericht als JPEG vorbereiten; das PDF ohne
+    // Fremdbibliothek kann JPEG direkt einbetten. Laeuft im Hintergrund;
+    // ist es beim Erzeugen des PDFs nicht fertig, fehlt dort nur das Logo.
+    function vereinLogoPdfVorbereiten() {
+        vereinLogoPdf = null;
+        const logo = vereinLogo();
+        if (!logo || typeof Image === 'undefined') return;
+        const bild = new Image();
+        bild.onload = () => {
+            try {
+                if (!bild.naturalWidth || !bild.naturalHeight || vereinLogo() !== logo) return;
+                const hoehe = 120;
+                const breite = Math.max(1, Math.round(bild.naturalWidth * hoehe / bild.naturalHeight));
+                const leinwand = document.createElement('canvas');
+                leinwand.width = breite;
+                leinwand.height = hoehe;
+                const ctx = leinwand.getContext('2d');
+                if (!ctx) return;
+                ctx.fillStyle = '#fff';         // JPEG kennt keine Transparenz
+                ctx.fillRect(0, 0, breite, hoehe);
+                ctx.drawImage(bild, 0, 0, breite, hoehe);
+                const url = leinwand.toDataURL('image/jpeg', 0.9);
+                const kopf = 'data:image/jpeg;base64,';
+                if (url.indexOf(kopf) !== 0) return;
+                vereinLogoPdf = { daten: atob(url.slice(kopf.length)), breite: breite, hoehe: hoehe };
+            } catch (e) { vereinLogoPdf = null; }
+        };
+        bild.src = logo;
+    }
+
+    // Kopf des Berichts: Logo und Kurzname des Vereins (leer ohne beides)
+    function berichtVereinKopf() {
+        const logo = vereinLogo();
+        const name = vereinKurzname();
+        if (!logo && !name) return '';
+        return '<header class="bericht-verein">' + (logo ? '<img src="' + esc(logo) + '" alt="">' : '') +
+            (name ? '<span>' + esc(name) + '</span>' : '') + '</header>';
+    }
+
+    // Vereinskopf im PDF: Logo (sofern als JPEG vorbereitet) und Kurzname
+    function pdfVereinKopf(dok, name) {
+        let x = PDF_RAND;
+        let hoehe = 0;
+        if (vereinLogoPdf) {
+            hoehe = 34;
+            let breite = hoehe * vereinLogoPdf.breite / vereinLogoPdf.hoehe;
+            if (breite > 120) { breite = 120; hoehe = breite * vereinLogoPdf.hoehe / vereinLogoPdf.breite; }
+            dok.bild = vereinLogoPdf;
+            dok.strom.push(`q ${breite.toFixed(2)} 0 0 ${hoehe.toFixed(2)} ${PDF_RAND.toFixed(2)} ${(dok.y + 12 - hoehe).toFixed(2)} cm /Im1 Do Q`);
+            x += breite + 10;
+        }
+        if (name) {
+            const y = dok.y;
+            if (hoehe) dok.y = y + 12 - hoehe / 2 - 4;
+            pdfText(dok, name, x, PDF_BREITE - PDF_RAND - x, 11, true, 'links', 0.25);
+            dok.y = y;
+        }
+        dok.y -= hoehe ? hoehe + 8 : 20;
+    }
+
+    // ---------------------------------------------------------------------
+    // Anwesende aus der Spielerliste ankreuzen
+    // ---------------------------------------------------------------------
+    // Die Namen kommen in der Reihenfolge der Haken in den Plan, die
+    // Teilnehmerzahl stellt sich passend ein. Ohne Spielerliste bietet der
+    // Dialog die Namen des Rating-Stands an. Namen, die nur im Plan stehen
+    // (z.B. ein Gast ohne Eintrag), werden mit angeboten und bleiben so erhalten.
+    let anwesendeWahl = [];
+
+    // Gruppen fuer den Dialog: [{ titel, namen }], jeder Name nur einmal
+    function anwesendeGruppen() {
+        const verein = vereinSpieler();
+        const gruppen = [];
+        const bekannt = {};
+        const gruppe = (titel, namen) => {
+            const neu = namen.filter(n => {
+                const k = vereinNorm(n);
+                if (!k || bekannt[k]) return false;
+                bekannt[k] = true;
+                return true;
+            });
+            if (neu.length) gruppen.push({ titel: titel, namen: neu });
+        };
+        if (verein.length) {
+            gruppe('Mitglieder', verein.filter(s => s.status === 'mitglied').map(s => s.name));
+            gruppe('Gäste', verein.filter(s => s.status === 'gast').map(s => s.name));
+        } else {
+            gruppe('Aus dem Rating-Stand', namensVorschlaege());
+        }
+        // Platzhalter wie "Spieler 3" zaehlen nicht
+        gruppe('Nur im Plan', currentNames.map(n => String(n || '').trim()).filter(n => !/^Spieler \d+$/.test(n)));
+        return gruppen;
+    }
+
+    // Erlaubte Teilnehmerzahlen dieses Plans
+    function anwesendeErlaubt() {
+        return Array.from(document.getElementById('player-count').options)
+            .map(o => parseInt(o.value, 10)).filter(n => !isNaN(n));
+    }
+
+    function anwesendeOeffnen() {
+        anwesendeSchliessen();
+        const gruppen = anwesendeGruppen();
+        // Vorbelegt: wer schon im Plan steht, in dessen Reihenfolge
+        const alle = {};
+        gruppen.forEach(g => g.namen.forEach(n => { alle[vereinNorm(n)] = n; }));
+        anwesendeWahl = [];
+        currentNames.forEach(n => {
+            const name = alle[vereinNorm(n)];
+            if (name && anwesendeWahl.indexOf(name) < 0) anwesendeWahl.push(name);
+        });
+
+        const schleier = document.createElement('div');
+        schleier.id = 'anw-schleier';
+        schleier.className = 'anw-schleier no-print';
+        schleier.innerHTML =
+            '<div class="anw-dialog" role="dialog" aria-modal="true" aria-labelledby="anw-titel">' +
+            '<h3 id="anw-titel">Anwesende ankreuzen</h3>' +
+            '<div class="anw-unter">Die Namen kommen in der Reihenfolge der Haken in den Plan. Die Teilnehmerzahl stellt sich passend ein.</div>' +
+            (vereinSpieler().length ? '' : '<div class="anw-hinweis">Noch keine Spielerliste angelegt. Auf der Systemseite unter „1. Verein“ lassen sich die Spieler des Vereins eintragen.</div>') +
+            (gruppen.length ? '<input type="search" class="anw-suche" id="anw-suche" placeholder="Suchen…" autocomplete="off">' : '') +
+            gruppen.map(g => '<h4>' + esc(g.titel) + '</h4><div class="anw-raster">' + g.namen.map(n =>
+                '<label class="anw-wahl" data-name="' + esc(n) + '"><input type="checkbox"><span class="anw-nr"></span>' +
+                '<span class="anw-name">' + esc(n) + '</span></label>').join('') + '</div>').join('') +
+            '<div class="anw-fuss"><div class="anw-stand" id="anw-stand"></div>' +
+            '<button type="button" class="anw-btn" id="anw-uebernehmen">Übernehmen</button>' +
+            '<button type="button" class="anw-btn grau" id="anw-abbrechen">Abbrechen</button></div></div>';
+        schleier.addEventListener('change', (e) => {
+            const wahl = e.target.closest ? e.target.closest('.anw-wahl') : null;
+            if (!wahl) return;
+            const name = wahl.dataset.name;
+            anwesendeWahl = anwesendeWahl.filter(n => n !== name);
+            if (e.target.checked) anwesendeWahl.push(name);
+            anwesendeStand();
+        });
+        schleier.addEventListener('click', (e) => {
+            if (e.target === schleier || e.target.id === 'anw-abbrechen') anwesendeSchliessen();
+            else if (e.target.id === 'anw-uebernehmen' && anwesendeUebernehmen(anwesendeWahl.slice())) anwesendeSchliessen();
+        });
+        schleier.addEventListener('input', (e) => { if (e.target.id === 'anw-suche') anwesendeFiltern(e.target.value); });
+        schleier.addEventListener('keydown', (e) => { if (e.key === 'Escape') anwesendeSchliessen(); });
+        document.body.appendChild(schleier);
+        anwesendeStand();
+        const suche = document.getElementById('anw-suche');
+        if (suche) suche.focus();
+    }
+
+    // Haken, Nummern und Zaehler nachziehen
+    function anwesendeStand() {
+        const schleier = document.getElementById('anw-schleier');
+        if (!schleier) return;
+        schleier.querySelectorAll('.anw-wahl').forEach(l => {
+            const i = anwesendeWahl.indexOf(l.dataset.name);
+            l.classList.toggle('an', i >= 0);
+            l.querySelector('input').checked = i >= 0;
+            l.querySelector('.anw-nr').textContent = i >= 0 ? String(i + 1) : '';
+        });
+        const n = anwesendeWahl.length;
+        const erlaubt = anwesendeErlaubt();
+        const passt = erlaubt.indexOf(n) >= 0;
+        let text = '<b>' + n + ' ausgewählt</b>';
+        if (passt) {
+            text += ' &rarr; Teilnehmerzahl ' + n + '<span class="anw-klein">Der Spielplan wird neu aufgebaut, ' +
+                'eingetragene Ergebnisse werden gelöscht (Rückgängig über den Restore-Punkt).</span>';
+        } else if (n > 0) {
+            text += '<span class="anw-warn">Dieser Turnierplan ist für ' + erlaubt[0] + ' bis ' + erlaubt[erlaubt.length - 1] + ' Spieler.</span>';
+        }
+        document.getElementById('anw-stand').innerHTML = text;
+        document.getElementById('anw-uebernehmen').disabled = !passt;
+    }
+
+    // Suche: nur passende Namen zeigen, leere Gruppen ausblenden
+    function anwesendeFiltern(text) {
+        const suche = vereinNorm(text);
+        document.querySelectorAll('#anw-schleier .anw-raster').forEach(raster => {
+            let sichtbar = 0;
+            raster.querySelectorAll('.anw-wahl').forEach(l => {
+                const zeigen = !suche || vereinNorm(l.dataset.name).indexOf(suche) >= 0;
+                l.style.display = zeigen ? '' : 'none';
+                if (zeigen) sichtbar++;
+            });
+            raster.style.display = sichtbar ? '' : 'none';
+            if (raster.previousElementSibling) raster.previousElementSibling.style.display = sichtbar ? '' : 'none';
+        });
+    }
+
+    function anwesendeSchliessen() {
+        const schleier = document.getElementById('anw-schleier');
+        if (schleier) schleier.parentNode.removeChild(schleier);
+    }
+
+    // Namen in dieser Reihenfolge uebernehmen. Gesetzte Spieler und von Hand
+    // gesetzte Ratings wandern mit dem Namen auf die neue Startnummer.
+    function anwesendeUebernehmen(namen) {
+        if (anwesendeErlaubt().indexOf(namen.length) < 0) return false;
+        if (hasAnyScore() && !confirm('Es sind bereits Ergebnisse eingetragen.\n\n' +
+            'Mit den Anwesenden wird der Spielplan neu aufgebaut, alle Ergebnisse werden gelöscht. ' +
+            'Rückgängig geht über den Restore-Punkt.\n\nFortfahren?')) return false;
+        const behalten = { namen: namen.slice(), seeded: {}, manuell: {} };
+        const umziehen = (alt, neu) => Object.keys(alt || {}).forEach(k => {
+            const j = namen.findIndex(n => vereinNorm(n) === vereinNorm(currentNames[k]));
+            if (j >= 0) neu[j] = alt[k];
+        });
+        if (typeof seeded === 'object' && seeded) umziehen(seeded, behalten.seeded);
+        umziehen(handicap.manuell, behalten.manuell);
+        restorePunktAnlegen('Vor: Anwesende übernehmen');
+        gemerkteNamen = namen.slice();
+        teilnehmerzahlSetzen(namen.length, behalten);
+        zeigeRestoreBanner('Anwesende übernommen.');
+        scheduleAutosave();
+        return true;
+    }
+
+    // ---------------------------------------------------------------------
+    // Namensvorschlaege aus Spielerliste und Rating-Stand
+    // ---------------------------------------------------------------------
+    // Die Namensfelder der Spielerliste bieten die Spieler des Vereins
+    // (Systemseite) und die Namen des geladenen Rating-Stands als
+    // Auswahlliste an, ausgetretene Spieler nicht. Gefiltert wird nach dem
+    // Wortanfang: "M" zeigt alle Namen mit M, "Ma" nur noch Martin, Matthias
+    // und so fort. Namen, die in einem anderen Feld schon stehen, werden
+    // nicht angeboten.
+
+    // Vorschlaege alphabetisch sortiert; bei gleichem Namen gilt die
+    // Schreibweise der Spielerliste
+    function namensVorschlaege() {
+        const namen = {};
+        vereinSpieler().forEach(s => { namen[vereinNorm(s.name)] = s.name; });
+        (handicap.stand ? handicap.stand.spieler : []).forEach(sp => {
+            const k = vereinNorm(sp.name);
+            if (k && !namen[k]) namen[k] = sp.name;
+        });
+        const aus = vereinAusgetreten();
+        return Object.keys(namen).filter(k => !aus[k]).map(k => namen[k])
             .sort((a, b) => a.localeCompare(b, 'de'));
     }
 
@@ -3318,7 +3685,7 @@
         currentNames.forEach((n, i) => { if (i !== index && n) belegt[hcNormName(n)] = true; });
         const suche = hcNormName(text);
         liste.innerHTML = '';
-        hcStandNamen().forEach(n => {
+        namensVorschlaege().forEach(n => {
             const k = hcNormName(n);
             if (belegt[k]) return;                       // steht schon in einem anderen Feld
             if (suche && k.indexOf(suche) !== 0) return; // passt nicht zum Wortanfang
@@ -4368,33 +4735,42 @@
         objekte[3] = '<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica /Encoding /WinAnsiEncoding >>';
         objekte[4] = '<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica-Bold /Encoding /WinAnsiEncoding >>';
 
+        // Vereinslogo (JPEG) als eigenes Objekt hinter dem Info-Objekt
+        const infoId = 5 + seitenAnzahl * 2;
+        const bildId = dok.bild ? infoId + 1 : 0;
+        const letzteId = bildId || infoId;
+        const bildRef = bildId ? ` /XObject << /Im1 ${bildId} 0 R >>` : '';
+
         dok.seiten.forEach((strom, i) => {
             const seiteId = 5 + i * 2;
             const inhaltId = seiteId + 1;
             objekte[seiteId] = `<< /Type /Page /Parent 2 0 R /MediaBox [0 0 ${PDF_BREITE} ${PDF_HOEHE}] ` +
-                `/Resources << /Font << /F1 3 0 R /F2 4 0 R >> >> /Contents ${inhaltId} 0 R >>`;
+                `/Resources << /Font << /F1 3 0 R /F2 4 0 R >>${bildRef} >> /Contents ${inhaltId} 0 R >>`;
             const inhalt = strom.join('\n');
             objekte[inhaltId] = `<< /Length ${inhalt.length} >>\nstream\n${inhalt}\nendstream`;
         });
 
-        objekte[5 + seitenAnzahl * 2] = '<< /Title (' + pdfEscape(titel || 'Turnierergebnis') +
+        objekte[infoId] = '<< /Title (' + pdfEscape(titel || 'Turnierergebnis') +
             ') /Producer (Billard Turnierplan) >>';
-        const infoId = 5 + seitenAnzahl * 2;
+        if (bildId) {
+            objekte[bildId] = `<< /Type /XObject /Subtype /Image /Width ${dok.bild.breite} /Height ${dok.bild.hoehe} ` +
+                `/ColorSpace /DeviceRGB /BitsPerComponent 8 /Filter /DCTDecode /Length ${dok.bild.daten.length} >>\nstream\n${dok.bild.daten}\nendstream`;
+        }
 
         let datei = '%PDF-1.4\n';
         const versatz = [];
-        for (let i = 1; i <= infoId; i++) {
+        for (let i = 1; i <= letzteId; i++) {
             if (objekte[i] === undefined) continue;
             versatz[i] = datei.length;
             datei += `${i} 0 obj\n${objekte[i]}\nendobj\n`;
         }
         const xrefStart = datei.length;
-        datei += `xref\n0 ${infoId + 1}\n0000000000 65535 f \n`;
-        for (let i = 1; i <= infoId; i++) {
+        datei += `xref\n0 ${letzteId + 1}\n0000000000 65535 f \n`;
+        for (let i = 1; i <= letzteId; i++) {
             const v = versatz[i] === undefined ? 0 : versatz[i];
             datei += String(v).padStart(10, '0') + ' 00000 n \n';
         }
-        datei += `trailer\n<< /Size ${infoId + 1} /Root 1 0 R /Info ${infoId} 0 R >>\nstartxref\n${xrefStart}\n%%EOF\n`;
+        datei += `trailer\n<< /Size ${letzteId + 1} /Root 1 0 R /Info ${infoId} 0 R >>\nstartxref\n${xrefStart}\n%%EOF\n`;
 
         const bytes = new Uint8Array(datei.length);
         for (let i = 0; i < datei.length; i++) bytes[i] = datei.charCodeAt(i) & 0xFF;
@@ -4428,7 +4804,9 @@
 
         Array.from(quelle.children).forEach(el => {
             const tag = el.tagName;
-            if (tag === 'H1') {
+            if (tag === 'HEADER') {
+                pdfVereinKopf(dok, el.textContent.trim());
+            } else if (tag === 'H1') {
                 pdfText(dok, el.textContent.trim(), PDF_RAND, PDF_BREITE - 2 * PDF_RAND, 15, true, 'links');
                 dok.y -= 18;
             } else if (tag === 'H2') {
@@ -4528,6 +4906,7 @@
         buildPrintReport();
         const quelle = document.getElementById('print-report');
         const kinder = Array.from(quelle.children);
+        const verein = vereinKurzname();
 
         const kopf = [];
         const h1 = kinder.find(el => el.tagName === 'H1');
@@ -4545,7 +4924,8 @@
             }
         }
         if (!tabelle) tabelle = kinder.find(el => el.tagName === 'TABLE');
-        if (!tabelle) return { betreff: kopf[0] || 'Turnierergebnis', text: kopf.join('\n') };
+        if (!tabelle) return { betreff: (verein ? verein + ': ' : '') + (kopf[0] || 'Turnierergebnis'),
+                               text: (verein ? verein + '\n' : '') + kopf.join('\n') };
 
         const spalten = Array.from(tabelle.querySelectorAll('thead th')).map(th => th.textContent.trim());
         const zeilen = Array.from(tabelle.querySelectorAll('tbody tr'))
@@ -4556,13 +4936,13 @@
             Math.max(s.length, ...zeilen.map(z => (z[k] || '').length)));
         const zeileBauen = (werte) => werte.map((w, k) => String(w || '').padEnd(breiten[k])).join('  ').trimEnd();
 
-        const text = kopf.join('\n') + '\n\n' +
+        const text = (verein ? verein + '\n' : '') + kopf.join('\n') + '\n\n' +
             zeileBauen(spalten) + '\n' +
             breiten.map(b => '-'.repeat(b)).join('  ') + '\n' +
             zeilen.map(zeileBauen).join('\n') + '\n';
 
         const datum = formatDateDE(new Date());
-        const betreff = `Turnierergebnis ${getTournamentName() || ''}`.trim() + ` vom ${datum}`;
+        const betreff = (verein ? verein + ': ' : '') + `Turnierergebnis ${getTournamentName() || ''}`.trim() + ` vom ${datum}`;
         return { betreff: betreff, text: text };
     }
 
@@ -4610,7 +4990,7 @@
         const zeitraum = buildTimeRange(ende);
         const title = getTournamentName() || 'Turnierergebnis';
 
-        let html = `<h1>${esc(title)}</h1>
+        let html = berichtVereinKopf() + `<h1>${esc(title)}</h1>
             <p class="sub">Zwei-Gruppen-Modus &middot; ${esc(gameType)} &middot; ${raceInfo} &middot; ${playerCount} Teilnehmer &middot; ${date}${zeitraum}${hcBerichtZusatz()}</p>`;
 
         if (groups.A.length === 0) {
@@ -4740,7 +5120,7 @@
                 if (!btn || !box) return;
                 btn.addEventListener('click', () => klappSetzen(btnId, boxId, box.style.display === 'none'));
             }
-            klappen('btn-toggle-players', 'player-inputs-container');
+            klappen('btn-toggle-players', 'spieler-eingabe');
             klappen('btn-toggle-draw', 'draw-body');
             klappen('btn-toggle-restore', 'restore-body');
         })();
