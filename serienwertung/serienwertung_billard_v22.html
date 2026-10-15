@@ -6,7 +6,7 @@
     <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Ccircle cx='32' cy='32' r='30' fill='%231a1a1a'/%3E%3Ccircle cx='24' cy='22' r='8' fill='%23ffffff' opacity='0.18'/%3E%3Ccircle cx='32' cy='32' r='15' fill='%23fdfdf2'/%3E%3Ctext x='32' y='39' font-family='Arial, Helvetica, sans-serif' font-size='22' font-weight='bold' fill='%23111' text-anchor='middle'%3E8%3C/text%3E%3C/svg%3E">
     <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
     <meta name="apple-mobile-web-app-title" content="Serienwertung">
-    <title>Billard Serienwertung v17</title>
+    <title>Billard Serienwertung v22</title>
     <style>
         body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #f4f6f9; color: #333; margin: 0; padding: 20px; }
         .container { max-width: 1600px; margin: 0 auto; background-color: #ffffff; padding: 25px; border-radius: 8px; box-shadow: 0 4px 10px rgba(0,0,0,0.08); }
@@ -39,6 +39,34 @@
         .btn-secondary:hover { background-color: #d35400; }
         .btn-danger { background-color: #c0392b; color: #fff; }
         .btn-danger:hover { background-color: #922b21; }
+        /* Neutrale Schaltflaeche, z.B. Abbrechen neben einer roten Aktion */
+        .btn-grau { background-color: #7f8c8d; color: #fff; }
+        .btn-grau:hover { background-color: #6c7a7a; }
+        /* Zuruecksetzen mit Auswahl der Bereiche */
+        .reset-overlay { position: fixed; inset: 0; background: rgba(44,62,80,0.45); display: none; align-items: center;
+            justify-content: center; z-index: 1000; padding: 16px; }
+        .reset-overlay.show { display: flex; }
+        .reset-fenster { background: #fff; border-radius: 8px; box-shadow: 0 10px 30px rgba(0,0,0,0.25); max-width: 560px; width: 100%;
+            max-height: calc(100vh - 32px); overflow-y: auto; padding: 20px 22px; box-sizing: border-box; }
+        .reset-fenster h3 { margin: 0 0 4px; color: #c0392b; font-size: 1.15rem; }
+        .reset-unter { color: #7f8c8d; font-size: 0.85rem; margin-bottom: 14px; }
+        .reset-zeile { display: grid; grid-template-columns: 22px 1fr auto; gap: 8px; align-items: start; padding: 9px 0;
+            border-top: 1px solid #e9ecef; font-size: 0.92rem; cursor: pointer; }
+        .reset-zeile.gesperrt { cursor: default; opacity: 0.55; }
+        .reset-zeile input { margin-top: 3px; width: 16px; height: 16px; }
+        .reset-zeile b { color: #2c3e50; }
+        .reset-hinweis { display: block; color: #7f8c8d; font-size: 0.8rem; }
+        .reset-anzahl { color: #555; font-size: 0.85rem; white-space: nowrap; }
+        .reset-saison { margin-top: 6px; font-size: 0.85rem; }
+        .reset-saison select { padding: 3px 8px; font-size: 0.85rem; }
+        .reset-sicherung { display: block; margin-top: 12px; padding: 9px 12px; background: #e8f6f3; border-radius: 4px;
+            font-size: 0.9rem; color: #0e6655; cursor: pointer; }
+        .reset-knoepfe { display: flex; justify-content: flex-end; gap: 10px; margin-top: 16px; flex-wrap: wrap; }
+        /* Schmale Bildschirme: Anzahl unter den Text statt daneben */
+        @media (max-width: 600px) {
+            .reset-zeile { grid-template-columns: 22px 1fr; }
+            .reset-anzahl { grid-column: 2; white-space: normal; }
+        }
         .btn:disabled { background-color: #ced4da; color: #868e96; cursor: not-allowed; }
         .btn-small { padding: 4px 9px; font-size: 0.78rem; }
 
@@ -169,6 +197,7 @@
         .archiv-vorgabe { font-size: 0.72rem; color: #7f8c8d; margin-left: 5px; white-space: nowrap; }
         .alias-hinweis { font-size: 0.72rem; color: #7f8c8d; }
         .table-style input[type="checkbox"] { width: 16px; height: 16px; cursor: pointer; }
+        .table-style select.disz-wahl { padding: 3px 6px; font-size: 0.88rem; border: 1px solid #ced4da; border-radius: 4px; background: #fff; }
         .table-style input[type="checkbox"]:disabled { cursor: not-allowed; }
         .archiv-fehler { max-height: 180px; overflow-y: auto; margin-top: 4px; }
 
@@ -213,13 +242,24 @@
             #print-report th { background: #e9ecef; color: #2c3e50; }
             #print-report td.left, #print-report th.left { text-align: left; }
         }
+        /* Rueckweg zur Startseite, eigene Zeile ueber dem Kopf */
+        .link-startseite { display: inline-block; margin-bottom: 14px; background-color: #fff; color: #2c3e50;
+            border: 2px solid #2c3e50; padding: 4px 12px; border-radius: 4px; font-weight: bold; font-size: 0.85rem;
+            text-decoration: none; white-space: nowrap; line-height: 1.4; }
+        .link-startseite:hover { background-color: #eaeded; }
+        @media print { .link-startseite { display: none; } }
     </style>
 </head>
 <body>
 <div class="container" data-reiter="serien">
+    <a id="link-startseite" class="link-startseite" href="index.html" title="Zur Startseite der Turnierverwaltung">&larr; Startseite</a>
+    <script>
+        // Lokal liegt die Startseite als index.html daneben, ueber GitHub in Turnierplanung/Startseite/
+        if (location.protocol !== 'file:') document.getElementById('link-startseite').href = '../Startseite/';
+    </script>
     <div class="header-bar">
         <div class="title-group">
-            <h1><img class="logo" alt="Pool-Billard-Club Bassum e.V." src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAJ0AAACoCAMAAADNTxz6AAAA/1BMVEVsoV9dmUxTlEJOkTz8//xNkTwcaAD//wBToBmbtZt/fwCMtHukzKJQkT4qpSRVVVVRlECAr3P/AAD+/v4AAAAAAABEijE5gyVIkTVWlUUAfwBJjTfX5tPT2dHm6eYWFhacwZIwfRt1dXVDizBVVQAnJye607M3Nzd2qWiTu4hnZ2enp6eXl5dISEjHx8e3t7dXV1eHh4euzKakxpuHs3tVqlVqolt/f39inVPh7N4/fz/C2bwzgB4A/wBVlERKjTgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACJUgrUAAAAQHRSTlMiUpalAswDARQKAhMKcRUD1/8B/wD//f7+/wK5/////////zQD/////////////////////wP/Av//BP//AW7RrG/h9wAADl5JREFUeNrtnQl3ozgSgJ07nfTM7C6YI43A9jYGc+MrdhzH//9fbZUkzCUcfCbvbevNdNOA4aMulQoBHVlev3zL9irLckf+zq3zIndufn3DdnMlP8mde/mXpmjfsCmP8hPIDui+W1Pxj7/l35xO/2YN6f7L6VRd+mZtpH5nut4fuv8bOldfzOcjXJrqmk4XRnxhrg/zX84XsN/UxK1TaagvTHo43d1uhtWSNNFhNxd+RnBh3st/P4aDuiaeb4z/XOkLQzJ03ZTojqMGOl1V+2p/Dj/rq7A4zRbgtEp/kh9dwf3eddw8l8Z9xaAX1OfyN1RF1fDC4Fjw31gaws59ejgORw+6kCStT0lguyERVTVMNQMQ07njqaKSpapMiasqkqmoLi6YkqYW6DTYz1XUIaNTGd0os44hRlIUrKqNJ7q6wBU93N/gP1+oOpnAaeB8Pf4DkJ2iLOF0U9yRiOnwWrT+eIW748UY8D/IAnZXSnTvE4muKdJtZTdRdXqCEa5AZjj7Es6uZrah4891dQwLo5xOpXTDbMcGOr0/KdDRq6rR4TXr7z0x3bQ/1UGfnK6vZ7LZ0lE9wGlEdGNpeTQdld37WEw37w9dPBCl6zXRTUZGo+xWR8puunJVzRTT6aoxRUeidLiHkI6puEY3GrqMRegVyzGgN9KtIFmANZBCqKoylIR0YN6ZySlTV1FWBToNfj7Or7RORw9sNNHhZoXtLqID31f78A9FA8PXxbJbwbHGKFigg4jiSgU6jBiTnXR44EUznQKRsZFOWhGyYl5hYLAS0U1gHf6Wy04dFehWK7Iyd2p2LBEFXUpE9z41ltnuO+1uglp1hXTgsviTMbc7tcErXOh8hF4hLWjcbvCKY+mAB6wLRMZ89n3fiNKGbolBuEj3Pm6mM4t0OrVssDdOp7GzLwt0GJAW/TENmQU6s53siAqeBWaDhD3YD4wIhLE0jC3daLmCsJLRrQzYBDDw1xJcdkyg91uU6IbGiHVQPDSAdQGIrk7xoHCWCdLgFUyWQ5T7Ljp0DxDBHLtEhTkRG4rwjpwuY//G6fCfBqba4MhDmgFMAKpHwwrTLO6/TdJGfTyoAlfJD0pPB6ow+IGN3XQGZCvqYskXdENAp2D2U6LrUzrKBEDqki7BVogxuMfc2FqGCwfVqO/jT/7NT2cyOoXlanW6ZX4AMuTLBlswaOMbcRF9WzINM99ksNWGyXZh/0vZFrOYWhpDUj4oyc+y/JO5/6H7Q/eH7g/dSRqJfT8mDRtjL0xS8lV0Zup0abMHAgYzZBuDr6FLrW7eBrXNTrYp+AK6TDRZcyriG+SbzMvTOd1Ks0t4cWFLenG6pFtrTlGydmFDeGm6oCtogwZ469J0loiuu9WtX14flXROzk0nFF0uPLMCX/DaGOw1PjNdKKazGzZ7W3P08J/JmenEis1UGzRRB5YwAJ6YjjTAMZ2RBuqYBSErOLPdRU10foPa/UypoGVT+kq6VOguXKlOdP6Iskuzwm122KDUS3uF021snnmZaNwcUfxGNiu6VF/RHI2TZtEl8Zf3ZFZ3RwujL8wCvHLi1Nr0Tp9BheJ+bPAJXdfyL0Fn1nzTItJOj611upfM3GlqTLotWjXHv8Cox9vly5/ElvOMGMmA5+e2RxrzeSFefKnRdhD4W02ZVrdli76gUhG3hWMudGE6rzVd1zYvTme3pysOIy9DR7r7tMGF6by96PKh2SXoYmc/uO1Y6AJ05p6CK+r27HSB1T2gkYvQRU73oOZdgO4QpZaEd066bCxoHyy889FF2VjQPMTyLPOcdCbPhRPSNEz7pKVnpPOZNp24WgFwBi1bcDY6wpWa1joxy9zrQOegy5VaG0/4X32vhyvVZp1lWa/JF9+J4krNav1H6fXkdFypIRHeu/Clr6SLuVK3FMfp9aR0JKkmj9Fxej0lXVpR6vF6PR1dVpj260Z4sF5PRZcpFT3VJJEfDLyw0vkfoNcT0WWVCWuQOLa1o+h+cjoUhX/8sCGUTkhnRrGfDpKQi8I8NsM8SK9COr+uHXLssCGQjqB7LdKVQqhlo3VHRw4bwgMNGicbPgLdfUF2lCnxBlbXIaaJpbd4Z79ln0mvjK4DdI/0abcswqc8mDqc1t9RWHKi9Ex6zenu5RtNUbK8YpCVZgLwWLtCZxKS0+EtJP9MepWkKaVbd94oncErgTYxSewJZ2b4obUtaQ5sVsff5RmWE5oH07lFOv7gCKZoVuEWW1EziUhb9dqhZYeJl/oxOZwM21xVNj9lGeg+NPZMQ55aWJGUhuUJS4k4+Ge9rO2EXhrEkXkc1LbpqraRKd2VRqdwU7zEBqdN66fwGx0ROpSInIgpb+Cov+TfcmcmdxQ2P3pXc7p7TMQ5vhmKot3Ib3LnidK5+5Qww7PTEVXR/kK6tfxjQ6eNt6+c22enGwPdlQxqlV/ycPxt6HgwBrr7POB9G83ycAd0b/JfWv70Q43Lr3tFcHY6HlCA7p9GpyWBZ/NEIN5j/tepXPYe6f5D6apuEQWJXdSjJyjbn9kp3vjbDH5leQBPj9PQLqRIUWmcZZ0fjucAr5TuTb7e9mVSPAizkUwS+GGh54J+xLKc1Dw/HD6tsnlmdgdhBfuyUdE5rSSNeHJenPRgXgKNmd0v8AdKt6aGt8h6exuEl2S1ESuQLt/Q7D7Q7KjdsRcasIhHYuoBhA2jPfML4Hi0y97xwZKoSbFG41i8+HuuVpsqXcjWQLGbW5nbHfYY5ZjinD0V8arVFdJ1/IJi/6KKZRGlqNrtTExyRji8k5FUcLezUnLFMjqmWv7QfGyV6oRnSpHsCl5gZ2OYZa5YRndLVavn+UjFKvxBempJkpr0orwMkCmWv/nmN6o2C8hOZa4jHfefvItAPK8hFNP8JKdjAZknyJUoElmC+SLHNN8OduCtVAzF9wXNQoMEuSHJszEme6fL6qLMrMV4Lk+Li3TML6aiK2XzWJzDayLCAhHG0kiAZ4BeNz+27zRifz2gXyiKKYpMGPhM+4RpHbspBB04Sm9QF91HJrqtZmc0URHkoCFaHD4b4Z3QJVjxLyE1PPqUav6OqmzpVSA8L2BmRzC7s0/a5Zqs4pxiqjFoFF3+Lq0ZracULS+habDNDG5w6oDH7jLbSanLRKtTOuuHGt3Tmgovd9uAJp7Q55xrHEG82ligIrrCe8iY5bnFVCBm+UrRoJPkhBlflJSf/llRh31ZC+jWLyi8fOho01F1UnKHRDhJ8xi+sDjxTi/GujIdrMWYpxecNaXCj2rl4kO8tMmp4m3mRHvYze2TLKST/7ndFKJKVJt2hoOOFO8S761cyEAGbYYTGE1mDXQsqmxfoBNUn7ka0LQi6rY4U0U8rcrvcxXH2DO5gY47xla3ceJ4UTnE+PTPvWQX02Gn96mx4g0U5bngElW6h9efG0Xc3XJLjHFGNheD57VKW+x2iTaGurJL1N5syHU7bBoM0JG3F2ytsE3/4bervOh1vdbeu0j9tqleFpQsLqBWSOxPexGnjaG6LNQ97KSTZ7c3RdPLJSBVI3NIJZlmHZHJCgUmIdUad8yFXLoK4tRmP2t8qLOD7knuaII6coyPLpV6NcLcMLNCz7Lo/CJP8FhviBGdJMXpzlF59jO+B4QP/3fSsSS+lks51FHtgqUFWXgJt71IwkhquRZGzqRcMwXfKjxci5FOu67DCd73SdPk0qtuMgiUnVlW7CALLx7vQ2zR4xK8Oy2OQs1CEWSpgUfc/SwHkwY6VjErO25M1RUU7G6rWC5Nj91VoxMCPVHZeccIWRcbnZhu/Rs9o4Rn4sjHL5aMK4pldBGrsHmiWNQ8aFowuJncik5+WP+8q+Cl1SedWX61VSyjC1h9ORFWJuJdcFdCOPF7ZiEoC/Ecs6hYaZs4UzrLAqEFXUs4PSblVxYHDXBvcms6xPsX4hXes0RSzy+dzSsqFgceIQAMurw2KRCeT7PNcuxe6rvgmt7RO5OfqfR6zfGfKdbP6UB84J2ekA7t1PZqdTdD2wnX+AbhTLnTpns/ZcUiHcgTkj8YbIVNyUC1YDmkL5Rthmt+v/FM/kEDy7yhZ2eKTfLczwKPgHG030Dn16PKBNlAcvfy3nQgvVuKpxOhkaclxcIai9io1qiBTnKqFXLs+DUIJX/LB9BhdEQ8kfH5OPnULya8wGuGXRgpkSa6SnJgUH+46zSr9ZM3V69faJ8LOcFS4BXltB7pBrQvtUpDzKY2QZPTrn+I41wbOuzUmG8o42qECCthF+l82k+0oTPm1OQ+ZFH31ZoO8H4w7brVhDRK07gcMcyIBowWdD0quLsr+eVWPoYOBX+lUfHtntgQYJyltY1P6VYLKrjrZ/nx03eSf7bD+l7uMPHp4910kUQnnVm7R+OGq1JfvZJ3m1w7ulx8iroYNpccBgNT8lMY8vvBjgK4MVWY4DpydQxxIJ38+gLiU1C96nx41M1DznbXSnCt34UPh+LqVfXJwRUxl7FpH7fy3w/y6ejkBzDgqzvGp02NA9gmC5WyKdc/Wwpun+8IQGC6vbpTGOBish/g0FUYGxpca7a9vnKAB7264XzKvNcS0By6Gke7+3iGwzzI56BjfOgfDFDV3fEnhMvhaM6kBhd1c4U6vd3rGwz7fbJh9iLLzyhADqjo7mhMliL/HPZc9mpSinaHKt1LbgfQgf1hgO98cECKCIwLdzrqTcbQJr3R1J3rfANVqLK57qDIZuu9v1+x/ycv1ihAuXN1c4dfllC2jKXGVuP2mw+K9vZ6yNc1Dvomx+sbAt52Pq7vKELtGxPsCxSbm48reoLZ7KDTHP5lktcZ68OfO1cfNzebMtxm8+sawKgHvBwktSPpmAizIcFtB9rjf6E94tJPvvr+bX9bOxkdq+bO3h5faqvv395mr8ce+2TfnFm/0vZE/1yvT3TU/wHwmsRYKjKg6QAAAABJRU5ErkJggg==">Billard Serienwertung<span class="versions-badge" title="Version dieser Datei">v17</span></h1>
+            <h1><img class="logo" alt="Pool-Billard-Club Bassum e.V." src="data:image/png;base64,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">Billard Serienwertung<span class="versions-badge" title="Version dieser Datei">v22</span></h1>
             <div class="kopf-buttons no-print">
                 <button id="btn-sperren" class="btn-sperren" type="button" title="Löschen und Zurücksetzen wieder mit Passwort sichern">Löschschutz wieder einschalten</button>
                 <button id="btn-fullscreen" class="btn-fullscreen" type="button" title="Vollbildmodus ein- oder ausschalten">Vollbild</button>
@@ -437,13 +477,41 @@
             <button id="btn-export-db" class="btn btn-secondary">Exportieren</button>
             <button id="btn-import-db" class="btn btn-secondary">Importieren</button>
             <input type="file" id="db-file-input" accept="application/json,.json" style="display:none;">
-            <button id="btn-reset-db" class="btn btn-danger" style="margin-left:auto;">Alles zurücksetzen</button>
+            <button id="btn-reset-db" class="btn btn-danger" style="margin-left:auto;" title="Wählen, was gelöscht wird: Serien (auch einzelne Saison), Turnier-Archiv, Startwerte, Rating-Einstellungen, Zusammenführungen">Zurücksetzen…</button>
         </div>
         <div id="db-status" class="save-load-status"></div>
         <div id="autosave-status" class="autosave-status"></div>
     </div>
 </div>
 
+<!-- Zuruecksetzen: Auswahl der Bereiche -->
+<div id="reset-overlay" class="reset-overlay no-print" role="dialog" aria-modal="true" aria-labelledby="reset-titel">
+    <div class="reset-fenster">
+        <h3 id="reset-titel">Zurücksetzen</h3>
+        <div class="reset-unter">Was soll gelöscht werden? Nicht Angehaktes bleibt erhalten.</div>
+        <label class="reset-zeile"><input type="checkbox" id="reset-serien">
+            <span><b>Serien und Turniere</b>
+                <span class="reset-saison">Saison: <select id="reset-saison"></select></span></span>
+            <span class="reset-anzahl" id="reset-anz-serien"></span></label>
+        <label class="reset-zeile"><input type="checkbox" id="reset-archiv">
+            <span><b>Turnier-Archiv</b><span class="reset-hinweis">Grundlage des Vereins-Ratings. Ohne Archiv gibt es kein Rating.</span></span>
+            <span class="reset-anzahl" id="reset-anz-archiv"></span></label>
+        <label class="reset-zeile"><input type="checkbox" id="reset-startwerte">
+            <span><b>Startwerte und ausgeblendete Spieler</b></span>
+            <span class="reset-anzahl" id="reset-anz-startwerte"></span></label>
+        <label class="reset-zeile" id="reset-zeile-einst"><input type="checkbox" id="reset-einst">
+            <span><b>Rating-Einstellungen auf Standard</b><span class="reset-hinweis" id="reset-hinweis-einst"></span></span>
+            <span class="reset-anzahl" id="reset-anz-einst"></span></label>
+        <label class="reset-zeile"><input type="checkbox" id="reset-aliase">
+            <span><b>Spieler-Zusammenführungen</b><span class="reset-hinweis">Wirken auf Serien und Rating.</span></span>
+            <span class="reset-anzahl" id="reset-anz-aliase"></span></label>
+        <label class="reset-sicherung"><input type="checkbox" id="reset-sicherung" checked> Vorher Sicherung herunterladen</label>
+        <div class="reset-knoepfe">
+            <button type="button" id="btn-reset-abbrechen" class="btn btn-grau">Abbrechen</button>
+            <button type="button" id="btn-reset-ausfuehren" class="btn btn-danger" disabled>Ausgewähltes zurücksetzen</button>
+        </div>
+    </div>
+</div>
 <div id="print-report"></div>
 
 <script>
@@ -488,6 +556,8 @@
     window.addEventListener('DOMContentLoaded', () => {
         ladeDb();
         db.ratingEinstellungen = ratingEinst();      // Standardwerte auch ohne gespeicherten Stand
+        // Name und Logo des Vereins (Systemseite); die Spielerliste fliesst in die Startwerte-Vorschlaege
+        vereinStarten(renderStartwerte);
 
         document.getElementById('btn-serie-neu').addEventListener('click', serieAnlegen);
         document.getElementById('sel-saison').addEventListener('change', () => { fuelleSerienAuswahl(); renderAlles(); });
@@ -503,6 +573,16 @@
         document.getElementById('btn-import-db').addEventListener('click', () => document.getElementById('db-file-input').click());
         document.getElementById('db-file-input').addEventListener('change', dbImportieren);
         document.getElementById('btn-reset-db').addEventListener('click', dbZuruecksetzen);
+        // Fenster "Zuruecksetzen": jede Aenderung frischt Zahlen und Freigabe auf
+        document.getElementById('reset-overlay').addEventListener('change', resetFensterAktualisieren);
+        document.getElementById('btn-reset-abbrechen').addEventListener('click', resetFensterSchliessen);
+        document.getElementById('btn-reset-ausfuehren').addEventListener('click', resetBestaetigen);
+        document.getElementById('reset-overlay').addEventListener('click', (e) => {
+            if (e.target.id === 'reset-overlay') resetFensterSchliessen();      // Klick neben das Fenster
+        });
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && document.getElementById('reset-overlay').classList.contains('show')) resetFensterSchliessen();
+        });
         document.getElementById('btn-print').addEventListener('click', () => { buildPrintReport(); printReport(serienDruckTitel()); });
 
         document.getElementById('btn-datei-neu').addEventListener('click', speicherdateiAnlegen);
@@ -1019,7 +1099,10 @@
         const aehnlich = schonDa ? null : serie.turniere.find(t =>
             t.datum === turnier.datum && teilnehmerSignatur((t.ranking || []).map(r => r.name)) === teilnehmerNeu);
 
+        // Disziplin: bei Abweichung von der Serie nachfragen, gilt fuer Serie und Archiv
+        turnier.disziplin = disziplinBeimEinlesen(turnier.name, turnier.disziplin, serie, schonDa);
         const arch = archivTurnierAusExport(dateiname, daten, serie.id);
+        arch.turnier.disziplin = normDisziplin(turnier.disziplin) || turnier.disziplin;
         const archivKonflikt = archivBrauchtFrage(arch.turnier);
         let ersetzen = false;
         if (aehnlich || archivKonflikt) {
@@ -1051,6 +1134,86 @@
             return { ok: false, text: esc(dateiname) + ': Dieses Turnier ist ' + serienText + '. Das Archiv ist ebenfalls aktuell.' };
         }
         return { ok: true, text: esc(dateiname) + ': ' + serienText + '; ' + archivText + '.' };
+    }
+
+    // ---------------------------------------------------------------------
+    // Disziplin nachtraeglich aendern
+    // ---------------------------------------------------------------------
+    // Die Disziplin steht zweimal: im Turnier der Serie (Anzeige) und im
+    // Turnier-Archiv (zaehlt fuer das Vereins-Rating). Eine Aenderung an
+    // einer Stelle zieht die andere mit. Zugeordnet wird ueber Serie, Namen
+    // und Teilnehmer; das Datum zaehlt nicht, es laesst sich in der Serie aendern.
+
+    // Archiv-Eintrag zu einem Turnier der Serie, bei keinem oder mehreren Treffern null
+    function archivZuSerienTurnier(serie, t) {
+        const sig = teilnehmerSignatur((t.ranking || []).map(r => r.name));
+        const treffer = db.partienArchiv.filter(a => a.serieId === serie.id && a.name === t.name &&
+            teilnehmerSignatur(a.teilnehmer) === sig);
+        return treffer.length === 1 ? treffer[0] : null;
+    }
+
+    // Turnier der Serie zu einem Archiv-Eintrag: { serie, turnier } oder null
+    function serienTurnierZuArchiv(a) {
+        const serie = a.serieId ? serieById(a.serieId) : null;
+        if (!serie) return null;
+        const treffer = serie.turniere.filter(t => archivZuSerienTurnier(serie, t) === a);
+        return treffer.length === 1 ? { serie: serie, turnier: treffer[0] } : null;
+    }
+
+    // Auswahlfeld fuer die Disziplin; ein unbekannter alter Wert bleibt sichtbar
+    function disziplinAuswahl(wert, attribut) {
+        const norm = normDisziplin(wert);
+        return '<select class="disz-wahl" ' + attribut + ' title="Disziplin ändern">' +
+            (norm ? '' : '<option value="" selected>' + esc(String(wert || '') || '-') + '</option>') +
+            DISZIPLINEN.map(d => '<option value="' + d + '"' + (d === norm ? ' selected' : '') + '>' + d + '</option>').join('') +
+            '</select>';
+    }
+
+    function disziplinGeaendert(statusId, name, disziplin, mit, ohne) {
+        speichern();
+        renderAlles();
+        renderAuswertung();
+        setStatus(statusId, 'Disziplin von „' + esc(name) + '“ auf <b>' + esc(disziplin) + '</b> geändert' + (mit || ohne), 'ok');
+    }
+
+    function turnierDisziplinAendern(tid, wert) {
+        const serie = aktiveSerie();
+        const t = serie ? serie.turniere.find(x => x.id === tid) : null;
+        const disziplin = normDisziplin(wert);
+        if (!t || !disziplin) return false;
+        const a = archivZuSerienTurnier(serie, t);
+        t.disziplin = disziplin;
+        if (a) a.disziplin = disziplin;
+        disziplinGeaendert('import-status', t.name, disziplin,
+            a ? ', auch im Turnier-Archiv. Das Vereins-Rating zählt die ' + (a.partien || []).length + ' Partien jetzt bei ' + esc(disziplin) + '.' : '',
+            '. Im Turnier-Archiv gibt es keinen eindeutig passenden Eintrag; dort lässt sich die Disziplin eigens ändern.');
+        return true;
+    }
+
+    function archivDisziplinAendern(id, wert) {
+        const a = archivById(id);
+        const disziplin = normDisziplin(wert);
+        if (!a || !disziplin) return false;
+        const zug = serienTurnierZuArchiv(a);
+        a.disziplin = disziplin;
+        if (zug) zug.turnier.disziplin = disziplin;
+        disziplinGeaendert('archiv-status', a.name, disziplin,
+            zug ? ', auch in der Serie „' + esc(zug.serie.name) + '“.' : '', '.');
+        return true;
+    }
+
+    // Beim Einlesen: Passt die Disziplin nicht zur Serie, nachfragen. Steht das
+    // Turnier schon in der Serie, gilt ohne Frage dessen Disziplin, damit das
+    // Archiv es wiedererkennt. Liefert die Disziplin fuer Serie und Archiv.
+    function disziplinBeimEinlesen(name, exportiert, serie, schonDa) {
+        if (schonDa) return schonDa.disziplin || exportiert;
+        const dSerie = normDisziplin(serie.disziplin);
+        const roh = String(exportiert || '').trim();
+        if (!dSerie || normDisziplin(roh) === dSerie) return roh;
+        const frage = '„' + name + '“ wurde ' + (roh ? 'als ' + roh : 'ohne Disziplin') + ' exportiert, die Serie „' +
+            serie.name + '“ ist ' + dSerie + '.\n\nOK: als ' + dSerie + ' übernehmen (Serie und Turnier-Archiv).\n' +
+            'Abbrechen: ' + (roh ? 'als ' + roh : 'ohne Disziplin') + ' übernehmen.';
+        return confirm(frage) ? dSerie : roh;
     }
 
     function turnierSignatur(t) {
@@ -1091,6 +1254,104 @@
         speichern();
         renderTurnierListe();
         renderAuswertung();
+    }
+
+    // ---------------------------------------------------------------------
+    // Verein: Name, Logo und Spielerliste (Systemseite, Karte "1. Verein")
+    // ---------------------------------------------------------------------
+    // Gemeinsam fuer alle Programme im Browser-Speicher. Ohne Eintrag gilt
+    // Bassum: Name wie unten, Logo wie im Kopf dieser Datei. Im Eintrag
+    // heisst logo fehlt = eingebautes Logo, logo '' = kein Logo.
+    // Status der Spieler: mitglied, gast, aus (ausgetreten).
+    const VEREIN_KEY = 'billard-system:verein';
+    const VEREIN_STANDARD = { name: 'Pool-Billard-Club Bassum e.V.', kurzname: 'PBC Bassum' };
+    let vereinLogoEingebaut = '';       // Logo aus dem Kopf dieser Datei, beim Start gemerkt
+
+    function vereinNorm(name) {
+        return String(name === null || name === undefined ? '' : name).trim().toLowerCase().replace(/\s+/g, ' ');
+    }
+
+    function vereinLesen() {
+        try {
+            const v = JSON.parse(localStorage.getItem(VEREIN_KEY) || 'null');
+            return (v && typeof v === 'object' && !Array.isArray(v)) ? v : null;
+        } catch (e) { return null; }
+    }
+
+    function vereinName() {
+        const v = vereinLesen();
+        return v ? String(v.name || '').trim() : VEREIN_STANDARD.name;
+    }
+
+    // Kurzname fuer Bericht, PDF und Mail; ohne Kurzname der volle Name
+    function vereinKurzname() {
+        const v = vereinLesen();
+        if (!v) return VEREIN_STANDARD.kurzname;
+        return String(v.kurzname || '').trim() || String(v.name || '').trim();
+    }
+
+    function vereinLogo() {
+        const v = vereinLesen();
+        if (!v || v.logo === undefined || v.logo === null) return vereinLogoEingebaut;
+        return /^data:image\//.test(String(v.logo)) ? String(v.logo) : '';
+    }
+
+    // Spieler mit Status mitglied oder gast, alphabetisch nach Turniername.
+    // name = Name im Turnier (Kurzname, sonst voller Name), voll = voller Name
+    function vereinSpieler() {
+        const v = vereinLesen();
+        return (v && Array.isArray(v.spieler) ? v.spieler : [])
+            .filter(s => s && vereinNorm(s.name) && s.status !== 'aus')
+            .map(s => {
+                const voll = String(s.name).trim().replace(/\s+/g, ' ');
+                const kurz = String(s.kurzname || '').trim().replace(/\s+/g, ' ');
+                return { name: kurz || voll, voll: voll, status: s.status === 'gast' ? 'gast' : 'mitglied' };
+            })
+            .sort((a, b) => a.name.localeCompare(b.name, 'de'));
+    }
+
+    // Ausgetretene Spieler als { normierter Name: true }, voller und Kurzname
+    function vereinAusgetreten() {
+        const v = vereinLesen();
+        const aus = {};
+        (v && Array.isArray(v.spieler) ? v.spieler : []).forEach(s => {
+            if (!s || s.status !== 'aus') return;
+            aus[vereinNorm(s.name)] = true;
+            if (vereinNorm(s.kurzname)) aus[vereinNorm(s.kurzname)] = true;
+        });
+        return aus;
+    }
+
+    // Logo und Name im Kopf, ein eigenes Logo auch im Browser-Tab
+    function vereinAnwenden() {
+        const logo = vereinLogo();
+        const name = vereinName();
+        document.querySelectorAll('img.logo').forEach(img => {
+            if (logo) img.setAttribute('src', logo);
+            img.style.display = logo ? '' : 'none';
+            img.alt = name;
+            img.title = name;
+        });
+        const eigenes = !!logo && logo !== vereinLogoEingebaut;
+        document.querySelectorAll('link[rel="icon"]').forEach(l => {
+            if (l.dataset.eingebaut === undefined) {
+                l.dataset.eingebaut = l.getAttribute('href') || '';
+                l.dataset.typ = l.getAttribute('type') || '';
+            }
+            l.setAttribute('href', eigenes ? logo : l.dataset.eingebaut);
+            const typ = eigenes ? (/^data:([^;,]+)/.exec(logo) || [])[1] : l.dataset.typ;
+            if (typ) l.setAttribute('type', typ);
+        });
+    }
+
+    // Beim Start: eingebautes Logo merken, anwenden und auf Aenderungen aus
+    // anderen Tabs hoeren. nachher (optional) laeuft nach jedem Anwenden.
+    function vereinStarten(nachher) {
+        const img = document.querySelector('img.logo');
+        vereinLogoEingebaut = img ? (img.getAttribute('src') || '') : '';
+        const anwenden = () => { vereinAnwenden(); if (nachher) nachher(); };
+        anwenden();
+        window.addEventListener('storage', (e) => { if (!e.key || e.key === VEREIN_KEY) anwenden(); });
     }
 
     // ---------------------------------------------------------------------
@@ -1247,7 +1508,7 @@
                 '<td><input type="date" value="' + esc(t.datum) + '" data-datum="' + t.id + '" style="width:135px;"></td>' +
                 '<td class="left">' + esc(t.name) +
                     (t.vollstaendig ? '' : '<span class="t-warn" title="Das Turnier war beim Export noch nicht beendet.">nicht beendet</span>') + '</td>' +
-                '<td>' + esc(t.disziplin || '-') + '</td>' +
+                '<td>' + disziplinAuswahl(t.disziplin, 'data-disziplin="' + t.id + '"') + '</td>' +
                 '<td>' + esc(modusText(t.modus)) + '</td>' +
                 '<td>' + t.teilnehmer + '</td>' +
                 '<td><button class="btn btn-danger btn-small" data-turnier-del="' + t.id + '">Entfernen</button></td>' +
@@ -1256,6 +1517,7 @@
 
         tbody.querySelectorAll('[data-turnier-del]').forEach(b => b.addEventListener('click', (e) => turnierLoeschen(e.currentTarget.dataset.turnierDel)));
         tbody.querySelectorAll('[data-datum]').forEach(i => i.addEventListener('change', (e) => turnierDatumAendern(e.currentTarget.dataset.datum, e.currentTarget.value)));
+        tbody.querySelectorAll('[data-disziplin]').forEach(i => i.addEventListener('change', (e) => turnierDisziplinAendern(e.currentTarget.dataset.disziplin, e.currentTarget.value)));
     }
 
     function modusText(m) {
@@ -1816,17 +2078,136 @@
         reader.readAsText(datei);
     }
 
+    // ---------------------------------------------------------------------
+    // Zuruecksetzen mit Auswahl der Bereiche
+    // ---------------------------------------------------------------------
+    // Das Fenster waehlt aus, zuruecksetzenAusfuehren() loescht. Die Trennung
+    // erlaubt Tests ohne Oberflaeche (test/zuruecksetzen.test.js).
+
+    function saisonVon(s) { return s.saison || '-'; }
+
+    // Zahlen fuer die Anzeige; saison '' = alle
+    function zuruecksetzenZaehlen(saison) {
+        const serien = db.serien.filter(s => !saison || saisonVon(s) === saison);
+        return {
+            serien: serien.length,
+            turniere: serien.reduce((n, s) => n + s.turniere.length, 0),
+            archiv: db.partienArchiv.length,
+            partien: db.partienArchiv.reduce((n, t) => n + (t.partien || []).length, 0),
+            startwerte: (db.ratingStartwerte || []).length,
+            ausgeblendet: (db.ratingAusgeblendet || []).length,
+            einstStandard: JSON.stringify(ratingEinst()) === JSON.stringify(RATING_STANDARD),
+            aliase: Object.keys(db.aliase || {}).length
+        };
+    }
+
+    // auswahl: { serien, saison, archiv, startwerte, einstellungen, aliase }
+    // Liefert die Liste dessen, was geloescht wurde (leer = nichts geaendert).
+    function zuruecksetzenAusfuehren(auswahl) {
+        const z = zuruecksetzenZaehlen(auswahl.saison);
+        const erledigt = [];
+        if (auswahl.serien) {
+            db.serien = auswahl.saison ? db.serien.filter(s => saisonVon(s) !== auswahl.saison) : [];
+            if (!serieById(aktiveSerieId)) aktiveSerieId = db.serien.length ? db.serien[0].id : null;
+            erledigt.push((auswahl.saison ? 'Saison ' + auswahl.saison + ': ' : '') + z.serien + ' Serie(n) mit ' + z.turniere + ' Turnier(en)');
+        }
+        if (auswahl.archiv) {
+            db.partienArchiv = [];
+            erledigt.push('Turnier-Archiv (' + z.archiv + ' Turniere, ' + z.partien + ' Partien)');
+        }
+        if (auswahl.startwerte) {
+            db.ratingStartwerte = [];
+            db.ratingAusgeblendet = [];
+            erledigt.push(z.startwerte + ' Startwert(e) und ' + z.ausgeblendet + ' ausgeblendete(r) Spieler');
+        }
+        if (auswahl.einstellungen) {
+            db.ratingEinstellungen = Object.assign({}, RATING_STANDARD);
+            erledigt.push('Rating-Einstellungen auf Standard');
+        }
+        if (auswahl.aliase) {
+            db.aliase = {};
+            erledigt.push(z.aliase + ' Spieler-Zusammenführung(en)');
+        }
+        return erledigt;
+    }
+
+    function resetAuswahl() {
+        const an = (id) => document.getElementById(id).checked;
+        return {
+            serien: an('reset-serien'),
+            saison: document.getElementById('reset-saison').value,
+            archiv: an('reset-archiv'),
+            startwerte: an('reset-startwerte'),
+            einstellungen: an('reset-einst'),
+            aliase: an('reset-aliase')
+        };
+    }
+
+    // Zahlen und Freigabe des roten Knopfes nachziehen
+    function resetFensterAktualisieren() {
+        const a = resetAuswahl();
+        const z = zuruecksetzenZaehlen(a.saison);
+        const setze = (id, text) => { document.getElementById(id).textContent = text; };
+        setze('reset-anz-serien', z.serien + ' Serien, ' + z.turniere + ' Turniere');
+        setze('reset-anz-archiv', z.archiv + ' Turniere, ' + z.partien + ' Partien');
+        setze('reset-anz-startwerte', z.startwerte + ' Startwerte, ' + z.ausgeblendet + ' ausgeblendet');
+        setze('reset-anz-aliase', String(z.aliase));
+        const s = RATING_STANDARD;
+        setze('reset-hinweis-einst', 'Zeitraum ' + s.zeitraum + ' Monate, Mindest-Racks ' + s.mindestRacks +
+            ', Rückgriff ' + s.rueckgriff + ' Monate, Gewicht ' + s.gewicht);
+        setze('reset-anz-einst', z.einstStandard ? 'bereits Standard' : 'geändert');
+        const einst = document.getElementById('reset-einst');
+        if (z.einstStandard) einst.checked = false;
+        einst.disabled = z.einstStandard;
+        document.getElementById('reset-zeile-einst').classList.toggle('gesperrt', z.einstStandard);
+        document.getElementById('btn-reset-ausfuehren').disabled =
+            !(a.serien || a.archiv || a.startwerte || (a.einstellungen && !z.einstStandard) || a.aliase);
+    }
+
     function dbZuruecksetzen() {
         if (!pruefeSchutz()) return;
-        if (!confirm('Alles zurücksetzen?\n\nAlle Serien, Turniere, Zusammenführungen sowie Turnier-Archiv, Startwerte, ausgeblendete Spieler und Einstellungen des Vereins-Ratings werden gelöscht.\nDenk an "Alle Serien exportieren", falls du den Stand behalten willst.\n\nBist du sicher?')) return;
-        db = { version: DB_VERSION, serien: [], aliase: {}, partienArchiv: [], ratingEinstellungen: {}, ratingStartwerte: [], ratingAusgeblendet: [] };
-        db.ratingEinstellungen = ratingEinst();
-        aktiveSerieId = null;
-        try { localStorage.removeItem(STORAGE_KEY); } catch (e) { /* Speicher nicht verfuegbar */ }
-        if (dateiHandle) inDateiSchreiben();     // auch die Speicherdatei leeren
+        const sel = document.getElementById('reset-saison');
+        sel.innerHTML = '<option value="">alle</option>' +
+            alleSaisons().map(s => '<option value="' + esc(s) + '">' + esc(s) + '</option>').join('');
+        ['reset-serien', 'reset-archiv', 'reset-startwerte', 'reset-einst', 'reset-aliase'].forEach(id => {
+            document.getElementById(id).checked = false;
+        });
+        document.getElementById('reset-sicherung').checked = true;
+        resetFensterAktualisieren();
+        document.getElementById('reset-overlay').classList.add('show');
+        document.getElementById('btn-reset-abbrechen').focus();
+    }
+
+    function resetFensterSchliessen() {
+        document.getElementById('reset-overlay').classList.remove('show');
+    }
+
+    function resetBestaetigen() {
+        const a = resetAuswahl();
+        // Vorschau: auf einer Kopie zaehlen, was geloescht wuerde
+        const vorschau = zuruecksetzenVorschau(a);
+        if (!vorschau.length) return;
+        const sicherung = document.getElementById('reset-sicherung').checked;
+        if (!confirm('Folgendes wird gelöscht:\n\n- ' + vorschau.join('\n- ') +
+            (sicherung ? '\n\nVorher wird eine Sicherung heruntergeladen.' : '\n\nEs wird KEINE Sicherung heruntergeladen.') +
+            '\n\nBist du sicher?')) return;
+        if (sicherung) dbExportieren();
+        const erledigt = zuruecksetzenAusfuehren(a);
+        resetFensterSchliessen();
+        speichereSofort();      // Browser-Speicher und Speicherdatei
+        ratingFelderFuellen();
         renderAlles();
         renderAuswertung();
-        setStatus('db-status', 'Alle Daten wurden gelöscht.', 'ok');
+        setStatus('db-status', 'Zurückgesetzt: ' + erledigt.map(esc).join('; ') + '.', 'ok');
+    }
+
+    // Was zuruecksetzenAusfuehren() loeschen wuerde, ohne etwas zu aendern
+    function zuruecksetzenVorschau(auswahl) {
+        const gesichert = db;
+        const aktiv = aktiveSerieId;
+        db = JSON.parse(JSON.stringify(db));
+        try { return zuruecksetzenAusfuehren(auswahl); }
+        finally { db = gesichert; aktiveSerieId = aktiv; }
     }
 
     function setAutosaveStatus(text, cls) {
@@ -2471,7 +2852,7 @@
             let html = '<tr' + (t.werten ? '' : ' class="archiv-aus"') + '>' +
                 '<td>' + esc(datumLang(t.datum)) + '</td>' +
                 '<td class="left">' + esc(t.name) + '</td>' +
-                '<td>' + esc(t.disziplin || '-') + '</td>' +
+                '<td>' + disziplinAuswahl(t.disziplin, 'data-archiv-disziplin="' + t.id + '"') + '</td>' +
                 '<td>' + quelle + '</td>' +
                 '<td>' + zahl + '</td>' +
                 '<td><input type="checkbox" data-archiv-werten="' + t.id + '"' + (t.werten ? ' checked' : '') +
@@ -2527,6 +2908,7 @@
 
     function archivAenderung(e) {
         const el = e.target;
+        if (el.dataset.archivDisziplin) { archivDisziplinAendern(el.dataset.archivDisziplin, el.value); return; }
         if (el.dataset.archivWerten) {
             const t = archivById(el.dataset.archivWerten);
             if (!t) return;
@@ -3035,10 +3417,12 @@
     function renderStartwerte() {
         const liste = document.getElementById('sw-liste');
         if (!liste) return;
-        // Vorschlagsliste: alle bekannten Spieler
+        // Vorschlagsliste: alle bekannten Spieler, dazu die Spielerliste des
+        // Vereins (neue Mitglieder haben noch keine Ergebnisse)
         const namen = {};
         const map = alleSchreibweisen();
         Object.keys(map).forEach(k => { const kn = kanonName(map[k]); namen[normName(kn)] = kn; });
+        vereinSpieler().forEach(sp => { const kn = kanonName(sp.name); if (!namen[normName(kn)]) namen[normName(kn)] = kn; });
         document.getElementById('sw-namen').innerHTML = Object.keys(namen)
             .sort((a, b) => namen[a].localeCompare(namen[b], 'de'))
             .map(k => '<option value="' + esc(namen[k]) + '"></option>').join('');

@@ -1,0 +1,1428 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" type="image/png" sizes="32x32" href="data:image/png;base64,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">
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Ccircle cx='32' cy='32' r='30' fill='%231a1a1a'/%3E%3Ccircle cx='24' cy='22' r='8' fill='%23ffffff' opacity='0.18'/%3E%3Ccircle cx='32' cy='32' r='15' fill='%23fdfdf2'/%3E%3Ctext x='32' y='39' font-family='Arial, Helvetica, sans-serif' font-size='22' font-weight='bold' fill='%23111' text-anchor='middle'%3E8%3C/text%3E%3C/svg%3E">
+    <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
+    <title>Billard System v04</title>
+    <style>
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #f4f6f9; color: #333; margin: 0; padding: 20px; }
+        .container { max-width: 980px; margin: 0 auto; background-color: #fff; padding: 25px; border-radius: 8px; box-shadow: 0 4px 10px rgba(0,0,0,0.08); }
+        .kopf { display: flex; align-items: center; gap: 14px; border-bottom: 2px solid #2c3e50; padding-bottom: 12px; margin-bottom: 20px; }
+        .kopf h1 { color: #1e3d2f; margin: 0; font-size: 1.7rem; display: flex; align-items: center; gap: 10px; }
+        .kopf .unter { color: #7f8c8d; font-size: 0.95rem; }
+        .logo { height: 56px; width: auto; flex-shrink: 0; }
+        .versions-badge { font-size: 0.8rem; font-weight: normal; color: #7f8c8d; background: #ecf0f1; border-radius: 10px; padding: 2px 8px; }
+
+        .card { background-color: #f8f9fa; border: 1px solid #e9ecef; border-radius: 6px; padding: 16px 20px; margin-bottom: 18px; }
+        .card h2 { margin: 0 0 12px; font-size: 1.15rem; color: #2c3e50; border-left: 4px solid #16a085; padding-left: 10px; }
+        table { width: 100%; border-collapse: collapse; font-size: 0.9rem; background: #fff; }
+        th { background: #2c3e50; color: #fff; text-align: left; padding: 7px 9px; font-size: 0.85rem; }
+        td { border-bottom: 1px solid #e9ecef; padding: 7px 9px; vertical-align: top; }
+        td.name { width: 30%; font-weight: 600; color: #2c3e50; }
+        td.zahl { text-align: right; white-space: nowrap; color: #555; }
+        td.aktion { width: 1%; white-space: nowrap; text-align: right; }
+        .gruppe td { background: #eef2f3; font-weight: 600; color: #2c3e50; }
+        .ok::before, .warn::before, .bad::before { content: '\25CF'; margin-right: 6px; }
+        .ok::before { color: #27ae60; } .warn::before { color: #f39c12; } .bad::before { color: #c0392b; }
+        .klein { color: #7f8c8d; font-size: 0.8rem; }
+        .leer { color: #95a5a6; font-style: italic; }
+
+        .btn { border: none; padding: 7px 14px; border-radius: 4px; font-weight: bold; cursor: pointer; font-size: 0.85rem; white-space: nowrap; }
+        .btn-primary { background-color: #16a085; color: #fff; } .btn-primary:hover { background-color: #117a65; }
+        .btn-grau { background-color: #7f8c8d; color: #fff; } .btn-grau:hover { background-color: #6c7a7a; }
+        .btn-danger { background-color: #c0392b; color: #fff; } .btn-danger:hover { background-color: #922b21; }
+        .btn-klein { padding: 3px 9px; font-size: 0.75rem; }
+        .btn:disabled { background-color: #ced4da; color: #868e96; cursor: not-allowed; }
+        .zeile { display: flex; gap: 10px; flex-wrap: wrap; align-items: center; margin-top: 10px; }
+        .hint { background: #fff3cd; border-left: 4px solid #f39c12; color: #856404; padding: 9px 13px; border-radius: 4px; font-size: 0.88rem; margin-top: 10px; line-height: 1.5; }
+        .info { background: #e8f6f3; border-left: 4px solid #16a085; color: #0e6655; padding: 9px 13px; border-radius: 4px; font-size: 0.88rem; margin-top: 10px; line-height: 1.5; }
+        .meldung { margin-top: 10px; font-size: 0.9rem; min-height: 1em; }
+        .meldung.ok { color: #117a65; } .meldung.fehler { color: #c0392b; font-weight: 600; }
+        .meldung.ok::before, .meldung.fehler::before { content: none; }
+        details summary { cursor: pointer; color: #117a65; font-weight: 600; margin-top: 12px; font-size: 0.9rem; }
+
+        /* 1. Verein */
+        .v-raster { display: grid; grid-template-columns: 300px 1fr; gap: 14px; align-items: start; }
+        @media (max-width: 760px) { .v-raster { grid-template-columns: 1fr; } }
+        .v-block { background: #fff; border: 1px solid #e9ecef; border-radius: 6px; padding: 12px 14px; min-width: 0; }
+        .v-block h3 { margin: 0 0 8px; font-size: 0.98rem; color: #2c3e50; }
+        .feld { display: block; font-size: 0.85rem; color: #555; margin-top: 8px; }
+        .feld input[type=text] { display: block; width: 100%; box-sizing: border-box; margin-top: 3px; padding: 6px 8px;
+            border: 1px solid #ced4da; border-radius: 4px; font-size: 0.92rem; }
+        .logo-feld { display: flex; align-items: center; gap: 12px; margin-top: 4px; }
+        .logo-feld img { height: 56px; max-width: 120px; object-fit: contain; border: 1px solid #e9ecef; border-radius: 4px; padding: 3px; background: #fff; }
+        .vorschau { margin-top: 12px; border: 1px solid #e9ecef; border-radius: 4px; padding: 8px 10px; background: #f8f9fa; }
+        .vorschau .vk { display: flex; align-items: center; gap: 8px; color: #1e3d2f; font-weight: bold; font-size: 1.05rem; }
+        .vorschau img { height: 30px; max-width: 80px; object-fit: contain; }
+        .werkzeug { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; margin-bottom: 8px; }
+        .werkzeug input { padding: 6px 8px; border: 1px solid #ced4da; border-radius: 4px; font-size: 0.9rem; }
+        .werkzeug .suche { width: 130px; }
+        .werkzeug .neuname { flex: 1; min-width: 140px; }
+        select.st { padding: 3px 6px; font-size: 0.85rem; }
+        tr.aus td.name { color: #95a5a6; text-decoration: line-through; }
+        input.kurz { width: 150px; box-sizing: border-box; padding: 4px 7px; border: 1px solid #ced4da; border-radius: 4px; font-size: 0.88rem; }
+        input.kurz::placeholder { color: #b0b6ba; font-style: italic; }
+        input.kurz.doppelt { border-color: #e67e22; background: #fff3cd; }
+        .aehnlich { background: #fff3cd; border-left: 4px solid #f39c12; color: #856404; padding: 7px 11px; border-radius: 4px;
+            font-size: 0.86rem; margin-bottom: 8px; display: flex; gap: 10px; align-items: center; flex-wrap: wrap; }
+        .zaehler { font-size: 0.82rem; color: #7f8c8d; margin-top: 8px; }
+        .uebernahme { margin-top: 10px; border: 1px solid #d5e8e2; background: #f4fbf9; border-radius: 6px; padding: 10px 12px; }
+        .uebernahme .titel { font-size: 0.88rem; font-weight: 600; color: #0e6655; margin-bottom: 6px; }
+        .uebernahme textarea { width: 100%; box-sizing: border-box; font-family: inherit; font-size: 0.9rem; padding: 6px 8px;
+            border: 1px solid #ced4da; border-radius: 4px; }
+        .ankreuz { display: inline-flex; align-items: center; gap: 5px; font-size: 0.88rem; margin: 3px 14px 3px 0; }
+        .datei-zeile { display: flex; gap: 10px; flex-wrap: wrap; align-items: center; margin-top: 14px; padding-top: 12px; border-top: 1px solid #e9ecef; }
+        .datei-zeile .klein { flex-basis: 100%; }
+
+        /* Rueckweg zur Startseite, eigene Zeile ueber dem Kopf */
+        .link-startseite { display: inline-block; margin-bottom: 14px; background-color: #fff; color: #2c3e50;
+            border: 2px solid #2c3e50; padding: 4px 12px; border-radius: 4px; font-weight: bold; font-size: 0.85rem;
+            text-decoration: none; white-space: nowrap; line-height: 1.4; }
+        .link-startseite:hover { background-color: #eaeded; }
+
+        /* Schmale Bildschirme: Tabellenzellen untereinander */
+        @media (max-width: 600px) {
+            body { padding: 10px; }
+            .container { padding: 16px; }
+            .card { padding: 14px; }
+            table, tbody, tr, td { display: block; width: auto; }
+            tr { border-bottom: 1px solid #e9ecef; padding: 4px 0; }
+            td { border-bottom: none; padding: 3px 9px; }
+            td.name, td.aktion { width: auto; text-align: left; }
+            td.zahl { text-align: left; }
+            th { display: none; }
+        }
+        @media print { .link-startseite, .btn { display: none; } }
+        /* Voreinstellungen fuer neue Turniere */
+        .vor-raster { display: grid; grid-template-columns: repeat(auto-fit, minmax(270px, 1fr)); gap: 14px; }
+        .vor-block { background: #fff; border: 1px solid #e9ecef; border-radius: 6px; padding: 12px 14px; }
+        .vor-block h3 { margin: 0 0 6px; font-size: 0.98rem; color: #2c3e50; }
+        .vor-block h3.weiter { margin-top: 14px; }
+        .vor-zeile { display: flex; justify-content: space-between; align-items: center; gap: 10px; padding: 5px 0;
+            font-size: 0.9rem; border-top: 1px solid #f1f3f4; }
+        .vor-zeile select { padding: 3px 8px; font-size: 0.88rem; min-width: 96px; }
+        .vor-zeile input[type=checkbox] { width: 16px; height: 16px; }
+    </style>
+</head>
+<body>
+<div class="container">
+    <a id="link-startseite" class="link-startseite" href="index.html" title="Zur Startseite der Turnierverwaltung">&larr; Startseite</a>
+    <script>
+        // Lokal liegt die Startseite als index.html daneben, ueber GitHub in Turnierplanung/Startseite/
+        if (location.protocol !== 'file:') document.getElementById('link-startseite').href = '../Startseite/';
+    </script>
+    <div class="kopf">
+        <img class="logo" alt="Pool-Billard-Club Bassum e.V." src="data:image/png;base64,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">
+        <div>
+            <h1>System <span class="versions-badge" title="Version dieser Datei">v04</span></h1>
+            <div class="unter">Verein, Prüfung, Speicher-Übersicht, Postfach und Gesamtsicherung</div>
+        </div>
+    </div>
+
+    <div class="card">
+        <h2>1. Verein</h2>
+        <div id="verein-stand" class="info" style="margin:0 0 12px;"></div>
+        <div class="v-raster">
+            <div class="v-block">
+                <h3>Vereinsdaten</h3>
+                <label class="feld">Name des Vereins<input type="text" id="verein-name" maxlength="80" autocomplete="off"></label>
+                <label class="feld">Kurzname <span class="klein">(Bericht, PDF, Mail-Betreff)</span><input type="text" id="verein-kurzname" maxlength="40" autocomplete="off"></label>
+                <div class="feld">Logo</div>
+                <div class="logo-feld">
+                    <img id="verein-logo-bild" alt="Logo des Vereins">
+                    <div>
+                        <div class="zeile" style="margin-top:0;">
+                            <button type="button" class="btn btn-primary btn-klein" data-aktion="logo-waehlen">Logo wählen…</button>
+                            <button type="button" class="btn btn-grau btn-klein" data-aktion="logo-entfernen">Entfernen</button>
+                        </div>
+                        <div class="klein" id="verein-logo-info" style="margin-top:4px;"></div>
+                    </div>
+                    <input type="file" id="verein-logo-datei" accept="image/png,image/jpeg,image/gif,image/webp,image/svg+xml" style="display:none;">
+                </div>
+                <div class="vorschau">
+                    <div class="klein" style="margin-bottom:4px;">So sieht der Kopf der Programme aus:</div>
+                    <div class="vk"><img id="verein-vorschau-bild" alt="">Billard Turnierplan</div>
+                </div>
+            </div>
+            <div class="v-block">
+                <h3>Spielerliste</h3>
+                <div class="werkzeug">
+                    <input type="search" id="verein-suche" class="suche" placeholder="Suchen…" autocomplete="off">
+                    <input type="text" id="verein-neu" class="neuname" placeholder="Neuer Spieler, z.B. Anna K." maxlength="40" autocomplete="off">
+                    <button type="button" class="btn btn-primary" data-aktion="spieler-neu">Hinzufügen</button>
+                </div>
+                <div id="verein-aehnlich" class="aehnlich" style="display:none;"></div>
+                <table>
+                    <thead><tr><th>Name</th><th>Status</th><th title="Name im Turnierplan, in der Serienwertung und im Vereins-Rating">Im Turnier</th><th></th></tr></thead>
+                    <tbody id="verein-spieler"></tbody>
+                </table>
+                <datalist id="verein-turniernamen"></datalist>
+                <div id="verein-zaehler" class="zaehler"></div>
+                <div class="klein" style="margin-top:6px; line-height:1.45;"><b>Im Turnier</b> ist der Name im Turnierplan, in der Serienwertung
+                    und im Vereins-Rating; leer heißt: der volle Name. Damit bisherige Ergebnisse zugeordnet bleiben, so schreiben wie in den
+                    bisherigen Turnieren. Das Feld schlägt die Namen aus Serienwertung und Rating-Stand vor.</div>
+                <div class="zeile">
+                    <button type="button" class="btn btn-grau" data-aktion="kandidaten">Namen aus der Serienwertung übernehmen…</button>
+                    <button type="button" class="btn btn-grau" data-aktion="einfuegen">Liste einfügen…</button>
+                </div>
+                <div id="verein-kandidaten" class="uebernahme" style="display:none;"></div>
+                <div id="verein-einfuegen" class="uebernahme" style="display:none;">
+                    <div class="titel">Ein Name pro Zeile, z.B. aus Excel kopiert</div>
+                    <textarea id="verein-einfuegen-text" rows="6"></textarea>
+                    <div class="zeile">
+                        <button type="button" class="btn btn-primary btn-klein" data-aktion="einfuegen-ok">Übernehmen</button>
+                        <button type="button" class="btn btn-grau btn-klein" data-aktion="einfuegen-ab">Abbrechen</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="datei-zeile">
+            <button type="button" class="btn btn-primary" data-aktion="verein-export">Vereinsdatei exportieren</button>
+            <button type="button" class="btn btn-grau" data-aktion="verein-import">Vereinsdatei einspielen…</button>
+            <input type="file" id="verein-datei" accept="application/json,.json" style="display:none;">
+            <span style="flex:1"></span>
+            <button type="button" class="btn btn-danger btn-klein" data-aktion="verein-loeschen">Vereinseinstellungen löschen</button>
+            <div class="klein">Name, Logo und Spielerliste in einer Datei, z.B. für das zweite Notebook oder die Online-Seite
+                (lokal und online haben getrennte Speicher). Ohne Turnier- und Ratingdaten. Löschen fragt das Passwort ab.</div>
+        </div>
+        <div id="meldung-verein" class="meldung"></div>
+    </div>
+
+    <div class="card">
+        <h2>2. Prüfung</h2>
+        <table><tbody id="pruefung"></tbody></table>
+        <details>
+            <summary>Edge löscht die Daten beim Schließen? So abschalten</summary>
+            <div class="hint">
+                1. <b>edge://settings/privacy</b> &rarr; „Zu löschende Elemente auswählen, jedes Mal, wenn Sie den Browser schließen“: alles aus.<br>
+                2. <b>edge://settings/content/cookies</b> &rarr; „Cookies und Websitedaten löschen, wenn Sie alle Fenster schließen“: aus.<br>
+                Danach Edge ganz schließen, neu starten und diese Seite wieder öffnen. Die Zeile „Speicher übersteht Neustart“ zeigt dann, ob es geklappt hat.
+            </div>
+        </details>
+    </div>
+
+    <div class="card">
+        <h2>3. Speicher-Übersicht</h2>
+        <table>
+            <thead><tr><th>Eintrag</th><th>Inhalt</th><th style="text-align:right">Größe</th><th></th></tr></thead>
+            <tbody id="uebersicht"></tbody>
+        </table>
+        <div class="klein" style="margin-top:8px;">Löschen fragt das Passwort ab wie in der Serienwertung. Vorher sichern geht über 5.
+            Ist ein Programm gerade in einem anderen Tab offen, schreibt es seinen Stand beim nächsten Speichern wieder.</div>
+        <div id="meldung-uebersicht" class="meldung"></div>
+    </div>
+
+    <div class="card">
+        <h2>4. Postfach</h2>
+        <table>
+            <thead><tr><th>Wartet auf Übernahme</th><th>Übergeben</th><th></th></tr></thead>
+            <tbody id="postfach"></tbody>
+        </table>
+        <div id="postfach-erledigt" class="zeile klein"></div>
+        <div id="meldung-postfach" class="meldung"></div>
+    </div>
+
+    <div class="card">
+        <h2>5. Gesamtsicherung</h2>
+        <div>Alle Daten, die die Programme im Browser ablegen, in einer Datei &ndash; zum Umzug auf ein anderes Gerät oder als Schutz, falls der Browser seine Daten löscht.</div>
+        <div class="zeile">
+            <button type="button" class="btn btn-primary" data-aktion="sichern">Alle Browser-Daten sichern</button>
+            <button type="button" class="btn btn-grau" data-aktion="einspielen">Sicherung einspielen…</button>
+            <input type="file" id="datei-einspielen" accept="application/json,.json" style="display:none;">
+        </div>
+        <div class="info">
+            Einspielen zeigt zuerst, was die Datei enthält, und ersetzt nur diese Einträge; alles andere bleibt.
+            Nicht enthalten ist der Verweis auf die Speicherdatei der Serienwertung &ndash; diese danach einmal neu verknüpfen.
+            Ist eine Speicherdatei verknüpft, lädt die Serienwertung beim Öffnen ohnehin deren Stand.
+        </div>
+        <div id="meldung-sicherung" class="meldung"></div>
+    </div>
+    <div class="card">
+        <h2>6. Voreinstellungen für neue Turniere</h2>
+        <div style="font-size:0.9rem; margin-bottom:12px; line-height:1.5;">Gelten, wenn ein Turnierplan ohne gespeicherten Stand startet und nach
+            „Turnierplan zurücksetzen“. Ein laufendes Turnier bleibt unverändert. „Standard“ heißt: der Turnierplan nimmt seinen eigenen Wert.
+            Die Voreinstellungen gelten nur für diesen Browser auf diesem Gerät.</div>
+        <div class="vor-raster">
+            <div class="vor-block">
+                <h3>Alle Turnierpläne</h3>
+                <label class="vor-zeile">Spielart <select id="vor-spielart" data-werte="8-Ball,9-Ball,10-Ball,Multi-Ball"></select></label>
+                <label class="vor-zeile">Für Vereins-Rating werten <input type="checkbox" id="vor-rating" checked></label>
+                <label class="vor-zeile">Handicap <input type="checkbox" id="vor-handicap"></label>
+                <label class="vor-zeile">Stärke <select id="vor-staerke" data-werte="100,90,80,75,70,60,50" data-einheit=" %"></select></label>
+                <label class="vor-zeile">Obergrenze <select id="vor-obergrenze" data-werte="0,1,2,3,4,5,6,8"></select></label>
+                <label class="vor-zeile">Rating-Werte ausblenden <input type="checkbox" id="vor-ausblenden"></label>
+                <label class="vor-zeile"><span>Rating-Stand der Serienwertung<br><span class="klein">beim Start selbst übernehmen</span></span>
+                    <input type="checkbox" id="vor-auto"></label>
+            </div>
+            <div class="vor-block">
+                <h3>Einzelgruppe</h3>
+                <label class="vor-zeile">Teilnehmer <select id="vor-e-teilnehmer" data-von="3" data-bis="12"></select></label>
+                <label class="vor-zeile">Race to <select id="vor-e-race" data-von="2" data-bis="11"></select></label>
+                <h3 class="weiter">Zwei Gruppen</h3>
+                <label class="vor-zeile">Teilnehmer <select id="vor-g-teilnehmer" data-von="4" data-bis="16"></select></label>
+                <label class="vor-zeile">Race to Gruppenphase <select id="vor-g-race" data-von="2" data-bis="11"></select></label>
+                <label class="vor-zeile">Race to Platzierungsduelle <select id="vor-g-race2" data-von="2" data-bis="11"></select></label>
+            </div>
+            <div class="vor-block">
+                <h3>Gruppen mit KO-Runde</h3>
+                <label class="vor-zeile">Teilnehmer <select id="vor-k-teilnehmer" data-von="8" data-bis="32"></select></label>
+                <label class="vor-zeile">Gruppen <select id="vor-k-gruppen" data-werte="2,4"></select></label>
+                <label class="vor-zeile">Weiter je Gruppe <select id="vor-k-weiter" data-werte="1,2,4,8"></select></label>
+                <label class="vor-zeile">Race to Gruppe <select id="vor-k-race-gruppe" data-von="2" data-bis="11"></select></label>
+                <label class="vor-zeile">Race to Achtelfinale <select id="vor-k-race-r16" data-von="2" data-bis="11"></select></label>
+                <label class="vor-zeile">Race to Viertelfinale <select id="vor-k-race-qf" data-von="2" data-bis="11"></select></label>
+                <label class="vor-zeile">Race to Halbfinale <select id="vor-k-race-sf" data-von="2" data-bis="11"></select></label>
+                <label class="vor-zeile">Race to Finale <select id="vor-k-race-finale" data-von="2" data-bis="11"></select></label>
+                <label class="vor-zeile">Race to Platzierungsspiele <select id="vor-k-race-p3" data-von="2" data-bis="11"></select></label>
+            </div>
+        </div>
+        <div class="zeile">
+            <button type="button" class="btn btn-primary" data-aktion="vor-speichern">Speichern</button>
+            <button type="button" class="btn btn-grau" data-aktion="vor-standard">Auf Programmstandard zurücksetzen</button>
+            <span class="klein" id="vor-stand"></span>
+        </div>
+        <div class="klein" style="margin-top:6px;">Passt „Weiter je Gruppe“ nicht zu Gruppen und Teilnehmern, nimmt der KO-Plan seinen eigenen Wert.</div>
+        <div id="meldung-voreinstellungen" class="meldung"></div>
+    </div>
+</div>
+
+<script>
+    // Systemseite: liest den gemeinsamen Browser-Speicher aller Programme.
+    // Die Programme selbst bleiben unveraendert; geloescht wird nur nach
+    // Passwort und Rueckfrage. Speicherschluessel siehe docs/01-architektur.md.
+
+    const PRAEFIX = 'billard-';
+    const PROGRAMME = [
+        { praefix: 'billard-tourn:', name: 'Einzelgruppe' },
+        { praefix: 'billard-2grp:', name: 'Zwei Gruppen' },
+        { praefix: 'billard-ko:', name: 'Gruppen mit KO-Runde' },
+        { praefix: 'billard-serie:', name: 'Serienwertung' },
+        { praefix: 'billard-postfach:', name: 'Postfach' },
+        { praefix: 'billard-system:', name: 'System' }
+    ];
+    const POSTFACH_KEY = 'billard-postfach:turniere';
+    const POSTFACH_ERLEDIGT_KEY = 'billard-postfach:erledigt';
+    const POSTFACH_ERLEDIGT_MAX = 100;
+    const RATING_POSTFACH_KEY = 'billard-postfach:rating';
+    const PRUEFWERT_KEY = 'billard-system:pruefwert';
+    const SICHERUNG_FORMAT = 'billard-browserdaten';
+    const IDB_NAME = 'billard-serienwertung';
+    const IDB_STORE = 'handles';
+
+    // Loeschschutz wie in der Serienwertung: kein Zugriffsschutz, nur gegen
+    // den versehentlichen Klick. Die Freigabe gilt bis zum Schliessen der Seite.
+    const SCHUTZ_PASSWORT = '8-Ball';
+    let entsperrt = false;
+
+    function pruefeSchutz() {
+        if (entsperrt) return true;
+        const eingabe = prompt('Löschschutz\n\nBitte das Passwort eingeben, um Löschen und Zurücksetzen freizugeben.');
+        if (eingabe === null) return false;
+        if (eingabe.trim().toLowerCase() !== SCHUTZ_PASSWORT.toLowerCase()) {
+            alert('Das Passwort stimmt nicht. Es wurde nichts geändert.');
+            return false;
+        }
+        entsperrt = true;
+        return true;
+    }
+
+    // ---------------------------------------------------------------------
+    // Hilfen
+    // ---------------------------------------------------------------------
+    function esc(s) {
+        return String(s === null || s === undefined ? '' : s)
+            .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
+            .replace(/"/g, '&quot;').replace(/'/g, '&#39;');
+    }
+
+    function lesen(schluessel) {
+        try { return JSON.parse(localStorage.getItem(schluessel) || 'null'); }
+        catch (e) { return null; }
+    }
+
+    function datumZeit(iso) {
+        const d = new Date(iso);
+        if (!iso || isNaN(d)) return '';
+        return d.toLocaleDateString('de-DE') + ', ' + d.toLocaleTimeString('de-DE', { hour: '2-digit', minute: '2-digit' }) + ' Uhr';
+    }
+
+    function datumIso(iso) {
+        const t = String(iso || '').split('-');
+        return t.length === 3 ? t[2] + '.' + t[1] + '.' + t[0] : String(iso || '');
+    }
+
+    function kbText(bytes) {
+        const kb = bytes / 1024;
+        return kb < 10 ? kb.toFixed(1).replace('.', ',') + ' kB' : Math.round(kb) + ' kB';
+    }
+
+    // UTF-16 im Browser-Speicher: zwei Byte je Zeichen
+    function groesse(text) {
+        return kbText(String(text || '').length * 2);
+    }
+
+    function meldung(id, text, fehler) {
+        const el = document.getElementById(id);
+        el.className = 'meldung ' + (fehler ? 'fehler' : 'ok');
+        el.textContent = text;
+    }
+
+    // Alle Schluessel der Programme, sortiert
+    function programmSchluessel() {
+        const liste = [];
+        try {
+            for (let i = 0; i < localStorage.length; i++) {
+                const k = localStorage.key(i);
+                if (k && k.indexOf(PRAEFIX) === 0 && k !== PRUEFWERT_KEY) liste.push(k);
+            }
+        } catch (e) { /* Speicher gesperrt: leere Liste */ }
+        return liste.sort();
+    }
+
+    // ---------------------------------------------------------------------
+    // Eintraege lesbar beschreiben
+    // ---------------------------------------------------------------------
+    function snapshotText(snap) {
+        if (!snap || typeof snap !== 'object') return 'nicht lesbar';
+        const teile = [];
+        if (snap.name) teile.push('„' + snap.name + '“');
+        const n = snap.playerCount || (Array.isArray(snap.currentNames) ? snap.currentNames.length : 0);
+        if (n) teile.push(n + ' Spieler');
+        if (snap.gameType) teile.push(snap.gameType);
+        if (snap.serie && snap.serie.datum) teile.push(datumIso(snap.serie.datum));
+        if (snap.serie) teile.push(snap.serie.vollstaendig ? 'beendet' : 'läuft');
+        if (snap.savedAt) teile.push('gesichert ' + datumZeit(snap.savedAt));
+        return teile.join(', ') || 'leerer Stand';
+    }
+
+    // Liefert { programm, eintrag, inhalt, loeschbar } fuer einen Schluessel
+    function beschreibung(schluessel, rohtext) {
+        const prog = PROGRAMME.find(p => schluessel.indexOf(p.praefix) === 0);
+        const programm = prog ? prog.name : 'Sonstiges';
+        const rest = prog ? schluessel.slice(prog.praefix.length) : schluessel;
+        let daten = null;
+        try { daten = JSON.parse(rohtext); } catch (e) { daten = rohtext; }
+
+        if (prog && prog.praefix === 'billard-serie:') {
+            if (rest === 'db') {
+                const serien = daten && Array.isArray(daten.serien) ? daten.serien.length : 0;
+                const archiv = daten && Array.isArray(daten.partienArchiv) ? daten.partienArchiv.length : 0;
+                return { programm, eintrag: 'Datenbestand (Browser-Kopie)', loeschbar: false,
+                    inhalt: serien + ' Serien, ' + archiv + ' Archiv-Turniere – verlässlich ist die Speicherdatei; löschen nur in der Serienwertung über „Zurücksetzen…“' };
+            }
+            if (rest === 'dateiname') return { programm, eintrag: 'Zuletzt benutzte Speicherdatei', inhalt: String(daten), loeschbar: false };
+            if (rest === 'reiter') return { programm, eintrag: 'Zuletzt geöffneter Reiter', inhalt: String(daten), loeschbar: false };
+            return { programm, eintrag: rest, inhalt: '', loeschbar: false };
+        }
+        if (prog && prog.praefix === 'billard-postfach:') {
+            if (rest === 'turniere') {
+                const n = Array.isArray(daten) ? daten.length : 0;
+                return { programm, eintrag: 'Wartende Ergebnisse', inhalt: n + (n === 1 ? ' Turnier' : ' Turniere') + ' (siehe 4.)', loeschbar: false };
+            }
+            if (rest === 'erledigt') {
+                const n = daten && typeof daten === 'object' ? Object.keys(daten).length : 0;
+                return { programm, eintrag: 'Vermerke für die Turnierpläne', inhalt: n + ' übernommen oder verworfen', loeschbar: false };
+            }
+            if (rest === 'rating') {
+                const r = daten && daten.stand && daten.stand.ratingStand;
+                return { programm, eintrag: 'Rating-Stand', loeschbar: true,
+                    inhalt: r ? 'Stichtag ' + datumIso(r.stichtag) + ', ' + (r.spieler || []).length + ' Spieler, bereitgestellt ' + datumZeit(daten.bereitgestellt) : 'nicht lesbar' };
+            }
+        }
+        if (prog && prog.praefix === 'billard-system:') {
+            if (rest === 'verein') {
+                const n = daten && Array.isArray(daten.spieler) ? daten.spieler.length : 0;
+                const name = daten ? String(daten.kurzname || daten.name || '').trim() : '';
+                return { programm, eintrag: 'Vereinseinstellungen', loeschbar: true,
+                    inhalt: (name ? name + ', ' : '') + n + ' Spieler' +
+                        (daten && typeof daten.logo === 'string' && daten.logo ? ', eigenes Logo' : '') + ' (siehe 1.)' };
+            }
+            if (rest === 'voreinstellungen') {
+                return { programm, eintrag: 'Voreinstellungen für neue Turniere', loeschbar: true,
+                    inhalt: daten && daten.gespeichert ? 'gespeichert am ' + datumZeit(daten.gespeichert) + ' (siehe 6.)' : 'siehe 6.' };
+            }
+            return { programm, eintrag: rest, inhalt: '', loeschbar: false };
+        }
+        if (prog) {
+            // Turnierplaene
+            if (rest === '__autosave__') return { programm, eintrag: 'Automatische Sicherung', inhalt: snapshotText(daten), loeschbar: true };
+            if (rest === '__restore__') {
+                const n = Array.isArray(daten) ? daten.length : 0;
+                const letzter = n ? datumZeit(daten[0].savedAt) : '';
+                return { programm, eintrag: 'Restore-Punkte', loeschbar: true,
+                    inhalt: n + (n === 1 ? ' Punkt' : ' Punkte') + (letzter ? ', letzter ' + letzter : '') };
+            }
+            return { programm, eintrag: 'Gespeicherter Stand „' + rest + '“', inhalt: snapshotText(daten), loeschbar: true };
+        }
+        return { programm, eintrag: schluessel, inhalt: '', loeschbar: false };
+    }
+
+    // ---------------------------------------------------------------------
+    // 1. Verein: Name, Logo und Spielerliste
+    // ---------------------------------------------------------------------
+    // Gemeinsam fuer alle Programme im Browser-Speicher. Ohne Eintrag gilt
+    // Bassum: Name wie unten, Logo wie im Kopf dieser Datei. Im Eintrag
+    // heisst logo fehlt = eingebautes Logo, logo '' = kein Logo.
+    // Status der Spieler: mitglied, gast, aus (ausgetreten).
+    const VEREIN_KEY = 'billard-system:verein';
+    const VEREIN_STANDARD = { name: 'Pool-Billard-Club Bassum e.V.', kurzname: 'PBC Bassum' };
+    let vereinLogoEingebaut = '';       // Logo aus dem Kopf dieser Datei, beim Start gemerkt
+
+    function vereinNorm(name) {
+        return String(name === null || name === undefined ? '' : name).trim().toLowerCase().replace(/\s+/g, ' ');
+    }
+
+    function vereinLesen() {
+        try {
+            const v = JSON.parse(localStorage.getItem(VEREIN_KEY) || 'null');
+            return (v && typeof v === 'object' && !Array.isArray(v)) ? v : null;
+        } catch (e) { return null; }
+    }
+
+    function vereinName() {
+        const v = vereinLesen();
+        return v ? String(v.name || '').trim() : VEREIN_STANDARD.name;
+    }
+
+    // Kurzname fuer Bericht, PDF und Mail; ohne Kurzname der volle Name
+    function vereinKurzname() {
+        const v = vereinLesen();
+        if (!v) return VEREIN_STANDARD.kurzname;
+        return String(v.kurzname || '').trim() || String(v.name || '').trim();
+    }
+
+    function vereinLogo() {
+        const v = vereinLesen();
+        if (!v || v.logo === undefined || v.logo === null) return vereinLogoEingebaut;
+        return /^data:image\//.test(String(v.logo)) ? String(v.logo) : '';
+    }
+
+    // Spieler mit Status mitglied oder gast, alphabetisch nach Turniername.
+    // name = Name im Turnier (Kurzname, sonst voller Name), voll = voller Name
+    function vereinSpieler() {
+        const v = vereinLesen();
+        return (v && Array.isArray(v.spieler) ? v.spieler : [])
+            .filter(s => s && vereinNorm(s.name) && s.status !== 'aus')
+            .map(s => {
+                const voll = String(s.name).trim().replace(/\s+/g, ' ');
+                const kurz = String(s.kurzname || '').trim().replace(/\s+/g, ' ');
+                return { name: kurz || voll, voll: voll, status: s.status === 'gast' ? 'gast' : 'mitglied' };
+            })
+            .sort((a, b) => a.name.localeCompare(b.name, 'de'));
+    }
+
+    // Ausgetretene Spieler als { normierter Name: true }, voller und Kurzname
+    function vereinAusgetreten() {
+        const v = vereinLesen();
+        const aus = {};
+        (v && Array.isArray(v.spieler) ? v.spieler : []).forEach(s => {
+            if (!s || s.status !== 'aus') return;
+            aus[vereinNorm(s.name)] = true;
+            if (vereinNorm(s.kurzname)) aus[vereinNorm(s.kurzname)] = true;
+        });
+        return aus;
+    }
+
+    // Logo und Name im Kopf, ein eigenes Logo auch im Browser-Tab
+    function vereinAnwenden() {
+        const logo = vereinLogo();
+        const name = vereinName();
+        document.querySelectorAll('img.logo').forEach(img => {
+            if (logo) img.setAttribute('src', logo);
+            img.style.display = logo ? '' : 'none';
+            img.alt = name;
+            img.title = name;
+        });
+        const eigenes = !!logo && logo !== vereinLogoEingebaut;
+        document.querySelectorAll('link[rel="icon"]').forEach(l => {
+            if (l.dataset.eingebaut === undefined) {
+                l.dataset.eingebaut = l.getAttribute('href') || '';
+                l.dataset.typ = l.getAttribute('type') || '';
+            }
+            l.setAttribute('href', eigenes ? logo : l.dataset.eingebaut);
+            const typ = eigenes ? (/^data:([^;,]+)/.exec(logo) || [])[1] : l.dataset.typ;
+            if (typ) l.setAttribute('type', typ);
+        });
+    }
+
+    // Beim Start: eingebautes Logo merken, anwenden und auf Aenderungen aus
+    // anderen Tabs hoeren. nachher (optional) laeuft nach jedem Anwenden.
+    function vereinStarten(nachher) {
+        const img = document.querySelector('img.logo');
+        vereinLogoEingebaut = img ? (img.getAttribute('src') || '') : '';
+        const anwenden = () => { vereinAnwenden(); if (nachher) nachher(); };
+        anwenden();
+        window.addEventListener('storage', (e) => { if (!e.key || e.key === VEREIN_KEY) anwenden(); });
+    }
+
+    const SERIE_DB_KEY = 'billard-serie:db';
+    const VEREIN_FORMAT = 'billard-verein';
+    const LOGO_KANTE = 300;             // laengste Seite des gespeicherten Logos in Pixel
+    const LOGO_MAX_ZEICHEN = 300000;    // etwa 220 kB, mehr gehoert nicht in den Browser-Speicher
+    const STATUS_TEXT = { mitglied: 'Mitglied', gast: 'Gast', aus: 'Ausgetreten' };
+
+    // Vereinsdaten in die gespeicherte Form bringen: Namen gesaeubert, jeder
+    // Spieler nur einmal, unbekannter Status wird Mitglied. Ohne Eintrag
+    // (q = null) gelten die eingebauten Werte.
+    function vereinBereinigen(q) {
+        const stand = {
+            version: 1,
+            name: q ? String(q.name || '').trim() : VEREIN_STANDARD.name,
+            kurzname: q ? String(q.kurzname || '').trim() : VEREIN_STANDARD.kurzname,
+            spieler: []
+        };
+        if (q && q.logo !== undefined && q.logo !== null) stand.logo = /^data:image\//.test(String(q.logo)) ? String(q.logo) : '';
+        const gesehen = {};
+        (q && Array.isArray(q.spieler) ? q.spieler : []).forEach(s => {
+            const name = s ? String(s.name || '').trim().replace(/\s+/g, ' ') : '';
+            const k = vereinNorm(name);
+            if (!k || gesehen[k]) return;
+            gesehen[k] = true;
+            const eintrag = { name: name, status: STATUS_TEXT[s.status] ? s.status : 'mitglied' };
+            const kurz = String(s.kurzname || '').trim().replace(/\s+/g, ' ');
+            if (kurz && vereinNorm(kurz) !== k) eintrag.kurzname = kurz;
+            stand.spieler.push(eintrag);
+        });
+        return stand;
+    }
+
+    function vereinArbeitsstand() {
+        return vereinBereinigen(vereinLesen());
+    }
+
+    function vereinSpeichern(v) {
+        v.geaendert = new Date().toISOString();
+        try { localStorage.setItem(VEREIN_KEY, JSON.stringify(v)); }
+        catch (e) { meldung('meldung-verein', 'Speichern nicht möglich (Browser-Speicher voll oder gesperrt).', true); return false; }
+        allesAnzeigen();
+        return true;
+    }
+
+    // Jedes Wort gross anfangen lassen wie in den Turnierplaenen
+    function namenSaeubern(text) {
+        return String(text || '').trim().replace(/\s+/g, ' ')
+            .replace(/(^|\s)(\S)/g, (treffer, davor, zeichen) => davor + zeichen.toUpperCase());
+    }
+
+    function vereinZaehlen(v) {
+        const n = { mitglied: 0, gast: 0, aus: 0 };
+        v.spieler.forEach(s => { n[s.status]++; });
+        return n;
+    }
+
+    // "8 Mitglieder, 1 Gast, 2 ausgetreten"; trenner zwischen den Teilen
+    function vereinZaehlText(n, trenner) {
+        return n.mitglied + (n.mitglied === 1 ? ' Mitglied' : ' Mitglieder') + trenner +
+            n.gast + (n.gast === 1 ? ' Gast' : ' Gäste') + trenner + n.aus + ' ausgetreten';
+    }
+
+    function logoGroesse(logo) {
+        return logo ? kbText(Math.round((logo.length - logo.indexOf(',') - 1) * 3 / 4)) : '';
+    }
+
+    function vereinAnzeigen() {
+        const roh = vereinLesen();
+        const v = vereinArbeitsstand();
+        const logo = vereinLogo();
+        const zaehlText = vereinZaehlText(vereinZaehlen(v), ', ');
+        document.getElementById('verein-stand').innerHTML = roh
+            ? 'Eingerichtet: <b>' + esc(vereinKurzname() || '(ohne Namen)') + '</b> · ' + esc(zaehlText) +
+              (roh.geaendert ? ' · geändert am ' + esc(datumZeit(roh.geaendert)) : '') + '. Gilt für alle Programme in diesem Browser.'
+            : 'Noch nicht eingerichtet: Die Programme zeigen Name und Logo von Bassum. ' +
+              'Jede Änderung hier richtet den Verein ein und gilt dann für alle Programme in diesem Browser.';
+        // Felder nicht ueberschreiben, waehrend dort getippt wird
+        [['verein-name', v.name], ['verein-kurzname', v.kurzname]].forEach(([id, wert]) => {
+            const feld = document.getElementById(id);
+            if (document.activeElement !== feld) feld.value = wert;
+        });
+        ['verein-logo-bild', 'verein-vorschau-bild'].forEach(id => {
+            const img = document.getElementById(id);
+            if (logo) img.setAttribute('src', logo); else img.removeAttribute('src');
+            img.style.display = logo ? '' : 'none';
+        });
+        document.getElementById('verein-logo-info').textContent = (!logo ? 'Kein Logo.'
+            : logo === vereinLogoEingebaut ? 'Eingebautes Logo (Bassum).' : 'Eigenes Logo, ' + logoGroesse(logo) + '.') +
+            ' PNG oder JPG, wird auf ' + LOGO_KANTE + ' Pixel verkleinert.';
+        vereinListeAnzeigen(v);
+    }
+
+    function vereinListeAnzeigen(v) {
+        const suche = vereinNorm(document.getElementById('verein-suche').value);
+        const liste = v.spieler.slice().sort((a, b) => a.name.localeCompare(b.name, 'de'))
+            .filter(s => !suche || vereinNorm(s.name).indexOf(suche) >= 0 || vereinNorm(s.kurzname).indexOf(suche) >= 0);
+        document.getElementById('verein-spieler').innerHTML = liste.length ? liste.map(s =>
+            '<tr' + (s.status === 'aus' ? ' class="aus"' : '') + '><td class="name">' + esc(s.name) + '</td>' +
+            '<td><select class="st" data-name="' + esc(s.name) + '" aria-label="Status von ' + esc(s.name) + '">' +
+            Object.keys(STATUS_TEXT).map(k => '<option value="' + k + '"' + (k === s.status ? ' selected' : '') + '>' + STATUS_TEXT[k] + '</option>').join('') +
+            '</select></td><td><input type="text" class="kurz" data-name="' + esc(s.name) + '" value="' + esc(s.kurzname || '') +
+            '" placeholder="' + esc(s.name) + '" list="verein-turniernamen" maxlength="40" autocomplete="off" aria-label="Name im Turnier von ' +
+            esc(s.name) + '"></td><td class="aktion"><button type="button" class="btn btn-grau btn-klein" data-aktion="spieler-entfernen" data-name="' +
+            esc(s.name) + '">Entfernen</button></td></tr>').join('')
+            : '<tr><td colspan="4" class="leer">' + (v.spieler.length ? 'Kein Name passt zur Suche.' : 'Noch keine Spieler eingetragen.') + '</td></tr>';
+        // Vorschlaege fuer die Turniernamen: bekannte Namen, die noch niemand fuehrt
+        const vergeben = {};
+        v.spieler.forEach(s => { vergeben[vereinNorm(turnierNameVon(s))] = true; });
+        document.getElementById('verein-turniernamen').innerHTML = serienNamen().filter(n => !vergeben[vereinNorm(n)])
+            .map(n => '<option value="' + esc(n) + '"></option>').join('');
+        document.getElementById('verein-zaehler').textContent = v.spieler.length
+            ? vereinZaehlText(vereinZaehlen(v), ' · ') + ' (Ausgetretene werden nicht mehr vorgeschlagen, bleiben aber in Rating und Archiv)'
+            : '';
+    }
+
+    function vereinFeldGeaendert(id) {
+        const v = vereinArbeitsstand();
+        v[id === 'verein-name' ? 'name' : 'kurzname'] = String(document.getElementById(id).value || '').trim();
+        if (vereinSpeichern(v)) meldung('meldung-verein', 'Gespeichert.');
+    }
+
+    // --- Logo ---------------------------------------------------------------
+    function vereinLogoDatei(evt) {
+        const datei = (evt.target.files || [])[0];
+        evt.target.value = '';
+        if (!datei) return;
+        if (!/^image\//.test(datei.type)) { meldung('meldung-verein', 'Bitte eine Bilddatei wählen (PNG oder JPG).', true); return; }
+        const reader = new FileReader();
+        reader.onload = (e) => {
+            const bild = new Image();
+            bild.onload = () => vereinLogoSetzen(logoVerkleinern(bild) || String(e.target.result));
+            bild.onerror = () => meldung('meldung-verein', 'Das Bild konnte nicht gelesen werden.', true);
+            bild.src = e.target.result;
+        };
+        reader.onerror = () => meldung('meldung-verein', 'Die Datei konnte nicht gelesen werden.', true);
+        reader.readAsDataURL(datei);
+    }
+
+    // Verkleinertes Logo als Data-URI. PNG behaelt die Transparenz; wird es zu
+    // gross (Foto), wird JPEG daraus. null, wenn der Browser nicht zeichnen kann.
+    function logoVerkleinern(bild) {
+        const w = bild.naturalWidth, h = bild.naturalHeight;
+        if (!w || !h) return null;
+        const f = Math.min(1, LOGO_KANTE / Math.max(w, h));
+        const leinwand = document.createElement('canvas');
+        leinwand.width = Math.max(1, Math.round(w * f));
+        leinwand.height = Math.max(1, Math.round(h * f));
+        const ctx = leinwand.getContext ? leinwand.getContext('2d') : null;
+        if (!ctx) return null;
+        ctx.drawImage(bild, 0, 0, leinwand.width, leinwand.height);
+        let url = leinwand.toDataURL('image/png');
+        if (url.length > 120000) {
+            ctx.globalCompositeOperation = 'destination-over';     // weisser Grund hinter das Bild
+            ctx.fillStyle = '#fff';
+            ctx.fillRect(0, 0, leinwand.width, leinwand.height);
+            url = leinwand.toDataURL('image/jpeg', 0.88);
+        }
+        return url;
+    }
+
+    // logo: Data-URI oder '' fuer kein Logo
+    function vereinLogoSetzen(logo) {
+        if (logo && !/^data:image\//.test(logo)) { meldung('meldung-verein', 'Das ist kein Bild.', true); return false; }
+        if (logo && logo.length > LOGO_MAX_ZEICHEN) {
+            meldung('meldung-verein', 'Das Logo ist auch verkleinert zu groß. Bitte ein kleineres Bild wählen.', true);
+            return false;
+        }
+        const v = vereinArbeitsstand();
+        v.logo = logo || '';
+        if (!vereinSpeichern(v)) return false;
+        meldung('meldung-verein', logo ? 'Logo gespeichert (' + logoGroesse(logo) + ').' : 'Logo entfernt. Die Programme zeigen jetzt kein Logo.');
+        return true;
+    }
+
+    function vereinLogoEntfernen() {
+        if (!vereinLogo()) return false;
+        if (!confirm('Logo entfernen?\n\nDie Programme zeigen dann kein Logo. Ein neues lässt sich jederzeit wählen.')) return false;
+        return vereinLogoSetzen('');
+    }
+
+    // --- Spielerliste ---------------------------------------------------------
+    // Abstand nach Levenshtein: Zahl der Aenderungen von a nach b
+    function namensAbstand(a, b) {
+        const zeile = [];
+        for (let j = 0; j <= b.length; j++) zeile[j] = j;
+        for (let i = 1; i <= a.length; i++) {
+            let vorher = zeile[0];
+            zeile[0] = i;
+            for (let j = 1; j <= b.length; j++) {
+                const merk = zeile[j];
+                zeile[j] = Math.min(zeile[j] + 1, zeile[j - 1] + 1, vorher + (a[i - 1] === b[j - 1] ? 0 : 1));
+                vorher = merk;
+            }
+        }
+        return zeile[b.length];
+    }
+
+    // Aehnlicher, aber nicht gleicher Name aus der Liste (voller oder
+    // Turniername), sonst ''. Erlaubt ist ein Tippfehler, ab acht Zeichen zwei.
+    function vereinAehnlich(name, spieler) {
+        const k = vereinNorm(name);
+        for (const s of spieler) {
+            for (const n of [s.name, turnierNameVon(s)]) {
+                const sk = vereinNorm(n);
+                if (sk !== k && namensAbstand(sk, k) <= (Math.min(sk.length, k.length) >= 8 ? 2 : 1)) return n;
+            }
+        }
+        return '';
+    }
+
+    // Name im Turnier: Kurzname, sonst voller Name
+    function turnierNameVon(s) {
+        return s.kurzname || s.name;
+    }
+
+    // Spieler, der den Namen schon als vollen oder als Turniernamen fuehrt (ausser ohne)
+    function vereinNameBelegt(spieler, name, ohne) {
+        const k = vereinNorm(name);
+        return spieler.find(s => s !== ohne && (vereinNorm(s.name) === k || vereinNorm(turnierNameVon(s)) === k)) || null;
+    }
+
+    // Kurzname eines Spielers setzen; leer oder gleich dem vollen Namen
+    // heisst: im Turnier gilt der volle Name. feld: Eingabefeld zum Markieren
+    function vereinKurznameSetzen(name, roh, feld) {
+        const v = vereinArbeitsstand();
+        const s = v.spieler.find(x => x.name === name);
+        if (!s) return false;
+        const kurz = namenSaeubern(roh);
+        const box = document.getElementById('verein-aehnlich');
+        const belegt = kurz ? vereinNameBelegt(v.spieler, kurz, s) : null;
+        if (belegt) {
+            box.innerHTML = '<span>„' + esc(kurz) + '“ ist schon der Turniername von ' + esc(belegt.name) +
+                '. Im Turnier wären beide nicht zu unterscheiden, bitte einen anderen Namen eintragen.</span>' +
+                '<button type="button" class="btn btn-grau btn-klein" data-aktion="aehnlich-ab">OK</button>';
+            box.style.display = '';
+            if (feld) feld.classList.add('doppelt');
+            return false;
+        }
+        box.style.display = 'none';
+        if (kurz && vereinNorm(kurz) !== vereinNorm(s.name)) s.kurzname = kurz;
+        else delete s.kurzname;
+        if (!vereinSpeichern(v)) return false;
+        meldung('meldung-verein', '„' + s.name + '“ heißt im Turnier „' + turnierNameVon(s) + '“.');
+        return true;
+    }
+
+    // Bekannte Namen aus der Serienwertung (Serien und Turnier-Archiv der
+    // Browser-Kopie) und dem Rating-Stand. Zusammengefuehrte Schreibweisen
+    // zaehlen einmal, ausgeblendete Spieler fehlen.
+    function serienNamen() {
+        const db = lesen(SERIE_DB_KEY) || {};
+        const aliase = db.aliase && typeof db.aliase === 'object' ? db.aliase : {};
+        const kanon = (n) => aliase[vereinNorm(n)] ? String(aliase[vereinNorm(n)]) : String(n || '').trim().replace(/\s+/g, ' ');
+        const namen = {};
+        const dazu = (n) => {
+            if (!n) return;
+            const kn = kanon(n);
+            const k = vereinNorm(kn);
+            if (k && !namen[k]) namen[k] = kn;
+        };
+        (Array.isArray(db.serien) ? db.serien : []).forEach(s => (s && Array.isArray(s.turniere) ? s.turniere : [])
+            .forEach(t => (t && Array.isArray(t.ranking) ? t.ranking : []).forEach(r => dazu(r && r.name))));
+        (Array.isArray(db.partienArchiv) ? db.partienArchiv : []).forEach(t => (t && Array.isArray(t.partien) ? t.partien : [])
+            .forEach(p => { if (p) { dazu(p.a); dazu(p.b); } }));
+        const rating = lesen(RATING_POSTFACH_KEY);
+        const r = rating && rating.stand && rating.stand.ratingStand;
+        (r && Array.isArray(r.spieler) ? r.spieler : []).forEach(sp => dazu(sp && sp.name));
+        (Array.isArray(db.ratingAusgeblendet) ? db.ratingAusgeblendet : []).forEach(n => { delete namen[vereinNorm(kanon(n))]; });
+        return Object.keys(namen).map(k => namen[k]).sort((a, b) => a.localeCompare(b, 'de'));
+    }
+
+    // Einen Spieler aufnehmen. trotzdem: Warnung zu aehnlichem Namen bestaetigt
+    function vereinSpielerHinzufuegen(roh, trotzdem) {
+        const name = namenSaeubern(roh);
+        const box = document.getElementById('verein-aehnlich');
+        if (!name) { meldung('meldung-verein', 'Bitte einen Namen eingeben.', true); return false; }
+        const v = vereinArbeitsstand();
+        const vorhanden = vereinNameBelegt(v.spieler, name, null);
+        if (vorhanden) {
+            meldung('meldung-verein', vereinNorm(vorhanden.name) === vereinNorm(name)
+                ? '„' + vorhanden.name + '“ steht schon in der Liste.'
+                : '„' + name + '“ ist schon der Turniername von ' + vorhanden.name + '.', true);
+            return false;
+        }
+        const aehnlich = trotzdem ? '' : vereinAehnlich(name, v.spieler);
+        if (aehnlich) {
+            box.innerHTML = '<span>„' + esc(name) + '“ ähnelt „' + esc(aehnlich) + '“ aus der Liste.</span>' +
+                '<button type="button" class="btn btn-primary btn-klein" data-aktion="spieler-trotzdem" data-name="' + esc(name) + '">Trotzdem anlegen</button>' +
+                '<button type="button" class="btn btn-grau btn-klein" data-aktion="aehnlich-ab">Abbrechen</button>';
+            box.style.display = '';
+            return false;
+        }
+        box.style.display = 'none';
+        v.spieler.push({ name: name, status: 'mitglied' });
+        if (!vereinSpeichern(v)) return false;
+        document.getElementById('verein-neu').value = '';
+        meldung('meldung-verein', '„' + name + '“ hinzugefügt.');
+        return true;
+    }
+
+    function vereinSpielerEntfernen(name) {
+        if (!confirm('„' + name + '“ aus der Spielerliste entfernen?\n\nTurnierergebnisse und Rating bleiben unberührt. ' +
+            'Wer nicht mehr spielt, lässt sich auch auf „Ausgetreten“ setzen.')) return false;
+        const v = vereinArbeitsstand();
+        v.spieler = v.spieler.filter(s => s.name !== name);
+        if (!vereinSpeichern(v)) return false;
+        meldung('meldung-verein', '„' + name + '“ entfernt.');
+        return true;
+    }
+
+    function vereinStatusSetzen(name, status) {
+        const v = vereinArbeitsstand();
+        const s = v.spieler.find(x => x.name === name);
+        if (!s || !STATUS_TEXT[status]) return false;
+        s.status = status;
+        if (!vereinSpeichern(v)) return false;
+        meldung('meldung-verein', '„' + name + '“: ' + STATUS_TEXT[status] + '.');
+        return true;
+    }
+
+    // Mehrere Namen als Mitglieder aufnehmen; liefert { neu, doppelt, aehnlich }
+    function vereinSpielerMehrere(namen) {
+        const v = vereinArbeitsstand();
+        const erg = { neu: [], doppelt: [], aehnlich: [] };
+        namen.map(namenSaeubern).filter(n => n).forEach(name => {
+            if (vereinNameBelegt(v.spieler, name, null)) { erg.doppelt.push(name); return; }
+            const a = vereinAehnlich(name, v.spieler);
+            if (a) erg.aehnlich.push(name + ' / ' + a);
+            v.spieler.push({ name: name, status: 'mitglied' });
+            erg.neu.push(name);
+        });
+        if (erg.neu.length && !vereinSpeichern(v)) return null;
+        return erg;
+    }
+
+    function mehrereMelden(erg) {
+        if (!erg) return;
+        let text = erg.neu.length + ' Spieler aufgenommen.';
+        if (erg.doppelt.length) text += ' Schon in der Liste: ' + erg.doppelt.length + '.';
+        if (erg.aehnlich.length) text += ' Bitte prüfen, ähnlich: ' + erg.aehnlich.join(', ') + '.';
+        meldung('meldung-verein', text);
+    }
+
+    // Namen aus Serienwertung und Rating-Stand, die noch nicht in der Liste
+    // stehen, weder als voller Name noch als Turniername
+    function vereinKandidaten() {
+        const weg = {};
+        vereinArbeitsstand().spieler.forEach(s => { weg[vereinNorm(s.name)] = true; weg[vereinNorm(turnierNameVon(s))] = true; });
+        return serienNamen().filter(n => !weg[vereinNorm(n)]);
+    }
+
+    function kandidatenZeigen() {
+        const box = document.getElementById('verein-kandidaten');
+        document.getElementById('verein-einfuegen').style.display = 'none';
+        const namen = vereinKandidaten();
+        if (!namen.length) {
+            box.style.display = 'none';
+            meldung('meldung-verein', 'Keine neuen Namen gefunden. Gesucht wird in Serien, Turnier-Archiv und Rating-Stand der Serienwertung auf diesem Gerät.');
+            return;
+        }
+        box.innerHTML = '<div class="titel">' + namen.length + (namen.length === 1 ? ' Name' : ' Namen') +
+            ' aus Serien, Turnier-Archiv und Rating-Stand, die noch nicht in der Liste stehen</div>' +
+            namen.map(n => '<label class="ankreuz"><input type="checkbox" checked value="' + esc(n) + '"> ' + esc(n) + '</label>').join('') +
+            '<div class="zeile"><button type="button" class="btn btn-primary btn-klein" data-aktion="kandidaten-ok">Angekreuzte übernehmen</button>' +
+            '<button type="button" class="btn btn-grau btn-klein" data-aktion="kandidaten-ab">Abbrechen</button></div>';
+        box.style.display = '';
+    }
+
+    function kandidatenUebernehmen() {
+        const box = document.getElementById('verein-kandidaten');
+        const namen = Array.from(box.querySelectorAll('input[type=checkbox]')).filter(c => c.checked).map(c => c.value);
+        box.style.display = 'none';
+        mehrereMelden(vereinSpielerMehrere(namen));
+    }
+
+    function einfuegenZeigen() {
+        document.getElementById('verein-kandidaten').style.display = 'none';
+        document.getElementById('verein-einfuegen').style.display = '';
+        document.getElementById('verein-einfuegen-text').focus();
+    }
+
+    // Eine Zeile je Name; aus Excel kopierte Zeilen bringen weitere Spalten
+    // mit Tabulator oder Semikolon mit, gezaehlt wird nur die erste
+    function einfuegenUebernehmen() {
+        const feld = document.getElementById('verein-einfuegen-text');
+        const namen = String(feld.value || '').split(/\r?\n/).map(z => z.split(/[\t;]/)[0]);
+        const erg = vereinSpielerMehrere(namen);
+        if (erg) { feld.value = ''; document.getElementById('verein-einfuegen').style.display = 'none'; }
+        mehrereMelden(erg);
+    }
+
+    // --- Vereinsdatei -----------------------------------------------------------
+    function vereinDateiInhalt() {
+        return { format: VEREIN_FORMAT, formatVersion: 1, erstellt: new Date().toISOString(), verein: vereinArbeitsstand() };
+    }
+
+    function vereinExportieren() {
+        const daten = vereinDateiInhalt();
+        const kurz = (vereinKurzname() || 'verein').replace(/[^a-zA-Z0-9_\-]+/g, '_');
+        const blob = new Blob([JSON.stringify(daten, null, 2)], { type: 'application/json' });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = 'verein_' + kurz + '_' + new Date().toISOString().slice(0, 10) + '.json';
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        setTimeout(() => URL.revokeObjectURL(url), 1000);
+        meldung('meldung-verein', 'Vereinsdatei „' + a.download + '“ gespeichert.');
+    }
+
+    // Prueft eine eingelesene Vereinsdatei. Liefert { verein, erstellt } oder { fehler }.
+    function vereinDateiPruefen(daten) {
+        if (!daten || daten.format !== VEREIN_FORMAT || !daten.verein || typeof daten.verein !== 'object') {
+            return { fehler: 'Das ist keine Vereinsdatei der Systemseite.' };
+        }
+        const verein = vereinBereinigen(daten.verein);
+        if (verein.logo && verein.logo.length > LOGO_MAX_ZEICHEN) delete verein.logo;
+        return { verein: verein, erstellt: daten.erstellt };
+    }
+
+    function vereinDateiGewaehlt(evt) {
+        const datei = (evt.target.files || [])[0];
+        evt.target.value = '';
+        if (!datei) return;
+        const reader = new FileReader();
+        reader.onload = (e) => {
+            let geprueft;
+            try { geprueft = vereinDateiPruefen(JSON.parse(e.target.result)); }
+            catch (err) { geprueft = { fehler: 'Die Datei konnte nicht gelesen werden (' + err.message + ').' }; }
+            if (geprueft.fehler) { meldung('meldung-verein', geprueft.fehler, true); return; }
+            vereinEinspielen(geprueft.verein, geprueft.erstellt);
+        };
+        reader.onerror = () => meldung('meldung-verein', 'Die Datei konnte nicht gelesen werden.', true);
+        reader.readAsText(datei);
+    }
+
+    // Ersetzt die Vereinseinstellungen; ueber bestehende nur mit Passwort
+    function vereinEinspielen(v, erstellt) {
+        if (vereinLesen() && !pruefeSchutz()) return false;
+        const name = v.kurzname || v.name || 'ohne Namen';
+        if (!confirm('Vereinsdatei „' + name + '“' + (erstellt ? ' vom ' + datumZeit(erstellt) : '') + ' einspielen?\n\n' +
+            'Name, Logo und Spielerliste (' + v.spieler.length + ' Spieler) ersetzen die jetzigen Vereinseinstellungen.')) return false;
+        if (!vereinSpeichern(v)) return false;
+        meldung('meldung-verein', 'Vereinsdatei „' + name + '“ eingespielt.');
+        return true;
+    }
+
+    function vereinLoeschen() {
+        if (!vereinLesen()) { meldung('meldung-verein', 'Es sind keine Vereinseinstellungen gespeichert.', true); return false; }
+        if (!pruefeSchutz()) return false;
+        if (!confirm('Vereinseinstellungen löschen?\n\nName, Logo und Spielerliste gehen verloren, die Programme zeigen wieder ' +
+            'Name und Logo von Bassum. Vorher sichern geht über „Vereinsdatei exportieren“.')) return false;
+        try { localStorage.removeItem(VEREIN_KEY); } catch (e) { /* Anzeige folgt */ }
+        allesAnzeigen();
+        meldung('meldung-verein', 'Vereinseinstellungen gelöscht.');
+        return true;
+    }
+
+    // ---------------------------------------------------------------------
+    // 2. Pruefung
+    // ---------------------------------------------------------------------
+    function pruefZeile(name, text, art, zusatzHtml) {
+        const tr = document.createElement('tr');
+        tr.innerHTML = '<td class="name">' + esc(name) + '</td><td><span class="' + (art || '') + '">' + esc(text) + '</span>' + (zusatzHtml || '') + '</td>';
+        document.getElementById('pruefung').appendChild(tr);
+        return tr;
+    }
+
+    function browserText() {
+        const ua = navigator.userAgent;
+        if (/Firefox\//.test(ua)) return ['Firefox – nicht geeignet: er behält den Speicher von Dateien nicht über das Schließen hinaus. Bitte Edge oder Chrome verwenden.', 'bad'];
+        if (/Edg\//.test(ua)) return ['Microsoft Edge – geeignet', 'ok'];
+        if (/Chrome\//.test(ua)) return ['Google Chrome – geeignet', 'ok'];
+        return ['nicht erkannt – vorgesehen sind Edge und Chrome', 'warn'];
+    }
+
+    function herkunftText() {
+        if (location.protocol === 'file:') return ['per Doppelklick aus dem Ordner (file://)', 'ok'];
+        if (location.protocol === 'https:') return ['über das Internet: ' + location.host, 'ok'];
+        return ['über ' + location.protocol + '//' + location.host, 'warn'];
+    }
+
+    // Sind Daten anderer Programme sichtbar, teilen sie sich den Speicher
+    function gemeinsamerSpeicherText() {
+        const schluessel = programmSchluessel();
+        const gefunden = PROGRAMME.filter(p => p.praefix !== 'billard-postfach:' && p.praefix !== 'billard-system:' &&
+            schluessel.some(k => k.indexOf(p.praefix) === 0)).map(p => p.name);
+        if (gefunden.length) return ['ja – Daten von ' + gefunden.join(', ') + ' gefunden', 'ok'];
+        return ['noch keine Daten der Programme gefunden – entweder wurde auf diesem Gerät noch nichts benutzt, oder der Browser trennt die Dateien', 'warn'];
+    }
+
+    // Pruefwert ueber den Neustart: beim Oeffnen den alten lesen, dann neu setzen
+    function pruefwertText() {
+        let alt = null;
+        try { alt = localStorage.getItem(PRUEFWERT_KEY); } catch (e) { return ['Browser-Speicher gesperrt', 'bad']; }
+        try { localStorage.setItem(PRUEFWERT_KEY, new Date().toISOString()); } catch (e) { return ['Prüfwert kann nicht geschrieben werden (Speicher voll oder gesperrt)', 'bad']; }
+        if (!alt) return ['erster Aufruf – Prüfwert gesetzt. Nach einem Neustart des Browsers zeigt diese Zeile, ob er erhalten blieb.', 'warn'];
+        return ['Prüfwert vom ' + datumZeit(alt) + ' vorgefunden (neuer Prüfwert gesetzt)', 'ok'];
+    }
+
+    // Gemerkten Verweis auf die Speicherdatei lesen, ohne die Datenbank anzulegen
+    function dateiverweisLesen() {
+        return new Promise((fertig) => {
+            if (!window.indexedDB) { fertig(null); return; }
+            let anfrage;
+            try { anfrage = indexedDB.open(IDB_NAME); } catch (e) { fertig(null); return; }
+            anfrage.onupgradeneeded = () => { anfrage.transaction.abort(); };   // gibt es nicht: nichts anlegen
+            anfrage.onerror = () => fertig(null);
+            anfrage.onsuccess = () => {
+                const db = anfrage.result;
+                if (!db.objectStoreNames.contains(IDB_STORE)) { db.close(); fertig(null); return; }
+                const get = db.transaction(IDB_STORE).objectStore(IDB_STORE).get('speicherdatei');
+                get.onsuccess = () => { db.close(); fertig(get.result ? (get.result.name || 'unbenannt') : null); };
+                get.onerror = () => { db.close(); fertig(null); };
+            };
+        });
+    }
+
+    async function pruefungAnzeigen() {
+        document.getElementById('pruefung').innerHTML = '';
+        pruefZeile('Browser', ...browserText());
+        pruefZeile('Geöffnet', ...herkunftText());
+        pruefZeile('Gemeinsamer Speicher', ...gemeinsamerSpeicherText());
+        const verweisZeile = pruefZeile('Speicherdatei der Serienwertung', 'wird geprüft …', '');
+        pruefZeile('Speicher übersteht Neustart', ...pruefwertText());
+        const dauerZeile = pruefZeile('Speicher als dauerhaft markiert', 'wird geprüft …', '');
+        const belegtZeile = pruefZeile('Belegt', 'wird geprüft …', '');
+
+        const name = await dateiverweisLesen();
+        verweisZeile.children[1].innerHTML = name
+            ? '<span class="ok">Verweis gemerkt: <b>' + esc(name) + '</b></span>'
+            : '<span class="warn">kein Verweis gemerkt – die Serienwertung bittet beim Öffnen, die Speicherdatei zu verknüpfen</span>';
+
+        if (navigator.storage && navigator.storage.persisted) {
+            const dauerhaft = await navigator.storage.persisted().catch(() => false);
+            dauerZeile.children[1].innerHTML = dauerhaft
+                ? '<span class="ok">ja – der Browser räumt diese Daten nicht von sich aus weg</span>'
+                : '<span class="warn">nein</span> <button type="button" class="btn btn-grau btn-klein" data-aktion="dauerhaft">Dauerhaft anfordern</button>' +
+                  '<div class="klein">Schützt vor dem Aufräumen bei Platzmangel, nicht vor der Edge-Einstellung „beim Schließen löschen“.</div>';
+        } else {
+            dauerZeile.children[1].innerHTML = '<span class="warn">vom Browser nicht unterstützt</span>';
+        }
+
+        let programme = 0;
+        programmSchluessel().forEach(k => { programme += (localStorage.getItem(k) || '').length * 2; });
+        let gesamt = '';
+        if (navigator.storage && navigator.storage.estimate) {
+            const e = await navigator.storage.estimate().catch(() => null);
+            if (e && e.quota) gesamt = ' · Browser gesamt ' + Math.round((e.usage || 0) / 1024) + ' kB von ' + (e.quota / 1024 / 1024 / 1024).toFixed(1).replace('.', ',') + ' GB';
+        }
+        belegtZeile.children[1].textContent = 'Daten der Programme ' + kbText(programme) + gesamt;
+    }
+
+    async function dauerhaftAnfordern() {
+        if (!navigator.storage || !navigator.storage.persist) return;
+        const ok = await navigator.storage.persist().catch(() => false);
+        if (!ok) alert('Der Browser hat die Anfrage abgelehnt. Edge und Chrome entscheiden das selbst, z.B. nach Nutzungshäufigkeit oder Lesezeichen.');
+        pruefungAnzeigen();
+    }
+
+    // ---------------------------------------------------------------------
+    // 3. Speicher-Uebersicht
+    // ---------------------------------------------------------------------
+    function uebersichtAnzeigen() {
+        const tbody = document.getElementById('uebersicht');
+        const schluessel = programmSchluessel();
+        let html = '';
+        PROGRAMME.forEach(p => {
+            html += '<tr class="gruppe"><td colspan="4">' + esc(p.name) + '</td></tr>';
+            const eigene = schluessel.filter(k => k.indexOf(p.praefix) === 0);
+            if (!eigene.length) { html += '<tr><td colspan="4" class="leer">nichts gespeichert</td></tr>'; return; }
+            eigene.forEach(k => {
+                const roh = localStorage.getItem(k);
+                const b = beschreibung(k, roh);
+                html += '<tr><td class="name">' + esc(b.eintrag) + '</td><td>' + esc(b.inhalt) + '</td><td class="zahl">' + groesse(roh) + '</td>' +
+                    '<td class="aktion">' + (b.loeschbar ? '<button type="button" class="btn btn-danger btn-klein" data-aktion="loeschen" data-schluessel="' + esc(k) + '">Löschen</button>' : '') + '</td></tr>';
+            });
+        });
+        tbody.innerHTML = html;
+    }
+
+    // Einen Eintrag loeschen; liefert true bei Erfolg
+    function eintragLoeschen(schluessel) {
+        const roh = localStorage.getItem(schluessel);
+        if (roh === null) return false;
+        const b = beschreibung(schluessel, roh);
+        if (!b.loeschbar) return false;
+        if (!pruefeSchutz()) return false;
+        if (!confirm('„' + b.eintrag + '“ (' + b.programm + ') löschen?\n\n' + b.inhalt +
+            '\n\nDas lässt sich nicht rückgängig machen.')) return false;
+        localStorage.removeItem(schluessel);
+        meldung('meldung-uebersicht', b.programm + ': „' + b.eintrag + '“ gelöscht.');
+        return true;
+    }
+
+    // ---------------------------------------------------------------------
+    // 4. Postfach
+    // ---------------------------------------------------------------------
+    function postfachAnzeigen() {
+        const liste = lesen(POSTFACH_KEY);
+        const wartend = Array.isArray(liste) ? liste.filter(e => e && e.id && e.serie) : [];
+        const tbody = document.getElementById('postfach');
+        tbody.innerHTML = wartend.length ? wartend.map(e => {
+            const s = e.serie;
+            const text = [e.name, s.disziplin, datumIso(s.datum), (parseInt(s.teilnehmer) || (s.ranking || []).length) + ' Spieler'].filter(Boolean).join(', ');
+            return '<tr><td>' + esc(text) + '</td><td class="zahl">' + esc(datumZeit(e.uebergeben)) + '</td>' +
+                '<td class="aktion"><button type="button" class="btn btn-danger btn-klein" data-aktion="verwerfen" data-id="' + esc(e.id) + '" data-uebergeben="' + esc(e.uebergeben) + '">Verwerfen</button></td></tr>';
+        }).join('') : '<tr><td colspan="3" class="leer">nichts wartet</td></tr>';
+
+        const erledigt = lesen(POSTFACH_ERLEDIGT_KEY) || {};
+        const letzte = Object.keys(erledigt)
+            .sort((a, b) => String(erledigt[b].zeit).localeCompare(String(erledigt[a].zeit))).slice(0, 5)
+            .map(id => '„' + (id.split('|')[2] || id) + '“ ' + (erledigt[id].art === 'verworfen' ? 'verworfen' : 'übernommen') + ' am ' + datumZeit(erledigt[id].zeit));
+        document.getElementById('postfach-erledigt').textContent = letzte.length ? 'Zuletzt erledigt: ' + letzte.join(' · ') : '';
+    }
+
+    // Wartenden Eintrag verwerfen und fuer die Turnierplaene vermerken
+    function postfachVerwerfen(id, uebergeben) {
+        const liste = lesen(POSTFACH_KEY);
+        if (!Array.isArray(liste)) return false;
+        const eintrag = liste.find(e => e && e.id === id && e.uebergeben === uebergeben);
+        if (!eintrag) return false;
+        if (!pruefeSchutz()) return false;
+        if (!confirm('Wartendes Ergebnis „' + eintrag.name + '“ verwerfen?\n\nEs wird nicht in die Serienwertung übernommen. Im Turnierplan lässt es sich erneut übergeben.')) return false;
+        try {
+            localStorage.setItem(POSTFACH_KEY, JSON.stringify(liste.filter(e => e !== eintrag)));
+            const erledigt = lesen(POSTFACH_ERLEDIGT_KEY) || {};
+            erledigt[id] = { art: 'verworfen', zeit: new Date().toISOString() };
+            Object.keys(erledigt)
+                .sort((a, b) => String(erledigt[b].zeit).localeCompare(String(erledigt[a].zeit)))
+                .slice(POSTFACH_ERLEDIGT_MAX)
+                .forEach(k => { delete erledigt[k]; });
+            localStorage.setItem(POSTFACH_ERLEDIGT_KEY, JSON.stringify(erledigt));
+        } catch (e) {
+            meldung('meldung-postfach', 'Das Postfach konnte nicht geändert werden (Browser-Speicher gesperrt).', true);
+            return false;
+        }
+        meldung('meldung-postfach', '„' + eintrag.name + '“ verworfen.');
+        return true;
+    }
+
+    // ---------------------------------------------------------------------
+    // 5. Gesamtsicherung
+    // ---------------------------------------------------------------------
+    function sicherungErstellen() {
+        const eintraege = {};
+        programmSchluessel().forEach(k => { eintraege[k] = localStorage.getItem(k); });
+        return { format: SICHERUNG_FORMAT, formatVersion: 1, erstellt: new Date().toISOString(),
+                 herkunft: location.protocol === 'file:' ? 'file' : location.host, eintraege: eintraege };
+    }
+
+    function sicherungHerunterladen() {
+        const daten = sicherungErstellen();
+        const anzahl = Object.keys(daten.eintraege).length;
+        if (!anzahl) { meldung('meldung-sicherung', 'Es gibt noch keine Daten der Programme zu sichern.', true); return; }
+        const blob = new Blob([JSON.stringify(daten, null, 2)], { type: 'application/json' });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = 'billard_browserdaten_' + new Date().toISOString().slice(0, 10) + '.json';
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        setTimeout(() => URL.revokeObjectURL(url), 1000);
+        meldung('meldung-sicherung', anzahl + ' Einträge als „' + a.download + '“ gesichert.');
+    }
+
+    // Prueft eine eingelesene Sicherung. Liefert { eintraege } oder { fehler }.
+    function sicherungPruefen(daten) {
+        if (!daten || daten.format !== SICHERUNG_FORMAT || !daten.eintraege || typeof daten.eintraege !== 'object') {
+            return { fehler: 'Das ist keine Gesamtsicherung der Systemseite.' };
+        }
+        const eintraege = {};
+        Object.keys(daten.eintraege).forEach(k => {
+            if (k.indexOf(PRAEFIX) === 0 && k !== PRUEFWERT_KEY && typeof daten.eintraege[k] === 'string') eintraege[k] = daten.eintraege[k];
+        });
+        if (!Object.keys(eintraege).length) return { fehler: 'Die Sicherung enthält keine Einträge.' };
+        return { eintraege: eintraege, erstellt: daten.erstellt };
+    }
+
+    // Schreibt die Eintraege; liefert { geschrieben: [..], fehlgeschlagen: [..] }
+    function sicherungEinspielen(eintraege) {
+        const erg = { geschrieben: [], fehlgeschlagen: [] };
+        Object.keys(eintraege).forEach(k => {
+            try { localStorage.setItem(k, eintraege[k]); erg.geschrieben.push(k); }
+            catch (e) { erg.fehlgeschlagen.push(k); }
+        });
+        return erg;
+    }
+
+    function sicherungDateiGewaehlt(evt) {
+        const datei = (evt.target.files || [])[0];
+        evt.target.value = '';
+        if (!datei) return;
+        const reader = new FileReader();
+        reader.onload = (e) => {
+            let geprueft;
+            try { geprueft = sicherungPruefen(JSON.parse(e.target.result)); }
+            catch (err) { geprueft = { fehler: 'Die Datei konnte nicht gelesen werden (' + err.message + ').' }; }
+            if (geprueft.fehler) { meldung('meldung-sicherung', geprueft.fehler, true); return; }
+            const zeilen = Object.keys(geprueft.eintraege).map(k => {
+                const b = beschreibung(k, geprueft.eintraege[k]);
+                return '- ' + b.programm + ': ' + b.eintrag;
+            });
+            if (!pruefeSchutz()) return;
+            if (!confirm('Sicherung vom ' + (datumZeit(geprueft.erstellt) || 'unbekannten Datum') + ' einspielen?\n\n' +
+                'Folgende Einträge werden ersetzt:\n' + zeilen.join('\n') +
+                '\n\nAlle anderen Einträge bleiben. Programme, die gerade in einem anderen Tab offen sind, danach neu laden.')) return;
+            const erg = sicherungEinspielen(geprueft.eintraege);
+            meldung('meldung-sicherung', erg.geschrieben.length + ' Einträge eingespielt.' +
+                (erg.fehlgeschlagen.length ? ' Nicht geschrieben (Speicher voll?): ' + erg.fehlgeschlagen.join(', ') : ''), erg.fehlgeschlagen.length > 0);
+            allesAnzeigen();
+        };
+        reader.onerror = () => meldung('meldung-sicherung', 'Die Datei konnte nicht gelesen werden.', true);
+        reader.readAsText(datei);
+    }
+
+    // ---------------------------------------------------------------------
+    // 6. Voreinstellungen fuer neue Turniere
+    // ---------------------------------------------------------------------
+    // Ausgewertet von den Turnierplaenen (voreinstellungenVorbereiten). Leere
+    // Auswahl ("Standard") wird nicht gespeichert, dann nimmt der Plan seinen Wert.
+    const VOREINSTELLUNGEN_KEY = 'billard-system:voreinstellungen';
+
+    // Feld -> Pfad im gespeicherten Objekt; zahl = als Zahl speichern
+    const VOR_FELDER = [
+        ['vor-spielart', 'allgemein', 'spielart', false],
+        ['vor-staerke', 'allgemein', 'staerke', true],
+        ['vor-obergrenze', 'allgemein', 'obergrenze', true],
+        ['vor-e-teilnehmer', 'einzel', 'teilnehmer', true],
+        ['vor-e-race', 'einzel', 'raceTo', true],
+        ['vor-g-teilnehmer', 'gruppen', 'teilnehmer', true],
+        ['vor-g-race', 'gruppen', 'raceGruppe', true],
+        ['vor-g-race2', 'gruppen', 'racePhase2', true],
+        ['vor-k-teilnehmer', 'ko', 'teilnehmer', true],
+        ['vor-k-gruppen', 'ko', 'gruppen', true],
+        ['vor-k-weiter', 'ko', 'weiter', true],
+        ['vor-k-race-gruppe', 'ko', 'raceGruppe', true],
+        ['vor-k-race-r16', 'ko', 'raceR16', true],
+        ['vor-k-race-qf', 'ko', 'raceQF', true],
+        ['vor-k-race-sf', 'ko', 'raceSF', true],
+        ['vor-k-race-finale', 'ko', 'raceFinale', true],
+        ['vor-k-race-p3', 'ko', 'racePhase3', true]
+    ];
+    const VOR_HAKEN = [
+        ['vor-rating', 'ratingWerten', true],
+        ['vor-handicap', 'handicap', false],
+        ['vor-ausblenden', 'ausblenden', false],
+        ['vor-auto', 'ratingStandAuto', false]
+    ];
+
+    // Auswahlfelder aus data-werte bzw. data-von/data-bis aufbauen, erste Zeile "Standard"
+    function voreinstellungenFelderAufbauen() {
+        document.querySelectorAll('select[id^="vor-"]').forEach(sel => {
+            let werte = [];
+            if (sel.dataset.werte) werte = sel.dataset.werte.split(',');
+            else for (let n = parseInt(sel.dataset.von, 10); n <= parseInt(sel.dataset.bis, 10); n++) werte.push(String(n));
+            const einheit = sel.dataset.einheit || '';
+            sel.innerHTML = '<option value="">Standard</option>' + werte.map(w =>
+                '<option value="' + esc(w) + '">' + esc(sel.id === 'vor-obergrenze' && w === '0' ? 'keine' : w + einheit) + '</option>').join('');
+        });
+    }
+
+    function voreinstellungenFormularFuellen(v) {
+        VOR_FELDER.forEach(([id, bereich, feld]) => {
+            const wert = v && v[bereich] ? v[bereich][feld] : undefined;
+            const sel = document.getElementById(id);
+            sel.value = (wert === undefined || wert === null) ? '' : String(wert);
+            if (sel.value !== String(wert === undefined || wert === null ? '' : wert)) sel.value = '';
+        });
+        VOR_HAKEN.forEach(([id, feld, standard]) => {
+            const wert = v && v.allgemein ? v.allgemein[feld] : undefined;
+            document.getElementById(id).checked = typeof wert === 'boolean' ? wert : standard;
+        });
+        document.getElementById('vor-stand').textContent = v && v.gespeichert
+            ? 'Gespeichert am ' + datumZeit(v.gespeichert) : 'Keine Voreinstellungen gespeichert, die Turnierpläne nehmen ihre eigenen Werte.';
+    }
+
+    function voreinstellungenAusFormular() {
+        const v = { version: 1, gespeichert: new Date().toISOString(), allgemein: {}, einzel: {}, gruppen: {}, ko: {} };
+        VOR_FELDER.forEach(([id, bereich, feld, zahl]) => {
+            const text = document.getElementById(id).value;
+            if (text !== '') v[bereich][feld] = zahl ? parseInt(text, 10) : text;
+        });
+        VOR_HAKEN.forEach(([id, feld]) => { v.allgemein[feld] = document.getElementById(id).checked; });
+        return v;
+    }
+
+    function voreinstellungenSpeichern() {
+        const v = voreinstellungenAusFormular();
+        try { localStorage.setItem(VOREINSTELLUNGEN_KEY, JSON.stringify(v)); }
+        catch (e) { meldung('meldung-voreinstellungen', 'Speichern nicht möglich (Browser-Speicher voll oder gesperrt).', true); return false; }
+        voreinstellungenFormularFuellen(v);
+        meldung('meldung-voreinstellungen', 'Gespeichert. Gilt ab dem nächsten neuen Turnier.');
+        allesAnzeigen();
+        return true;
+    }
+
+    function voreinstellungenStandard() {
+        if (!confirm('Voreinstellungen löschen?\n\nNeue Turniere nehmen dann wieder die Werte des Turnierplans bzw. des letzten Turniers.')) return false;
+        try { localStorage.removeItem(VOREINSTELLUNGEN_KEY); } catch (e) { /* Anzeige folgt */ }
+        voreinstellungenFormularFuellen(null);
+        meldung('meldung-voreinstellungen', 'Voreinstellungen gelöscht.');
+        allesAnzeigen();
+        return true;
+    }
+
+    // ---------------------------------------------------------------------
+    // Start und Bedienung
+    // ---------------------------------------------------------------------
+    function allesAnzeigen() {
+        vereinAnwenden();
+        vereinAnzeigen();
+        uebersichtAnzeigen();
+        postfachAnzeigen();
+    }
+
+    document.addEventListener('click', (e) => {
+        const btn = e.target.closest('[data-aktion]');
+        if (!btn) return;
+        const aktion = btn.dataset.aktion;
+        if (aktion === 'loeschen' && eintragLoeschen(btn.dataset.schluessel)) allesAnzeigen();
+        if (aktion === 'verwerfen' && postfachVerwerfen(btn.dataset.id, btn.dataset.uebergeben)) allesAnzeigen();
+        if (aktion === 'sichern') sicherungHerunterladen();
+        if (aktion === 'einspielen') document.getElementById('datei-einspielen').click();
+        if (aktion === 'dauerhaft') dauerhaftAnfordern();
+        if (aktion === 'vor-speichern') voreinstellungenSpeichern();
+        if (aktion === 'vor-standard') voreinstellungenStandard();
+        if (aktion === 'logo-waehlen') document.getElementById('verein-logo-datei').click();
+        if (aktion === 'logo-entfernen') vereinLogoEntfernen();
+        if (aktion === 'spieler-neu') vereinSpielerHinzufuegen(document.getElementById('verein-neu').value, false);
+        if (aktion === 'spieler-trotzdem') vereinSpielerHinzufuegen(btn.dataset.name, true);
+        if (aktion === 'aehnlich-ab') document.getElementById('verein-aehnlich').style.display = 'none';
+        if (aktion === 'spieler-entfernen') vereinSpielerEntfernen(btn.dataset.name);
+        if (aktion === 'kandidaten') kandidatenZeigen();
+        if (aktion === 'kandidaten-ok') kandidatenUebernehmen();
+        if (aktion === 'kandidaten-ab') document.getElementById('verein-kandidaten').style.display = 'none';
+        if (aktion === 'einfuegen') einfuegenZeigen();
+        if (aktion === 'einfuegen-ok') einfuegenUebernehmen();
+        if (aktion === 'einfuegen-ab') document.getElementById('verein-einfuegen').style.display = 'none';
+        if (aktion === 'verein-export') vereinExportieren();
+        if (aktion === 'verein-import') document.getElementById('verein-datei').click();
+        if (aktion === 'verein-loeschen') vereinLoeschen();
+    });
+    document.getElementById('datei-einspielen').addEventListener('change', sicherungDateiGewaehlt);
+    document.getElementById('verein-logo-datei').addEventListener('change', vereinLogoDatei);
+    document.getElementById('verein-datei').addEventListener('change', vereinDateiGewaehlt);
+    ['verein-name', 'verein-kurzname'].forEach(id => document.getElementById(id).addEventListener('change', () => vereinFeldGeaendert(id)));
+    document.getElementById('verein-suche').addEventListener('input', () => vereinListeAnzeigen(vereinArbeitsstand()));
+    document.getElementById('verein-neu').addEventListener('keydown', (e) => {
+        if (e.key === 'Enter') { e.preventDefault(); vereinSpielerHinzufuegen(e.target.value, false); }
+    });
+    document.addEventListener('change', (e) => {
+        if (e.target.classList && e.target.classList.contains('st')) vereinStatusSetzen(e.target.dataset.name, e.target.value);
+        if (e.target.classList && e.target.classList.contains('kurz')) vereinKurznameSetzen(e.target.dataset.name, e.target.value, e.target);
+    });
+    // Aenderungen aus anderen Tabs und beim Zurueckwechseln uebernehmen
+    window.addEventListener('storage', (e) => { if (!e.key || e.key.indexOf(PRAEFIX) === 0) allesAnzeigen(); });
+    document.addEventListener('visibilitychange', () => { if (document.visibilityState === 'visible') allesAnzeigen(); });
+
+    vereinStarten();
+    voreinstellungenFelderAufbauen();
+    voreinstellungenFormularFuellen(lesen(VOREINSTELLUNGEN_KEY));
+    pruefungAnzeigen();
+    allesAnzeigen();
+</script>
+</body>
+</html>

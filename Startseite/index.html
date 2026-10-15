@@ -98,12 +98,12 @@
     // von tools/startseite.py gepflegt, nicht von Hand aendern.
     // STARTSEITE-DATEIEN-ANFANG
     const LOKAL = {
-        einzel: 'turnierplan_billard_v70.html',
-        gruppen: 'turnierplan_billard_gruppen_v73.html',
-        ko: 'turnierplan_billard_ko_v83.html',
-        serie: 'serienwertung_billard_v21.html',
+        einzel: 'turnierplan_billard_v71.html',
+        gruppen: 'turnierplan_billard_gruppen_v74.html',
+        ko: 'turnierplan_billard_ko_v84.html',
+        serie: 'serienwertung_billard_v22.html',
         erklaerung: 'vereins_rating_erklaert_v02.html',
-        system: 'system_billard_v03.html'
+        system: 'system_billard_v04.html'
     };
     // STARTSEITE-DATEIEN-ENDE
 
@@ -162,20 +162,29 @@
         return /^data:image\//.test(String(v.logo)) ? String(v.logo) : '';
     }
 
-    // Spieler mit Status mitglied oder gast, alphabetisch
+    // Spieler mit Status mitglied oder gast, alphabetisch nach Turniername.
+    // name = Name im Turnier (Kurzname, sonst voller Name), voll = voller Name
     function vereinSpieler() {
         const v = vereinLesen();
         return (v && Array.isArray(v.spieler) ? v.spieler : [])
             .filter(s => s && vereinNorm(s.name) && s.status !== 'aus')
-            .map(s => ({ name: String(s.name).trim().replace(/\s+/g, ' '), status: s.status === 'gast' ? 'gast' : 'mitglied' }))
+            .map(s => {
+                const voll = String(s.name).trim().replace(/\s+/g, ' ');
+                const kurz = String(s.kurzname || '').trim().replace(/\s+/g, ' ');
+                return { name: kurz || voll, voll: voll, status: s.status === 'gast' ? 'gast' : 'mitglied' };
+            })
             .sort((a, b) => a.name.localeCompare(b.name, 'de'));
     }
 
-    // Ausgetretene Spieler als { normierter Name: true }
+    // Ausgetretene Spieler als { normierter Name: true }, voller und Kurzname
     function vereinAusgetreten() {
         const v = vereinLesen();
         const aus = {};
-        (v && Array.isArray(v.spieler) ? v.spieler : []).forEach(s => { if (s && s.status === 'aus') aus[vereinNorm(s.name)] = true; });
+        (v && Array.isArray(v.spieler) ? v.spieler : []).forEach(s => {
+            if (!s || s.status !== 'aus') return;
+            aus[vereinNorm(s.name)] = true;
+            if (vereinNorm(s.kurzname)) aus[vereinNorm(s.kurzname)] = true;
+        });
         return aus;
     }
 
